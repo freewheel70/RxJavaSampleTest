@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.image)
     ImageView imageView;
+
+    @Bind(R.id.city_label)
+    TextView cityLabel;
 
     ProgressDialog progressDialog;
 
@@ -73,9 +76,10 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onNext(String s) {
-            Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
+            cityLabel.append(s+" ");
         }
     };
+
 
     private void showProgressDialog() {
         if (progressDialog == null) {

@@ -12,11 +12,18 @@
     tools:context="com.hong.app.rxjavatest.MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <TextView
+        android:id="@+id/city_label"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="?colorPrimary"
+        tools:text="1234556"
+         />
+
     <ImageView
+        android:id="@+id/image"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_centerInParent="true"
-        android:scaleType="fitCenter"
-        android:id="@+id/image"
-        />
+        android:scaleType="fitCenter" />
 </RelativeLayout>
