@@ -4,12 +4,20 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/4/11.
@@ -41,6 +49,43 @@ public class NetworkHelper {
             }
         }
         return null;
+    }
+
+
+    public static List<String> requestCityList() {
+        try {
+            URL url = new URL("http://www.amoyhouse.com:7777/city");
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            InputStream inputStream = urlConnection.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+            StringBuilder resultBuilder = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                resultBuilder.append(line);
+            }
+
+            String result = resultBuilder.toString();
+
+            List<String> cityList = new ArrayList<>();
+            JSONArray jsonArray = new JSONArray(result);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject object = jsonArray.getJSONObject(i);
+                String name = object.getString("name");
+                cityList.add(name);
+            }
+
+            return cityList;
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>();
     }
 
 }
