@@ -3,6 +3,7 @@ package com.hong.app.rxjavatest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -118,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setItems(new CharSequence[]{"Requetest Image", "Request List"}, new DialogInterface.OnClickListener() {
+                builder.setItems(new CharSequence[]{"Requetest Image", "Request List","Go to beauty page"}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
@@ -129,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
                             case 1:
                                 CityRequester.loadCityList(citySubscriber);
                                 break;
+                            case 2:
+                                startActivity(new Intent(MainActivity.this, PrettyGirlActivity.class));
                             default:
                                 break;
 

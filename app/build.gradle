@@ -1,5 +1,14 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    mavenCentral() // jcenter() works as well because it pulls from Maven Central
+}
+
+dependencies {
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.android.support:support-v4:19.1.0'
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -7,7 +16,7 @@ android {
     defaultConfig {
         applicationId "com.hong.app.rxjavatest"
         minSdkVersion 19
-        targetSdkVersion 23
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -17,7 +26,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
+
+    productFlavors {
+
+        meizhi{
+            applicationId "com.hong.app.meizhi"
+        }
+
+        rxjava{
+            applicationId "com.hong.app.rxjava"
+        }
+    }
+
+
+    }
 
 
 

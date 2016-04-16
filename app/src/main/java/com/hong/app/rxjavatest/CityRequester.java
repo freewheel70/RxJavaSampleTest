@@ -41,6 +41,6 @@ public class CityRequester {
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
-        
+
     }
 }

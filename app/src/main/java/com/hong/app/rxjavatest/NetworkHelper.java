@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlDataDeserializer;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,6 +78,35 @@ public class NetworkHelper {
             }
 
             return cityList;
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>();
+    }
+
+    public static List<String> getBeautyList(int size,int page){
+
+        try {
+            URL url = new URL("https://gank.io/api/data/%E7%A6%8F%E5%88%A9/"+size+"/"+page);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            InputStream inputStream = urlConnection.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+            StringBuilder builder = new StringBuilder();
+            while ((line=reader.readLine())!=null){
+                builder.append(line);
+            }
+
+            String result = builder.toString();
+
+            return PrettyGirlDataDeserializer.deserializer(result);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
