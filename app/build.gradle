@@ -28,11 +28,6 @@ android {
     }
 
     productFlavors {
-
-        meizhi{
-            applicationId "com.hong.app.meizhi"
-        }
-
         rxjava{
             applicationId "com.hong.app.rxjava"
         }
@@ -50,4 +45,5 @@ dependencies {
     compile 'com.android.support:design:23.3.0'
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'com.blunderer:materialdesignlibrary:2.0.4'
 }

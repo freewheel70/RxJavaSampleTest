@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.hong.app.rxjavatest.Blogs.BlogBean;
+import com.hong.app.rxjavatest.Blogs.BeanDeserializer;
 import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlDataDeserializer;
 
 import org.json.JSONArray;
@@ -106,7 +108,38 @@ public class NetworkHelper {
 
             String result = builder.toString();
 
-            return PrettyGirlDataDeserializer.deserializer(result);
+            return PrettyGirlDataDeserializer.deserialize(result);
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>();
+    }
+
+
+
+    public static List<BlogBean> getBlogList(int size, int page){
+
+        try {
+            URL url = new URL("https://gank.io/api/data/Android/"+size+"/"+page);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            InputStream inputStream = urlConnection.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+            StringBuilder builder = new StringBuilder();
+            while ((line=reader.readLine())!=null){
+                builder.append(line);
+            }
+
+            String result = builder.toString();
+
+            return BeanDeserializer.deserialize(result);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class PrettyGirlDataDeserializer {
 
-    public static List<String> deserializer(String jsonString) throws JSONException {
+    public static List<String> deserialize(String jsonString) throws JSONException {
         List<String> imageStringList = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(jsonString);
         JSONArray jsonArray = jsonObject.getJSONArray("results");

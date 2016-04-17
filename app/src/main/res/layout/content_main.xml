@@ -4,26 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.hong.app.rxjavatest.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:id="@+id/city_label"
+    <FrameLayout
+        android:background="@color/WHITE"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="?colorPrimary"
-        tools:text="1234556"
-         />
+        >
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_centerInParent="true"
-        android:scaleType="fitCenter" />
+        <com.hong.app.rxjavatest.CustomViews.CustomPagerSlidingTabStrip
+            android:id="@+id/tabs"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mdl_viewpager_with_tabs_height"
+            android:background="?attr/colorPrimary"
+            app:pstsDividerColor="?attr/colorPrimaryDark"
+            app:pstsIndicatorColor="@android:color/white"
+            app:pstsIndicatorHeight="5dp"
+            app:pstsUnderlineColor="@android:color/transparent"
+            app:pstsUnderlineHeight="0dp"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/mdl_viewpager_with_tabs_height"/>
+
+    </FrameLayout>
+
 </RelativeLayout>

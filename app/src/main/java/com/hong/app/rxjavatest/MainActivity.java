@@ -1,109 +1,42 @@
 package com.hong.app.rxjavatest;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.util.DisplayMetrics;
 
-import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlActivity;
+import com.blunderer.materialdesignlibrary.adapters.ViewPagerAdapter;
+import com.blunderer.materialdesignlibrary.handlers.ViewPagerHandler;
+import com.blunderer.materialdesignlibrary.models.ViewPagerItem;
+import com.hong.app.rxjavatest.Blogs.AndroidBlogFragment;
+import com.hong.app.rxjavatest.CustomViews.CustomPagerSlidingTabStrip;
+import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Subscriber;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements com.blunderer.materialdesignlibrary.interfaces.ViewPager {
 
     private static final String TAG = "MainActivity";
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
+    @Bind(R.id.tabs)
+    CustomPagerSlidingTabStrip tabStrip;
 
-    @Bind(R.id.image)
-    ImageView imageView;
-
-    @Bind(R.id.city_label)
-    TextView cityLabel;
-
-    ProgressDialog progressDialog;
-
-    Subscriber imageSubscriber = new Subscriber<Bitmap>() {
-
-        @Override
-        public void onStart() {
-            super.onStart();
-            showProgressDialog();
-            imageView.setImageResource(R.mipmap.ic_launcher);
-        }
-
-        @Override
-        public void onCompleted() {
-
-        }
+    @Bind(R.id.view_pager)
+    ViewPager viewPager;
 
 
-        @Override
-        public void onError(Throwable e) {
-            Log.e(TAG, "onError: " + e.getLocalizedMessage());
-            dismissProgressDialog();
-        }
-
-        @Override
-        public void onNext(Bitmap bitmap) {
-            dismissProgressDialog();
-            imageView.setImageBitmap(bitmap);
-        }
-    };
-
-    Subscriber citySubscriber = new Subscriber<String>() {
-        @Override
-        public void onCompleted() {
-
-        }
-
-        @Override
-        public void onError(Throwable e) {
-
-        }
-
-        @Override
-        public void onNext(String s) {
-            cityLabel.append(s+" ");
-        }
-    };
-
-
-    private void showProgressDialog() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(this);
-        }
-
-        if (!progressDialog.isShowing()) {
-            progressDialog.show();
-        }
-    }
-
-    private void dismissProgressDialog() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(this);
-        }
-
-        if (progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
-    }
-
+    private ViewPager.OnPageChangeListener onPageChangeListener;
+    private List<ViewPagerItem> pagerItems = new ArrayList<>();
+    private ViewPagerAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,38 +45,102 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
+        initPageItems();
+        initViewPager();
         initViews();
     }
 
     private void initViews() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setItems(new CharSequence[]{"Requetest Image", "Request List","Go to beauty page"}, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                String imageUrl = "http://amoyhouse.com:7788/one_hit.jpg";
-                                ImageLoader.getInstance().loadImage(imageUrl, imageSubscriber);
-                                break;
-                            case 1:
-                                CityRequester.loadCityList(citySubscriber);
-                                break;
-                            case 2:
-                                startActivity(new Intent(MainActivity.this, PrettyGirlActivity.class));
-                            default:
-                                break;
+    }
 
-                        }
-                    }
-                }).show();
+    private void initPageItems() {
 
 
-            }
-        });
+        AndroidBlogFragment androidBlogFragment = new AndroidBlogFragment();
+        PrettyGirlFragment prettyGirlFragment = new PrettyGirlFragment();
+
+
+        ViewPagerHandler viewPagerHandler = new ViewPagerHandler(this)
+                .addPage("Android",
+                        androidBlogFragment)
+                .addPage("Pretty",
+                        prettyGirlFragment);
+
+        pagerItems = viewPagerHandler.getViewPagerItems();
+
+    }
+
+
+    private void initViewPager() {
+        pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), pagerItems);
+        viewPager.setAdapter(pagerAdapter);
+
+        int defaultViewPagerPageSelectedPosition = defaultViewPagerPageSelectedPosition();
+        selectPage(defaultViewPagerPageSelectedPosition);
+        showTabs();
+
+    }
+
+    @Override
+    public ViewPagerHandler getViewPagerHandler() {
+        return null;
+    }
+
+    @Override
+    public void selectPage(int position) {
+        viewPager.setCurrentItem(position);
+    }
+
+    @Override
+    public void setOnPageChangeListener(ViewPager.OnPageChangeListener onPageChangeListener) {
+        this.onPageChangeListener = onPageChangeListener;
+    }
+
+    @Override
+    public void updateNavigationDrawerTopHandler(ViewPagerHandler viewPagerHandler, int defaultViewPagerPageSelectedPosition) {
+        if (viewPagerHandler == null) {
+            viewPagerHandler = new ViewPagerHandler(this);
+        }
+        pagerItems.clear();
+        pagerItems.addAll(viewPagerHandler.getViewPagerItems());
+        pagerAdapter.notifyDataSetChanged();
+
+        selectPage(defaultViewPagerPageSelectedPosition);
+        showTabs();
+    }
+
+    @Override
+    public int defaultViewPagerPageSelectedPosition() {
+        return 0;
+    }
+
+    private void showTabs() {
+        tabStrip.setTextColor(getResources().getColor(android.R.color.white));
+        tabStrip.setTextSize(getTextSize());
+        tabStrip.setDividerColor(getResources().getColor(android.R.color.transparent));
+        tabStrip.setBackgroundColor(getResources().getColor(R.color.tab_bg_color));
+        tabStrip.setIndicatorColor(getResources().getColor(R.color.tab_indicator_color));
+        tabStrip.setUnderlineColor(getResources().getColor(android.R.color.white));
+        tabStrip.setUnderlineHeight(tabStrip.getIndicatorHeight());
+        tabStrip.setShouldExpand(true);
+        tabStrip.setOnPageChangeListener(onPageChangeListener);
+        tabStrip.setViewPager(viewPager);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            tabStrip.setTabBackground(android.R.attr.selectableItemBackground);
+        }
+    }
+
+
+    private int getTextSize() {
+
+        int textsizeDp = 16;
+
+        DisplayMetrics metric = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metric);
+        int densityDpi = metric.densityDpi;
+
+        return textsizeDp * densityDpi / DisplayMetrics.DENSITY_DEFAULT;
     }
 
 

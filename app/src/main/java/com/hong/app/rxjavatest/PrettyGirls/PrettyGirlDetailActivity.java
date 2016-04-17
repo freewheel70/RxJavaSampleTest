@@ -142,7 +142,7 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.getMenuInflater().inflate(R.menu.menu_main, menu);
+        this.getMenuInflater().inflate(R.menu.menu_pretty, menu);
         return true;
     }
 }

@@ -2,5 +2,12 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#B9F6CA</color>
+    <color name="WHITE">#fff</color>
+    <color name="tab_bg_color">#6688ee</color>
+    <color name="tab_indicator_color">#4e9</color>
+    <color name="item_selectable_pressed">#aaa</color>
+    <color name="black">#000</color>
+    <color name="common_item_via">#ffA8A8A8</color>
+    <color name="item_date">#ffA8A8A8</color>
 </resources>

@@ -2,4 +2,7 @@
     <string name="app_name">RxJavaTest</string>
     <string name="action_settings">Settings</string>
     <string name="action_save">保存</string>
+    <string name="copy_url">复制链接</string>
+    <string name="open_in_browser">用浏览器打开</string>
+    <string name="has_copy_url">链接已复制。</string>
 </resources>
