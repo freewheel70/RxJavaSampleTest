@@ -10,7 +10,13 @@ import android.util.DisplayMetrics;
 import com.blunderer.materialdesignlibrary.adapters.ViewPagerAdapter;
 import com.blunderer.materialdesignlibrary.handlers.ViewPagerHandler;
 import com.blunderer.materialdesignlibrary.models.ViewPagerItem;
-import com.hong.app.rxjavatest.Blogs.AndroidBlogFragment;
+import com.hong.app.rxjavatest.Blogs.BlogFragments.AndroidBlogFragment;
+import com.hong.app.rxjavatest.Blogs.BlogFragments.AppBlogFragment;
+import com.hong.app.rxjavatest.Blogs.BlogFragments.CoolBlogFragment;
+import com.hong.app.rxjavatest.Blogs.BlogFragments.FrontBlogFragment;
+import com.hong.app.rxjavatest.Blogs.BlogFragments.IOSBlogFragment;
+import com.hong.app.rxjavatest.Blogs.BlogFragments.ResourceBlogFragment;
+import com.hong.app.rxjavatest.Blogs.BlogFragments.VideoBlogFragment;
 import com.hong.app.rxjavatest.CustomViews.CustomPagerSlidingTabStrip;
 import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlFragment;
 
@@ -59,13 +65,23 @@ public class MainActivity extends AppCompatActivity implements com.blunderer.mat
 
         AndroidBlogFragment androidBlogFragment = new AndroidBlogFragment();
         PrettyGirlFragment prettyGirlFragment = new PrettyGirlFragment();
-
+        IOSBlogFragment iosBlogFragment = new IOSBlogFragment();
+        FrontBlogFragment frontBlogFragment = new FrontBlogFragment();
+        VideoBlogFragment videoBlogFragment = new VideoBlogFragment();
+        ResourceBlogFragment resourceBlogFragment = new ResourceBlogFragment();
+        AppBlogFragment appBlogFragment = new AppBlogFragment();
+        CoolBlogFragment coolBlogFragment = new CoolBlogFragment();
 
         ViewPagerHandler viewPagerHandler = new ViewPagerHandler(this)
-                .addPage("Android",
-                        androidBlogFragment)
-                .addPage("Pretty",
-                        prettyGirlFragment);
+                .addPage("Android", androidBlogFragment)
+                .addPage("福利", prettyGirlFragment)
+                .addPage("IOS",iosBlogFragment)
+                .addPage("前端",frontBlogFragment)
+                .addPage("拓展资源",resourceBlogFragment)
+                .addPage("App",appBlogFragment)
+                .addPage("视频",videoBlogFragment)
+                .addPage("瞎推荐",coolBlogFragment)
+                ;
 
         pagerItems = viewPagerHandler.getViewPagerItems();
 

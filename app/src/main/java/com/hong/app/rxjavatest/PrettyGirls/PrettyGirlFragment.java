@@ -32,7 +32,6 @@ public class PrettyGirlFragment extends BasePageFragment {
 
     List<String> imageUrlStrList = new ArrayList<>();
 
-
     @Override
     protected int getContainerViewId() {
         return R.layout.fragment_base_list;

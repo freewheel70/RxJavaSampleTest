@@ -1,9 +1,9 @@
-# RxJavaSampleTest
-A simple app implementing RxJava 
+# FreeGank
+An app sharing IT blogs and pretty girls's photos(haha) ...
 
 
 <br/>
 To be continued ...
 <br/>
 <br/>
-I am learning RxJava, this is a testing app witnessing my learning process.  :-)
+Thanks to [Gank.io](http://gank.io/)'s free API.

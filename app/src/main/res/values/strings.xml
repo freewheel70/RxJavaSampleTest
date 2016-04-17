@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RxJavaTest</string>
+    <string name="app_name">FreeGank</string>
     <string name="action_settings">Settings</string>
     <string name="action_save">保存</string>
     <string name="copy_url">复制链接</string>

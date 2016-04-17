@@ -47,14 +47,20 @@ public abstract class BasePageFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        Log.d(TAG, "onCreateView");
         View view = inflater.inflate(getContainerViewId(), container, false);
         ButterKnife.bind(this, view);
         this.inflater = inflater;
         initRecyclerView();
         initViews();
 
-        requestOneMorePage();
+        if (!hasInitFirstPage) {
+            Log.d(TAG, "onCreateView: has not yet InitFirstPage");
+            centerProgressBar.setVisibility(View.VISIBLE);
+            requestOneMorePage();
+        } else {
+            Log.d(TAG, "onCreateView: hasInitFirstPage");
+        }
         return view;
     }
 
@@ -95,7 +101,7 @@ public abstract class BasePageFragment extends Fragment {
         });
     }
 
-    protected abstract int getDataListSize() ;
+    protected abstract int getDataListSize();
 
     protected abstract void initAdapter();
 
@@ -108,10 +114,7 @@ public abstract class BasePageFragment extends Fragment {
     }
 
     protected void hideProgressbar() {
-        if (!hasInitFirstPage) {
-            Log.d(TAG, "hideProgressbar: hide center progress bar");
-            centerProgressBar.setVisibility(View.GONE);
-        }
+        centerProgressBar.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
     }
 
@@ -139,6 +142,8 @@ public abstract class BasePageFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        Log.d(TAG, "onDestroyView");
+//        ButterKnife.unbind(this);
     }
 }
+

@@ -20,6 +20,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,17 +93,17 @@ public class NetworkHelper {
         return new ArrayList<>();
     }
 
-    public static List<String> getBeautyList(int size,int page){
+    public static List<String> getBeautyList(int size, int page) {
 
         try {
-            URL url = new URL("https://gank.io/api/data/%E7%A6%8F%E5%88%A9/"+size+"/"+page);
+            URL url = new URL("https://gank.io/api/data/%E7%A6%8F%E5%88%A9/" + size + "/" + page);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = urlConnection.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
             String line;
             StringBuilder builder = new StringBuilder();
-            while ((line=reader.readLine())!=null){
+            while ((line = reader.readLine()) != null) {
                 builder.append(line);
             }
 
@@ -122,18 +123,17 @@ public class NetworkHelper {
     }
 
 
-
-    public static List<BlogBean> getBlogList(int size, int page){
+    public static List<BlogBean> getBlogList(String type, int size, int page) {
 
         try {
-            URL url = new URL("https://gank.io/api/data/Android/"+size+"/"+page);
+            URL url = new URL("https://gank.io/api/data/" + type + "/" + size + "/" + page);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = urlConnection.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
             String line;
             StringBuilder builder = new StringBuilder();
-            while ((line=reader.readLine())!=null){
+            while ((line = reader.readLine()) != null) {
                 builder.append(line);
             }
 
@@ -146,6 +146,8 @@ public class NetworkHelper {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 

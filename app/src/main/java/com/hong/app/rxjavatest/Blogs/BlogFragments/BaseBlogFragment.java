@@ -1,16 +1,19 @@
-package com.hong.app.rxjavatest.Blogs;
+package com.hong.app.rxjavatest.Blogs.BlogFragments;
 
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hong.app.rxjavatest.BasePageFragment;
-import com.hong.app.rxjavatest.NetworkHelper;
+import com.hong.app.rxjavatest.Blogs.BlogBean;
+import com.hong.app.rxjavatest.Blogs.BlogBrowserActivity;
 import com.hong.app.rxjavatest.R;
+import com.hong.app.rxjavatest.Utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +28,9 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Administrator on 2016/4/17.
  */
-public class AndroidBlogFragment extends BasePageFragment {
+public class BaseBlogFragment extends BasePageFragment {
 
-    private static final String TAG = "AndroidBlogFragment";
+    private static final String TAG = "BaseBlogFragment";
 
     List<BlogBean> blogBeanList = new ArrayList<>();
 
@@ -61,12 +64,28 @@ public class AndroidBlogFragment extends BasePageFragment {
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        Log.d(TAG, "onHiddenChanged() called with: " + "hidden = [" + hidden + "]");
+    }
+
+    @Override
+    public void onResume() {
+        Log.d(TAG, "onResume");
+        super.onResume();
+//        if (isRequesting) {
+//            centerProgressBar.setVisibility(View.VISIBLE);
+//        }else {
+//            centerProgressBar.setVisibility(View.INVISIBLE);
+//        }
+    }
+
+    @Override
     protected void sendRequest() {
 
         Observable.create(new rx.Observable.OnSubscribe<List<BlogBean>>() {
             @Override
             public void call(Subscriber<? super List<BlogBean>> subscriber) {
-                List<BlogBean> blogList = NetworkHelper.getBlogList(SIZE_OF_IMAGES_PER_REQUEST, currentPage);
+                List<BlogBean> blogList = requestBlogList();
                 subscriber.onNext(blogList);
                 subscriber.onCompleted();
             }
@@ -81,7 +100,7 @@ public class AndroidBlogFragment extends BasePageFragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        enableRequest();
                     }
 
                     @Override
@@ -90,6 +109,10 @@ public class AndroidBlogFragment extends BasePageFragment {
                         refreshRecyclerView();
                     }
                 });
+    }
+
+    protected List<BlogBean> requestBlogList() {
+        throw new UnsupportedOperationException("Must implement");
     }
 
     public class BlogAdapter extends RecyclerView.Adapter<BlogViewHolder> {
@@ -109,7 +132,8 @@ public class AndroidBlogFragment extends BasePageFragment {
             final BlogBean blogBean = blogBeanList.get(position);
             holder.description.setText(blogBean.getDescription());
             holder.author.setText(blogBean.getWho());
-            holder.tag.setText("Android");
+            holder.publishDate.setText(DateUtil.getDisplayDateString(blogBean.getPublishedAt()));
+            initTagLabel(holder.tag, blogBean.getUrl());
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -119,6 +143,22 @@ public class AndroidBlogFragment extends BasePageFragment {
                     startActivity(intent);
                 }
             });
+        }
+
+        private void initTagLabel(TextView tag, String urlStr) {
+            if (urlStr.contains("github")) {
+                tag.setText("Github");
+                tag.setBackgroundResource(R.drawable.bg_github_tag);
+            } else if (urlStr.contains("jianshu")) {
+                tag.setText("简书");
+                tag.setBackgroundResource(R.drawable.bg_jianshu_tag);
+            } else if (urlStr.contains("weixin")) {
+                tag.setText("微信");
+                tag.setBackgroundResource(R.drawable.bg_weixin_tag);
+            } else {
+                tag.setText("博客");
+                tag.setBackgroundResource(R.drawable.bg_blog_tag);
+            }
         }
 
         @Override

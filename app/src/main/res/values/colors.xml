@@ -10,4 +10,7 @@
     <color name="black">#000</color>
     <color name="common_item_via">#ffA8A8A8</color>
     <color name="item_date">#ffA8A8A8</color>
+    <color name="purple">#4527A0</color>
+    <color name="dark_green">#00695C</color>
+    <color name="dark_red">#D84315</color>
 </resources>

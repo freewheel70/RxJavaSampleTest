@@ -1,5 +1,7 @@
 package com.hong.app.rxjavatest.Blogs;
 
+import java.util.Date;
+
 /**
  * Created by Administrator on 2016/4/17.
  */
@@ -8,7 +10,7 @@ public class BlogBean {
     private String id;//"_id"
     private String createdAt;
     private String description;//"desc"
-    private String publishedAt;
+    private Date publishedAt;
     private String source;
     private String type;
     private String url;
@@ -39,11 +41,11 @@ public class BlogBean {
         this.description = description;
     }
 
-    public String getPublishedAt() {
+    public Date getPublishedAt() {
         return publishedAt;
     }
 
-    public void setPublishedAt(String publishedAt) {
+    public void setPublishedAt(Date publishedAt) {
         this.publishedAt = publishedAt;
     }
 

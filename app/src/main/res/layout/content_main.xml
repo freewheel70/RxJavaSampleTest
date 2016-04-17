@@ -9,28 +9,27 @@
     tools:showIn="@layout/activity_main">
 
     <FrameLayout
-        android:background="@color/WHITE"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:background="@color/WHITE">
 
-        <com.hong.app.rxjavatest.CustomViews.CustomPagerSlidingTabStrip
+        <com.hong.app.rxjavatest.CustomViews.CustomPagerSlidingTabStrip xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/tabs"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="@dimen/mdl_viewpager_with_tabs_height"
             android:background="?attr/colorPrimary"
             app:pstsDividerColor="?attr/colorPrimaryDark"
             app:pstsIndicatorColor="@android:color/white"
             app:pstsIndicatorHeight="5dp"
+            app:pstsTextAllCaps="false"
             app:pstsUnderlineColor="@android:color/transparent"
-            app:pstsUnderlineHeight="0dp"/>
+            app:pstsUnderlineHeight="0dp" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/mdl_viewpager_with_tabs_height"/>
+            android:layout_marginTop="@dimen/mdl_viewpager_with_tabs_height" />
 
     </FrameLayout>
 
