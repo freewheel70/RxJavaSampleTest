@@ -27,6 +27,7 @@ public class BeanDeserializer {
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject object = jsonArray.getJSONObject(i);
             BlogBean bean = new BlogBean();
+            bean.setId(object.optString("_id"));
             bean.setUrl(object.optString("url"));
             bean.setDescription(object.optString("desc"));
             bean.setWho(object.optString("who"));

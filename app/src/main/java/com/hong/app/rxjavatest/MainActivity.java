@@ -13,6 +13,7 @@ import com.blunderer.materialdesignlibrary.models.ViewPagerItem;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.AndroidBlogFragment;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.AppBlogFragment;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.CoolBlogFragment;
+import com.hong.app.rxjavatest.Blogs.BlogFragments.FavouriteBlogFragment;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.FrontBlogFragment;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.IOSBlogFragment;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.ResourceBlogFragment;
@@ -71,8 +72,10 @@ public class MainActivity extends AppCompatActivity implements com.blunderer.mat
         ResourceBlogFragment resourceBlogFragment = new ResourceBlogFragment();
         AppBlogFragment appBlogFragment = new AppBlogFragment();
         CoolBlogFragment coolBlogFragment = new CoolBlogFragment();
+        FavouriteBlogFragment favouriteBlogFragment = new FavouriteBlogFragment();
 
         ViewPagerHandler viewPagerHandler = new ViewPagerHandler(this)
+                .addPage("收藏",favouriteBlogFragment)
                 .addPage("Android", androidBlogFragment)
                 .addPage("福利", prettyGirlFragment)
                 .addPage("IOS",iosBlogFragment)

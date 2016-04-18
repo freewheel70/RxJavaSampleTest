@@ -21,9 +21,16 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.hong.app.rxjavatest.R;
+import com.hong.app.rxjavatest.database.Blog;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2016/4/17.
@@ -32,7 +39,7 @@ public class BlogBrowserActivity extends AppCompatActivity {
 
     private static final String TAG = "BlogBrowserActivity";
 
-    public static final String EXTRA_URL = "blog_url";
+    public static final String EXTRA_BLOG = "blog_extra";
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -43,8 +50,11 @@ public class BlogBrowserActivity extends AppCompatActivity {
     @Bind(R.id.progress_bar)
     ProgressBar progressBar;
 
+    BlogBean blogBean;
     String urlStr;
     private static final CharSequence LABEL_FreeGank = "freeGank";
+    private Menu menu;
+    private boolean isFavorite = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,8 +64,16 @@ public class BlogBrowserActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         initWebview();
-        urlStr = getIntent().getStringExtra(EXTRA_URL);
+
+        blogBean = getIntent().getParcelableExtra(EXTRA_BLOG);
+        urlStr = blogBean.getUrl();
         webview.loadUrl(urlStr);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 
@@ -93,7 +111,7 @@ public class BlogBrowserActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.copy_url:
@@ -102,7 +120,13 @@ public class BlogBrowserActivity extends AppCompatActivity {
                 ClipData clip = ClipData.newPlainText(LABEL_FreeGank, urlStr);
                 clipboard.setPrimaryClip(clip);
 
-                Toast.makeText(this,R.string.has_copy_url,Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.has_copy_url, Toast.LENGTH_SHORT).show();
+
+                List<Blog> blogList = Blog.getAllFavouriteBlogs();
+                Log.d(TAG, "BlogSize " + blogList.size());
+                for (int i = 0; i < blogList.size(); i++) {
+                    Log.d(TAG, "Blog " + i + ": " + blogList.get(i));
+                }
 
                 break;
             case R.id.open_in_browser:
@@ -110,6 +134,77 @@ public class BlogBrowserActivity extends AppCompatActivity {
                 intent.setData(Uri.parse(urlStr));
                 startActivity(intent);
                 break;
+
+            case R.id.favourite:
+                if (isFavorite) {
+                    Observable.create(new Observable.OnSubscribe<Blog>() {
+                        @Override
+                        public void call(Subscriber<? super Blog> subscriber) {
+                            Blog blog = Blog.getBlogById(blogBean.getId());
+                            if (blog != null) {
+                                blog.delete();
+                            }
+                            subscriber.onCompleted();
+                        }
+                    })
+                            .subscribeOn(Schedulers.computation())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Subscriber<Blog>() {
+                                @Override
+                                public void onCompleted() {
+                                    isFavorite = false;
+                                    item.setIcon(R.drawable.favourite_empty);
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    e.printStackTrace();
+                                    Log.e(TAG, "onError: " + e.getMessage());
+                                }
+
+                                @Override
+                                public void onNext(Blog blog) {
+
+                                }
+                            });
+                } else {
+
+                    Observable.create(new Observable.OnSubscribe<Blog>() {
+                        @Override
+                        public void call(Subscriber<? super Blog> subscriber) {
+                            Log.d(TAG, "call: before save blog ");
+                            Blog blog = new Blog(blogBean);
+                            blog.save();
+                            Log.d(TAG, "call: after save blog ");
+                            subscriber.onCompleted();
+                        }
+                    })
+                            .subscribeOn(Schedulers.computation())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Subscriber<Blog>() {
+                                @Override
+                                public void onCompleted() {
+                                    Log.d(TAG, "call: before set favourite icon ");
+                                    isFavorite = true;
+                                    final MenuItem favouriteItem = menu.findItem(R.id.favourite);
+                                    favouriteItem.setIcon(R.drawable.favourite);
+                                    Log.d(TAG, "call: after set favourite icon ");
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    e.printStackTrace();
+                                    Log.e(TAG, "onError: " + e.getMessage());
+                                }
+
+                                @Override
+                                public void onNext(Blog blog) {
+
+                                }
+                            });
+                }
+                break;
+
             default:
                 break;
         }
@@ -119,6 +214,41 @@ public class BlogBrowserActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.getMenuInflater().inflate(R.menu.menu_blog_browser, menu);
+        this.menu = menu;
+
+        final MenuItem favouriteItem = menu.findItem(R.id.favourite);
+
+        Observable.create(new Observable.OnSubscribe<Boolean>() {
+            @Override
+            public void call(Subscriber<? super Boolean> subscriber) {
+                boolean isBlogCollected = Blog.isBlogCollected(blogBean.getId());
+                subscriber.onNext(isBlogCollected);
+                subscriber.onCompleted();
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Boolean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        Log.e(TAG, "onError: " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+                        favouriteItem.setIcon(aBoolean ? R.drawable.favourite : R.drawable.favourite_empty);
+                        isFavorite = aBoolean;
+                        Log.d(TAG, "call: isFavorite " + isFavorite);
+                    }
+                });
+
+
         return true;
     }
 }

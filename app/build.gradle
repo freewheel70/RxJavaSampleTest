@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'com.neenbedankt.android-apt'
+
+def dbflow_version = "3.0.0-beta5"
+
 repositories {
     mavenCentral() // jcenter() works as well because it pulls from Maven Central
 }
@@ -46,4 +50,12 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'com.blunderer:materialdesignlibrary:2.0.4'
+
+    apt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+    // kapt for kotlin apt
+    compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+
+    // sql-cipher database encyrption (optional)
+    compile "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}"
 }

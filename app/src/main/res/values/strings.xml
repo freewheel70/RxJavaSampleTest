@@ -5,4 +5,5 @@
     <string name="copy_url">复制链接</string>
     <string name="open_in_browser">用浏览器打开</string>
     <string name="has_copy_url">链接已复制。</string>
+    <string name="favourite">收藏</string>
 </resources>

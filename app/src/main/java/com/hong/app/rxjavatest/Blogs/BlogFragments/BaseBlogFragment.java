@@ -105,10 +105,14 @@ public class BaseBlogFragment extends BasePageFragment {
 
                     @Override
                     public void onNext(List<BlogBean> beanList) {
-                        blogBeanList.addAll(beanList);
+                        refreshDataList(beanList);
                         refreshRecyclerView();
                     }
                 });
+    }
+
+    protected void refreshDataList(List<BlogBean> beanList) {
+        blogBeanList.addAll(beanList);
     }
 
     protected List<BlogBean> requestBlogList() {
@@ -139,7 +143,7 @@ public class BaseBlogFragment extends BasePageFragment {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), BlogBrowserActivity.class);
-                    intent.putExtra(BlogBrowserActivity.EXTRA_URL, blogBean.getUrl());
+                    intent.putExtra(BlogBrowserActivity.EXTRA_BLOG, blogBean);
                     startActivity(intent);
                 }
             });
