@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.hong.app.rxjavatest.BasePageFragment;
-import com.hong.app.rxjavatest.NetworkHelper;
+import com.hong.app.rxjavatest.network.NetworkHelper;
 import com.hong.app.rxjavatest.R;
 
 import java.util.ArrayList;

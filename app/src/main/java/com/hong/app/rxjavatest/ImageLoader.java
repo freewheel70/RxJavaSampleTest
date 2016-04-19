@@ -2,8 +2,9 @@ package com.hong.app.rxjavatest;
 
 import android.graphics.Bitmap;
 
+import com.hong.app.rxjavatest.network.NetworkHelper;
+
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

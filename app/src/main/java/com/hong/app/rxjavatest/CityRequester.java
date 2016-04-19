@@ -1,5 +1,7 @@
 package com.hong.app.rxjavatest;
 
+import com.hong.app.rxjavatest.network.NetworkHelper;
+
 import java.util.List;
 
 import rx.Observable;

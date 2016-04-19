@@ -2,10 +2,19 @@ package com.hong.app.rxjavatest;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.blunderer.materialdesignlibrary.adapters.ViewPagerAdapter;
 import com.blunderer.materialdesignlibrary.handlers.ViewPagerHandler;
@@ -27,7 +36,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements com.blunderer.materialdesignlibrary.interfaces.ViewPager {
+public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener,
+        com.blunderer.materialdesignlibrary.interfaces.ViewPager {
 
     private static final String TAG = "MainActivity";
 
@@ -40,10 +50,20 @@ public class MainActivity extends AppCompatActivity implements com.blunderer.mat
     @Bind(R.id.view_pager)
     ViewPager viewPager;
 
+    @Bind(R.id.nav_view)
+    NavigationView navView;
+
+    @Bind(R.id.drawer_layout)
+    DrawerLayout drawer;
+
+    private ImageView avatar;
+    private TextView userName;
+    private TextView userEmail;
 
     private ViewPager.OnPageChangeListener onPageChangeListener;
     private List<ViewPagerItem> pagerItems = new ArrayList<>();
     private ViewPagerAdapter pagerAdapter;
+    private LayoutInflater inflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,17 +72,37 @@ public class MainActivity extends AppCompatActivity implements com.blunderer.mat
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
+        inflater = LayoutInflater.from(this);
+
         initPageItems();
         initViewPager();
+        initNavHeaderView();
         initViews();
     }
 
+    private void initNavHeaderView() {
+
+        View header = inflater.inflate(R.layout.nav_header_main, null, false);
+        navView.addHeaderView(header);
+
+        avatar = (ImageView) header.findViewById(R.id.avatar);
+        userName = (TextView) header.findViewById(R.id.user_name);
+        userEmail = (TextView) header.findViewById(R.id.user_email);
+
+    }
+
     private void initViews() {
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
     }
 
     private void initPageItems() {
-
 
         AndroidBlogFragment androidBlogFragment = new AndroidBlogFragment();
         PrettyGirlFragment prettyGirlFragment = new PrettyGirlFragment();
@@ -75,16 +115,15 @@ public class MainActivity extends AppCompatActivity implements com.blunderer.mat
         FavouriteBlogFragment favouriteBlogFragment = new FavouriteBlogFragment();
 
         ViewPagerHandler viewPagerHandler = new ViewPagerHandler(this)
-                .addPage("收藏",favouriteBlogFragment)
+                .addPage("收藏", favouriteBlogFragment)
                 .addPage("Android", androidBlogFragment)
                 .addPage("福利", prettyGirlFragment)
-                .addPage("IOS",iosBlogFragment)
-                .addPage("前端",frontBlogFragment)
-                .addPage("拓展资源",resourceBlogFragment)
-                .addPage("App",appBlogFragment)
-                .addPage("视频",videoBlogFragment)
-                .addPage("瞎推荐",coolBlogFragment)
-                ;
+                .addPage("IOS", iosBlogFragment)
+                .addPage("前端", frontBlogFragment)
+                .addPage("拓展资源", resourceBlogFragment)
+                .addPage("App", appBlogFragment)
+                .addPage("视频", videoBlogFragment)
+                .addPage("瞎推荐", coolBlogFragment);
 
         pagerItems = viewPagerHandler.getViewPagerItems();
 
@@ -162,5 +201,16 @@ public class MainActivity extends AppCompatActivity implements com.blunderer.mat
         return textsizeDp * densityDpi / DisplayMetrics.DENSITY_DEFAULT;
     }
 
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 
 }

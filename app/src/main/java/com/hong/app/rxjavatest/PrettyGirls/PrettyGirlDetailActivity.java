@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hong.app.rxjavatest.CustomViews.gesture_imageview.GestureImageView;
-import com.hong.app.rxjavatest.NetworkHelper;
+import com.hong.app.rxjavatest.network.NetworkHelper;
 import com.hong.app.rxjavatest.R;
 
 import java.io.ByteArrayOutputStream;

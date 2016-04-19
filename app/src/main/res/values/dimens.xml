@@ -10,5 +10,7 @@
     <dimen name="item_via_tv">12sp</dimen>
     <dimen name="item_tag_tv">12sp</dimen>
     <dimen name="item_date_tv">12sp</dimen>
+    <dimen name="avatar_size">130dp</dimen>
+    <dimen name="nav_header_vertical_spacing">50dp</dimen>
 
 </resources>

@@ -1,7 +1,7 @@
 package com.hong.app.rxjavatest.Blogs.BlogFragments;
 
 import com.hong.app.rxjavatest.Blogs.BlogBean;
-import com.hong.app.rxjavatest.NetworkHelper;
+import com.hong.app.rxjavatest.network.NetworkHelper;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest;
+package com.hong.app.rxjavatest.network;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -153,5 +154,40 @@ public class NetworkHelper {
 
         return new ArrayList<>();
     }
+
+
+    public static String sendNonGetRequest(String requestMethod, String params, String url) throws IOException {
+
+        NetworkLogger.printMessageIfDebug(TAG + "  URL: " + url + "  params :" + params);
+
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        con.setRequestMethod(requestMethod);
+        con.setRequestProperty("Content-Type", "application/json");
+
+        con.setDoOutput(true);
+        OutputStream os = con.getOutputStream();
+        os.write(params.getBytes());
+        os.flush();
+        os.close();
+        // For POST only - END
+
+        int responseCode = con.getResponseCode();
+
+        NetworkLogger.printMessageIfDebug(TAG + "  responseCode: " + responseCode);
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(
+                con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        return response.toString();
+    }
+
 
 }

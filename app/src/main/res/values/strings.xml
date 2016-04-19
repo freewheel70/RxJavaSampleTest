@@ -6,4 +6,9 @@
     <string name="open_in_browser">用浏览器打开</string>
     <string name="has_copy_url">链接已复制。</string>
     <string name="favourite">收藏</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
 </resources>
