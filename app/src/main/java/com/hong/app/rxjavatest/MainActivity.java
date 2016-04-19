@@ -1,5 +1,6 @@
 package com.hong.app.rxjavatest;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -29,6 +30,7 @@ import com.hong.app.rxjavatest.Blogs.BlogFragments.ResourceBlogFragment;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.VideoBlogFragment;
 import com.hong.app.rxjavatest.CustomViews.CustomPagerSlidingTabStrip;
 import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlFragment;
+import com.hong.app.rxjavatest.profile.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +38,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener,
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         com.blunderer.materialdesignlibrary.interfaces.ViewPager {
 
     private static final String TAG = "MainActivity";
@@ -89,6 +91,12 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         userName = (TextView) header.findViewById(R.id.user_name);
         userEmail = (TextView) header.findViewById(R.id.user_email);
 
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
     }
 
     private void initViews() {

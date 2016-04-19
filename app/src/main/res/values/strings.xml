@@ -9,6 +9,12 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="prompt_username">用户名</string>
+    <string name="action_sign_in_short">用户名</string>
+    <string name="prompt_email">电子邮箱</string>
+    <string name="prompt_password">密码</string>
+    <string name="register">注册</string>
+    <string name="login">登录</string>
 
 
 </resources>

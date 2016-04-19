@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import com.hong.app.rxjavatest.R;
 import com.hong.app.rxjavatest.database.Blog;
-import com.hong.app.rxjavatest.network.AccountNetworkManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -120,35 +119,6 @@ public class BlogBrowserActivity extends AppCompatActivity {
                 clipboard.setPrimaryClip(clip);
 
                 Toast.makeText(this, R.string.has_copy_url, Toast.LENGTH_SHORT).show();
-// TODO: 2016/4/19 testing
-                Observable.create(new Observable.OnSubscribe<String>() {
-                    @Override
-                    public void call(Subscriber<? super String> subscriber) {
-
-
-                        String response = AccountNetworkManager.signup("hong70", "1234567");
-                        subscriber.onNext(response);
-                    }
-                })
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Subscriber<String>() {
-                            @Override
-                            public void onCompleted() {
-
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-
-                            }
-
-                            @Override
-                            public void onNext(String str) {
-                                Toast.makeText(BlogBrowserActivity.this,str,Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
 
                 break;
             case R.id.open_in_browser:
