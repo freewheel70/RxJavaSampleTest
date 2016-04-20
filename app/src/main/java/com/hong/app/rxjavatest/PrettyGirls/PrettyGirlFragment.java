@@ -10,8 +10,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.hong.app.rxjavatest.BasePageFragment;
-import com.hong.app.rxjavatest.network.NetworkHelper;
 import com.hong.app.rxjavatest.R;
+import com.hong.app.rxjavatest.network.GankNetworkManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +62,7 @@ public class PrettyGirlFragment extends BasePageFragment {
 
                     @Override
                     public void call(Subscriber<? super List<String>> subscriber) {
-                        List<String> beautyList = NetworkHelper.getBeautyList(SIZE_OF_IMAGES_PER_REQUEST, currentPage);
+                        List<String> beautyList = GankNetworkManager.getBeautyList(SIZE_OF_IMAGES_PER_REQUEST, currentPage);
                         subscriber.onNext(beautyList);
                         subscriber.onCompleted();
                     }

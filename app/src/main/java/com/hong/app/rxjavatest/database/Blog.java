@@ -12,6 +12,9 @@ import com.raizlabs.android.dbflow.annotation.Unique;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Date;
 import java.util.List;
 
@@ -33,16 +36,22 @@ public class Blog extends BaseModel {
     public String description;//"desc"
 
     @Column
-    public  Date publishedAt;
+    public Date publishedAt;
 
     @Column
     public String type;
 
     @Column
-    public  String url;
+    public String url;
 
     @Column
     public String author;
+
+    @Column
+    public boolean isRemoved;
+
+    @Column
+    public boolean isSynced;
 
     public Blog() {
         super();
@@ -55,6 +64,8 @@ public class Blog extends BaseModel {
         type = blogBean.getType();
         url = blogBean.getUrl();
         author = blogBean.getWho();
+        isRemoved = false;
+        isSynced = false;
     }
 
     public static boolean isBlogCollected(String blogID) {
@@ -76,11 +87,34 @@ public class Blog extends BaseModel {
         return blog;
     }
 
-    public static List<Blog> getAllFavouriteBlogs() {
+    public static List<Blog> getAllNonRemovedFavouriteBlogs() {
         return SQLite.select()
                 .from(Blog.class)
+                .where(Blog_Table.isRemoved.eq(false))
                 .orderBy(com.hong.app.rxjavatest.database.Blog_Table.publishedAt, false)
                 .queryList();
+    }
+
+    public static List<Blog> getAllNonSyncedFavouriteBlogs() {
+        return SQLite.select()
+                .from(Blog.class)
+                .where(Blog_Table.isSynced.eq(false))
+                .orderBy(com.hong.app.rxjavatest.database.Blog_Table.publishedAt, false)
+                .queryList();
+    }
+
+
+
+    public JSONObject toJSONObject() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("url", url);
+        jsonObject.put("blogID", blogID);
+        jsonObject.put("description", description);
+        jsonObject.put("publishedAt", publishedAt.getTime());
+        jsonObject.put("type", type);
+        jsonObject.put("author", author);
+        jsonObject.put("isRemoved", isRemoved);
+        return jsonObject;
     }
 
     @Override

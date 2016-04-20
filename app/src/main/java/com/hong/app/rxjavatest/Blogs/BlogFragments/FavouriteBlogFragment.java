@@ -14,7 +14,7 @@ public class FavouriteBlogFragment extends BaseBlogFragment {
 
     @Override
     protected List<BlogBean> requestBlogList() {
-        return BlogBean.convertBlogList(Blog.getAllFavouriteBlogs());
+        return BlogBean.convertBlogList(Blog.getAllNonRemovedFavouriteBlogs());
     }
 
     protected void refreshDataList(List<BlogBean> beanList) {

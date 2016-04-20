@@ -1,7 +1,7 @@
 package com.hong.app.rxjavatest.Blogs.BlogFragments;
 
 import com.hong.app.rxjavatest.Blogs.BlogBean;
-import com.hong.app.rxjavatest.network.NetworkHelper;
+import com.hong.app.rxjavatest.network.GankNetworkManager;
 
 import java.util.List;
 
@@ -14,6 +14,6 @@ public class VideoBlogFragment extends BaseBlogFragment {
 
     @Override
     protected List<BlogBean> requestBlogList() {
-        return NetworkHelper.getBlogList("休息视频", SIZE_OF_IMAGES_PER_REQUEST, currentPage);
+        return GankNetworkManager.getBlogList("休息视频", SIZE_OF_IMAGES_PER_REQUEST, currentPage);
     }
 }

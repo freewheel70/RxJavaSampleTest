@@ -1,0 +1,22 @@
+{
+  "username": "hong5",
+  "password": "1234567",
+  "marks": [
+    {
+      "url": "http:\/\/www.jianshu.com\/p\/24820bf3df5c",
+      "blogID": "5714c7e567765974fca83029",
+      "description": "反射、注解与依赖注入总结",
+      "publishedAt": 1461124869000,
+      "author": "孙福生",
+      "isRemoved": false
+    },
+    {
+      "url": "http:\/\/www.jianshu.com\/p\/63aafe3c12af#",
+      "blogID": "57142ebb67765974f5e27da5",
+      "description": "关于 Android 进程保活，你所需要知道的一切",
+      "publishedAt": 1460952420000,
+      "author": "MVP",
+      "isRemoved": false
+    }
+  ]
+}

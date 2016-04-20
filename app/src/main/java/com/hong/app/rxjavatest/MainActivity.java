@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blunderer.materialdesignlibrary.adapters.ViewPagerAdapter;
 import com.blunderer.materialdesignlibrary.handlers.ViewPagerHandler;
@@ -30,6 +31,9 @@ import com.hong.app.rxjavatest.Blogs.BlogFragments.ResourceBlogFragment;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.VideoBlogFragment;
 import com.hong.app.rxjavatest.CustomViews.CustomPagerSlidingTabStrip;
 import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlFragment;
+import com.hong.app.rxjavatest.database.User;
+import com.hong.app.rxjavatest.network.BlogNetworkManager;
+import com.hong.app.rxjavatest.network.NetworkResponseResult;
 import com.hong.app.rxjavatest.profile.LoginActivity;
 
 import java.util.ArrayList;
@@ -37,6 +41,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         com.blunderer.materialdesignlibrary.interfaces.ViewPager {
@@ -60,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private ImageView avatar;
     private TextView userName;
-    private TextView userEmail;
 
     private ViewPager.OnPageChangeListener onPageChangeListener;
     private List<ViewPagerItem> pagerItems = new ArrayList<>();
@@ -89,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         avatar = (ImageView) header.findViewById(R.id.avatar);
         userName = (TextView) header.findViewById(R.id.user_name);
-        userEmail = (TextView) header.findViewById(R.id.user_email);
 
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +103,74 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
+
+        userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              //  uploadNonSyncedBlogs();
+                downloadAllBlogs();
+            }
+        });
+    }
+
+    private void downloadAllBlogs() {
+        Observable.create(new Observable.OnSubscribe<Object>() {
+            @Override
+            public void call(Subscriber<? super Object> subscriber) {
+                BlogNetworkManager.getMyBlogs();
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Object>() {
+
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Object o) {
+
+                    }
+                });
+    }
+
+    private void uploadNonSyncedBlogs() {
+        Observable.create(new Observable.OnSubscribe<Object>() {
+            @Override
+            public void call(Subscriber<? super Object> subscriber) {
+                NetworkResponseResult responseResult = BlogNetworkManager.uploadNonSyncedBlogs();
+                if (responseResult.success) {
+                    subscriber.onCompleted();
+                } else {
+                    subscriber.onError(new Throwable(responseResult.message));
+                }
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Object>() {
+                    @Override
+                    public void onCompleted() {
+                        Toast.makeText(MainActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(MainActivity.this, "上传失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(Object o) {
+
+                    }
+                });
     }
 
     private void initViews() {
@@ -137,7 +211,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
     private void initViewPager() {
         pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), pagerItems);
         viewPager.setAdapter(pagerAdapter);
@@ -146,6 +219,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         selectPage(defaultViewPagerPageSelectedPosition);
         showTabs();
 
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        User user = User.getUser();
+        userName.setText(user.username);
     }
 
     @Override

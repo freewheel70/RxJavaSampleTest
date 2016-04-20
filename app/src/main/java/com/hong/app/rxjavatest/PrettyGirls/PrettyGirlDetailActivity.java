@@ -14,8 +14,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hong.app.rxjavatest.CustomViews.gesture_imageview.GestureImageView;
-import com.hong.app.rxjavatest.network.NetworkHelper;
 import com.hong.app.rxjavatest.R;
+import com.hong.app.rxjavatest.network.OKHttpHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -70,7 +70,7 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
                         Observable.create(new Observable.OnSubscribe<Bitmap>() {
                             @Override
                             public void call(Subscriber<? super Bitmap> subscriber) {
-                                Bitmap bitmap = NetworkHelper.getBitmapfromUrl(beautyImageUrlStr);
+                                Bitmap bitmap = OKHttpHelper.getBitmapfromUrl(beautyImageUrlStr);
                                 saveBitmapIntoFile(bitmap);
                                 subscriber.onCompleted();
                             }

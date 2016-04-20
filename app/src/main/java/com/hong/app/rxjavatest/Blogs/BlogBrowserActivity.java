@@ -134,7 +134,8 @@ public class BlogBrowserActivity extends AppCompatActivity {
                         public void call(Subscriber<? super Blog> subscriber) {
                             Blog blog = Blog.getBlogById(blogBean.getId());
                             if (blog != null) {
-                                blog.delete();
+                                blog.isRemoved = true;
+                                blog.save();
                             }
                             subscriber.onCompleted();
                         }
@@ -165,7 +166,12 @@ public class BlogBrowserActivity extends AppCompatActivity {
                         @Override
                         public void call(Subscriber<? super Blog> subscriber) {
                             Log.d(TAG, "call: before save blog ");
-                            Blog blog = new Blog(blogBean);
+                            Blog blog = Blog.getBlogById(blogBean.getId());
+                            if (blog == null) {
+                                blog = new Blog(blogBean);
+                            } else {
+                                blog.isRemoved = false;
+                            }
                             blog.save();
                             Log.d(TAG, "call: after save blog ");
                             subscriber.onCompleted();
