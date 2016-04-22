@@ -74,7 +74,7 @@ public class Blog extends BaseModel {
                 .where(com.hong.app.rxjavatest.database.Blog_Table.blogID.eq(blogID))
                 .querySingle();
 
-        return blog != null;
+        return blog != null && (!blog.isRemoved);
     }
 
     @Nullable
@@ -104,6 +104,26 @@ public class Blog extends BaseModel {
     }
 
 
+    public static void createBlogFromJsonObject(JSONObject jsonObject) throws JSONException {
+
+        String blogID = jsonObject.getString("blogID");
+        Blog blog = getBlogById(blogID);
+        if (blog == null) {
+            blog = new Blog();
+            blog.blogID = blogID;
+            blog.author = jsonObject.getString("author");
+            blog.url = jsonObject.getString("url");
+            blog.description = jsonObject.getString("description");
+            blog.publishedAt = new Date(jsonObject.getLong("publishedAt"));
+            blog.isRemoved = jsonObject.getBoolean("isRemoved");
+            blog.isSynced = true;
+        } else {
+            blog.isRemoved = jsonObject.getBoolean("isRemoved");
+        }
+
+        blog.save();
+    }
+
 
     public JSONObject toJSONObject() throws JSONException {
         JSONObject jsonObject = new JSONObject();
@@ -128,5 +148,9 @@ public class Blog extends BaseModel {
                 ", type='" + type + '\'' +
                 ", url='" + url + '\'' +
                 '}';
+    }
+
+    public static void deleteAll() {
+        SQLite.delete().from(Blog.class).execute();
     }
 }

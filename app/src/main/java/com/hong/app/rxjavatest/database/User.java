@@ -44,4 +44,7 @@ public class User extends BaseModel {
         user.save();
     }
 
+    public boolean isAnonymous() {
+        return username.equals(DEFAULT_NAME);
+    }
 }

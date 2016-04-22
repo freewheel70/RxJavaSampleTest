@@ -11,7 +11,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,26 +32,28 @@ import com.hong.app.rxjavatest.Blogs.BlogFragments.IOSBlogFragment;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.ResourceBlogFragment;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.VideoBlogFragment;
 import com.hong.app.rxjavatest.CustomViews.CustomPagerSlidingTabStrip;
+import com.hong.app.rxjavatest.Events.ServerSyncBlogEvent;
 import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlFragment;
 import com.hong.app.rxjavatest.database.User;
-import com.hong.app.rxjavatest.network.BlogNetworkManager;
-import com.hong.app.rxjavatest.network.NetworkResponseResult;
 import com.hong.app.rxjavatest.profile.LoginActivity;
+import com.hong.app.rxjavatest.profile.ProfilePageActivity;
+import com.hong.app.rxjavatest.services.NetworkSyncService;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         com.blunderer.materialdesignlibrary.interfaces.ViewPager {
 
     private static final String TAG = "MainActivity";
+    private static final int LOGIN_REQUEST_CODE = 11;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -81,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
+        EventBus.getDefault().register(this);
+
         inflater = LayoutInflater.from(this);
 
         initPageItems();
@@ -100,78 +106,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            }
-        });
-
-        userName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              //  uploadNonSyncedBlogs();
-                downloadAllBlogs();
-            }
-        });
-    }
-
-    private void downloadAllBlogs() {
-        Observable.create(new Observable.OnSubscribe<Object>() {
-            @Override
-            public void call(Subscriber<? super Object> subscriber) {
-                BlogNetworkManager.getMyBlogs();
-            }
-        })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Object>() {
-
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(Object o) {
-
-                    }
-                });
-    }
-
-    private void uploadNonSyncedBlogs() {
-        Observable.create(new Observable.OnSubscribe<Object>() {
-            @Override
-            public void call(Subscriber<? super Object> subscriber) {
-                NetworkResponseResult responseResult = BlogNetworkManager.uploadNonSyncedBlogs();
-                if (responseResult.success) {
-                    subscriber.onCompleted();
+                if (User.getUser().isAnonymous()) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivityForResult(intent, LOGIN_REQUEST_CODE);
                 } else {
-                    subscriber.onError(new Throwable(responseResult.message));
+                    Intent intent = new Intent(MainActivity.this, ProfilePageActivity.class);
+                    startActivity(intent);
                 }
             }
-        })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Object>() {
-                    @Override
-                    public void onCompleted() {
-                        Toast.makeText(MainActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
-                    }
+        });
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(MainActivity.this, "上传失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onNext(Object o) {
-
-                    }
-                });
     }
+
 
     private void initViews() {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -302,4 +248,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        this.getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_sync) {
+            startService(new Intent(MainActivity.this, NetworkSyncService.class));
+        }
+
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handlerServerSyncResult(ServerSyncBlogEvent event) {
+        if (event.success) {
+            Toast.makeText(MainActivity.this, "同步成功", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(MainActivity.this, "同步失败:" + event.message, Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult() called with: " + "requestCode = [" + requestCode + "], resultCode = [" + resultCode + "]");
+        if (requestCode == LOGIN_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                startService(new Intent(MainActivity.this, NetworkSyncService.class));
+            }
+        }
+    }
 }

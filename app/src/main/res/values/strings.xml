@@ -15,6 +15,10 @@
     <string name="prompt_password">密码</string>
     <string name="register">注册</string>
     <string name="login">登录</string>
+    <string name="action_sync">同步</string>
+    <string name="username_title">用户名：</string>
+    <string name="logout">登出</string>
+    <string name="logout_with_delete_all_data">当前无网络，无法将本地数据同步到服务器。如果强制登出，将清除收藏文章数据。确定强制登出吗？</string>
 
 
 </resources>

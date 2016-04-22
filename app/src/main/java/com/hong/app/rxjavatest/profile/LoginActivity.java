@@ -4,8 +4,8 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,9 +36,6 @@ public class LoginActivity extends AppCompatActivity {
     @Bind(R.id.user_name)
     EditText userName;
 
-    @Bind(R.id.email)
-    AutoCompleteTextView email;
-
     @Bind(R.id.password)
     EditText password;
 
@@ -51,13 +48,28 @@ public class LoginActivity extends AppCompatActivity {
     @Bind(R.id.email_login_form)
     LinearLayout emailLoginForm;
 
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+
     ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
     @OnClick({R.id.register_button, R.id.login_button})
@@ -99,7 +111,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onCompleted() {
                         dismissProgressDialog();
                         Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-                        User.saveUser(username,pass);
+                        User.saveUser(username, pass);
+                        setResult(RESULT_OK);
                         finish();
                     }
 
@@ -142,7 +155,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onCompleted() {
                         dismissProgressDialog();
                         Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-                        User.saveUser(username,pass);
+                        User.saveUser(username, pass);
+                        setResult(RESULT_OK);
                         finish();
                     }
 

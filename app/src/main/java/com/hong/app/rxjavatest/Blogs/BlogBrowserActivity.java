@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.hong.app.rxjavatest.R;
 import com.hong.app.rxjavatest.database.Blog;
+import com.hong.app.rxjavatest.services.NetworkSyncService;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -135,6 +136,7 @@ public class BlogBrowserActivity extends AppCompatActivity {
                             Blog blog = Blog.getBlogById(blogBean.getId());
                             if (blog != null) {
                                 blog.isRemoved = true;
+                                blog.isSynced = false;
                                 blog.save();
                             }
                             subscriber.onCompleted();
@@ -147,6 +149,7 @@ public class BlogBrowserActivity extends AppCompatActivity {
                                 public void onCompleted() {
                                     isFavorite = false;
                                     item.setIcon(R.drawable.favourite_empty);
+                                    startService(new Intent(BlogBrowserActivity.this, NetworkSyncService.class));
                                 }
 
                                 @Override
@@ -171,6 +174,7 @@ public class BlogBrowserActivity extends AppCompatActivity {
                                 blog = new Blog(blogBean);
                             } else {
                                 blog.isRemoved = false;
+                                blog.isSynced = false;
                             }
                             blog.save();
                             Log.d(TAG, "call: after save blog ");
@@ -186,6 +190,7 @@ public class BlogBrowserActivity extends AppCompatActivity {
                                     isFavorite = true;
                                     final MenuItem favouriteItem = menu.findItem(R.id.favourite);
                                     favouriteItem.setIcon(R.drawable.favourite);
+                                    startService(new Intent(BlogBrowserActivity.this, NetworkSyncService.class));
                                     Log.d(TAG, "call: after set favourite icon ");
                                 }
 

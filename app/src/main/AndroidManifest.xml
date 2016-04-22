@@ -39,6 +39,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity android:name=".profile.ProfilePageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".services.NetworkSyncService"
+            android:exported="false" />
+
     </application>
 
 </manifest>

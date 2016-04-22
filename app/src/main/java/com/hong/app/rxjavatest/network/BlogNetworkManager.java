@@ -13,13 +13,11 @@ import java.util.List;
  */
 public class BlogNetworkManager {
 
-    private static final String UPLOAD_BLOGS_URL = "http://amoyhouse.com:9999/upload";
-    private static final String GET_MY_BLOGS_URL = "http://amoyhouse.com:9999/mymarks";
+
 
     public static NetworkResponseResult uploadNonSyncedBlogs() {
 
         List<Blog> blogList = Blog.getAllNonSyncedFavouriteBlogs();
-
 
         try {
 
@@ -37,9 +35,19 @@ public class BlogNetworkManager {
 
             jsonObject.put("marks", jsonArray);
 
-            String response = OKHttpHelper.postJson(UPLOAD_BLOGS_URL, jsonObject.toString());
+            String response = OKHttpHelper.postJson(NetworkURLConstant.UPLOAD_BLOGS_URL, jsonObject.toString());
 
-            return OKHttpHelper.deserializeResponse(response);
+            NetworkResponseResult responseResult = OKHttpHelper.deserializeResponse(response);
+
+            if (responseResult.success) {
+                for (int i = 0; i < blogList.size(); i++) {
+                    Blog blog = blogList.get(i);
+                    blog.isSynced = true;
+                    blog.save();
+                }
+            }
+
+            return responseResult;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,7 +55,7 @@ public class BlogNetworkManager {
         }
     }
 
-    public static void getMyBlogs() {
+    public static NetworkResponseResult getMyBlogs() {
 
         try {
             JSONObject jsonObject = new JSONObject();
@@ -55,12 +63,28 @@ public class BlogNetworkManager {
             jsonObject.put("username", user.username);
             jsonObject.put("password", user.password);
 
-            String response = OKHttpHelper.postJson(GET_MY_BLOGS_URL, jsonObject.toString());
+            String response = OKHttpHelper.postJson(NetworkURLConstant.GET_MY_BLOGS_URL, jsonObject.toString());
 
             NetworkLogger.printMessageIfDebug("getMyBlogs response :" + response);
 
+            JSONObject responseObject = new JSONObject(response);
+            if (responseObject.getInt("status") != 200) {
+                throw new Exception(responseObject.getString("message"));
+            } else {
+                JSONArray jsonArray = responseObject.getJSONArray("marks");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    Blog.createBlogFromJsonObject(object);
+                }
+            }
+
+            NetworkResponseResult responseResult = new NetworkResponseResult("OK",true);
+
+            return responseResult;
+
         } catch (Exception e) {
             e.printStackTrace();
+            return new NetworkResponseResult(e.getMessage(),false);
         }
 
     }

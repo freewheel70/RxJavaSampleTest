@@ -7,10 +7,6 @@ import org.json.JSONObject;
  */
 public class AccountNetworkManager {
 
-
-    private static final String SIGN_UP_URL_STR = "http://amoyhouse.com:9999/signup";
-    private static final String LOG_IN_URL_STR =  "http://amoyhouse.com:9999/login";
-
     public static NetworkResponseResult signup(String username, String password) {
 
         try {
@@ -18,7 +14,7 @@ public class AccountNetworkManager {
             jsonObject.put("username", username);
             jsonObject.put("password", password);
 
-            String response = OKHttpHelper.postJson(SIGN_UP_URL_STR, jsonObject.toString());
+            String response = OKHttpHelper.postJson(NetworkURLConstant.SIGN_UP_URL_STR, jsonObject.toString());
 
             NetworkLogger.printMessageIfDebug("signup response " + response);
 
@@ -40,7 +36,7 @@ public class AccountNetworkManager {
             jsonObject.put("username", username);
             jsonObject.put("password", password);
 
-            String response = OKHttpHelper.postJson(LOG_IN_URL_STR, jsonObject.toString());
+            String response = OKHttpHelper.postJson(NetworkURLConstant.LOG_IN_URL_STR, jsonObject.toString());
 
             NetworkLogger.printMessageIfDebug("login response " + response);
 

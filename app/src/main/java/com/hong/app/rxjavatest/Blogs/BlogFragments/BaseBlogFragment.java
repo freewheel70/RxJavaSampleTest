@@ -72,11 +72,6 @@ public class BaseBlogFragment extends BasePageFragment {
     public void onResume() {
         Log.d(TAG, "onResume");
         super.onResume();
-//        if (isRequesting) {
-//            centerProgressBar.setVisibility(View.VISIBLE);
-//        }else {
-//            centerProgressBar.setVisibility(View.INVISIBLE);
-//        }
     }
 
     @Override
