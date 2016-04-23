@@ -113,6 +113,7 @@ public class Blog extends BaseModel {
             blog.blogID = blogID;
             blog.author = jsonObject.getString("author");
             blog.url = jsonObject.getString("url");
+            blog.type = jsonObject.optString("type");
             blog.description = jsonObject.getString("description");
             blog.publishedAt = new Date(jsonObject.getLong("publishedAt"));
             blog.isRemoved = jsonObject.getBoolean("isRemoved");

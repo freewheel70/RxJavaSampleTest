@@ -130,7 +130,11 @@ public class BaseBlogFragment extends BasePageFragment {
 
             final BlogBean blogBean = blogBeanList.get(position);
             holder.description.setText(blogBean.getDescription());
-            holder.author.setText(blogBean.getWho());
+            String authorName = blogBean.getWho();
+            if (authorName == null || authorName.equals("null")) {
+                authorName = getResources().getString(R.string.anonymous_author);
+            }
+            holder.author.setText(authorName);
             holder.publishDate.setText(DateUtil.getDisplayDateString(blogBean.getPublishedAt()));
             initTagLabel(holder.tag, blogBean.getUrl());
 

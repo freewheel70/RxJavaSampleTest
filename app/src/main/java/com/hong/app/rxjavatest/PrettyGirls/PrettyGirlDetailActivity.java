@@ -65,23 +65,25 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         fromCollection = (getIntent().getIntExtra(EXTRA_SOURCE, 0) == EXTRA_SOURCE_COLLECTION);
 
         if (fromCollection) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
-
             String filePath = getIntent().getStringExtra(EXTRA_PRETTY);
             Glide.with(this).load(new File(filePath)).into(beautyImage);
+            getSupportActionBar().setTitle(R.string.favourite);
         } else {
             prettyBean = getIntent().getParcelableExtra(EXTRA_PRETTY);
             beautyImageUrlStr = prettyBean.getUrl();
+            getSupportActionBar().setTitle(prettyBean.getDescription());
         }
 
     }

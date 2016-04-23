@@ -22,6 +22,7 @@
     <string name="action_star">喜欢</string>
     <string name="action_my_pics">我的收藏</string>
     <string name="my_image_collection">我的图片收藏</string>
+    <string name="anonymous_author">匿名</string>
 
 
 </resources>

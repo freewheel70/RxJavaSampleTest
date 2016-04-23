@@ -82,6 +82,9 @@
         </android.support.design.widget.TextInputLayout>
 
         <Button
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:minHeight="0dp"
             android:background="@drawable/bound_button_bg"
             android:id="@+id/register_button"
             android:layout_width="wrap_content"
@@ -93,6 +96,9 @@
             android:textStyle="bold" />
 
         <Button
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:minHeight="0dp"
             android:background="@drawable/bound_button_bg"
             android:id="@+id/login_button"
             android:layout_width="wrap_content"

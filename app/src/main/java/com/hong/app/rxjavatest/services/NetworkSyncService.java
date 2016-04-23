@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 
 import com.hong.app.rxjavatest.Events.ServerSyncBlogEvent;
+import com.hong.app.rxjavatest.database.User;
 import com.hong.app.rxjavatest.network.BlogNetworkManager;
 import com.hong.app.rxjavatest.network.NetworkResponseResult;
 
@@ -42,11 +43,17 @@ public class NetworkSyncService extends IntentService {
         Observable.create(new Observable.OnSubscribe<Object>() {
             @Override
             public void call(Subscriber<? super Object> subscriber) {
-                NetworkResponseResult responseResult = BlogNetworkManager.getMyBlogs();
-                if (responseResult.success) {
-                    subscriber.onCompleted();
+
+                if (User.getUser().isAnonymous()) {
+                    subscriber.onError(new Throwable("登录账号以同步云服务"));
                 } else {
-                    subscriber.onError(new Throwable(responseResult.message));
+                    NetworkResponseResult responseResult = BlogNetworkManager.getMyBlogs();
+                    if (responseResult.success) {
+                        subscriber.onCompleted();
+                    } else {
+                        subscriber.onError(new Throwable(responseResult.message));
+                    }
+
                 }
             }
         })
@@ -75,11 +82,15 @@ public class NetworkSyncService extends IntentService {
         Observable.create(new Observable.OnSubscribe<Object>() {
             @Override
             public void call(Subscriber<? super Object> subscriber) {
-                NetworkResponseResult responseResult = BlogNetworkManager.uploadNonSyncedBlogs();
-                if (responseResult.success) {
-                    subscriber.onCompleted();
+                if (User.getUser().isAnonymous()) {
+                    subscriber.onError(new Throwable("登录账号以同步云服务"));
                 } else {
-                    subscriber.onError(new Throwable(responseResult.message));
+                    NetworkResponseResult responseResult = BlogNetworkManager.uploadNonSyncedBlogs();
+                    if (responseResult.success) {
+                        subscriber.onCompleted();
+                    } else {
+                        subscriber.onError(new Throwable(responseResult.message));
+                    }
                 }
             }
         })

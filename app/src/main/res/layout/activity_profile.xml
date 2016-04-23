@@ -27,7 +27,7 @@
         android:id="@+id/email_login_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+     android:layout_marginTop="120dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <ImageView
@@ -69,13 +69,16 @@
 
 
         <Button
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:minHeight="0dp"
             android:id="@+id/logout_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/username_box"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="86dp"
+            android:layout_marginTop="36dp"
             android:background="@drawable/bound_button_bg"
             android:text="@string/logout"
             android:textColor="@color/WHITE"

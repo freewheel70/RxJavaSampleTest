@@ -62,12 +62,21 @@ public class BlogBrowserActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         initWebview();
 
         blogBean = getIntent().getParcelableExtra(EXTRA_BLOG);
         urlStr = blogBean.getUrl();
         webview.loadUrl(urlStr);
 
+        getSupportActionBar().setTitle(blogBean.getType());
     }
 
     @Override
