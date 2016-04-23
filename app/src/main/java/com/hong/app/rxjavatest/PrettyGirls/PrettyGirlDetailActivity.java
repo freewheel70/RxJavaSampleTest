@@ -1,27 +1,28 @@
 package com.hong.app.rxjavatest.PrettyGirls;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.hong.app.rxjavatest.Blogs.BlogBean;
 import com.hong.app.rxjavatest.CustomViews.gesture_imageview.GestureImageView;
 import com.hong.app.rxjavatest.R;
+import com.hong.app.rxjavatest.Utils.FileUtil;
 import com.hong.app.rxjavatest.network.OKHttpHelper;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,9 +34,16 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Administrator on 2016/4/16.
  */
+@SuppressLint("LongLogTag")
 public class PrettyGirlDetailActivity extends AppCompatActivity {
 
-    public static final String EXTRA_BEAUTY_IMG = "beauty_image";
+    private static final String TAG = "PrettyGirlDetailActivity";
+
+    public static final String EXTRA_PRETTY = "extar_beauty";
+    public static final String EXTRA_SOURCE = "extar_source";
+
+    public static final int EXTRA_SOURCE_COLLECTION = 2;
+
 
     @Bind(R.id.beauty_image)
     GestureImageView beautyImage;
@@ -43,7 +51,10 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
+    BlogBean prettyBean;
     String beautyImageUrlStr;
+    private boolean isImageStared = false;
+    private boolean fromCollection = false;
 
 
     @Override
@@ -54,8 +65,24 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        beautyImageUrlStr = getIntent().getStringExtra(EXTRA_BEAUTY_IMG);
-        Glide.with(this).load(beautyImageUrlStr).into(beautyImage);
+        fromCollection = (getIntent().getIntExtra(EXTRA_SOURCE, 0) == EXTRA_SOURCE_COLLECTION);
+
+        if (fromCollection) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+
+            String filePath = getIntent().getStringExtra(EXTRA_PRETTY);
+            Glide.with(this).load(new File(filePath)).into(beautyImage);
+        } else {
+            prettyBean = getIntent().getParcelableExtra(EXTRA_PRETTY);
+            beautyImageUrlStr = prettyBean.getUrl();
+        }
 
     }
 
@@ -71,7 +98,7 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
                             @Override
                             public void call(Subscriber<? super Bitmap> subscriber) {
                                 Bitmap bitmap = OKHttpHelper.getBitmapfromUrl(beautyImageUrlStr);
-                                saveBitmapIntoFile(bitmap);
+                                FileUtil.saveBitmapIntoFile(bitmap, FileUtil.PUBLIC_IMAGE_STORAGE_DIR, prettyBean.getDescription());
                                 subscriber.onCompleted();
                             }
                         })
@@ -100,50 +127,130 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void saveBitmapIntoFile(Bitmap bitmap) {
-
-        String dirStr = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Pretty";
-        File dir = new File(dirStr);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        //create a file to write bitmap data
-        File file = new File(dir, new Date().getTime() + ".png");
-        FileOutputStream fos = null;
-        try {
-            file.createNewFile();
-
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
-            byte[] bitmapdata = bos.toByteArray();
-
-//write the bytes in file
-            fos = new FileOutputStream(file);
-            fos.write(bitmapdata);
-            fos.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-
-            try {
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        showSaveDialog();
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_save) {
+            showSaveDialog();
+        } else if (itemId == R.id.action_star) {
+            if (isImageStared) {
+                deletImageFromCache(item);
+            } else {
+                saveImageIntoCache(item);
+            }
+        } else if (itemId == R.id.action_see_all) {
+            startActivity(new Intent(PrettyGirlDetailActivity.this, PrettyGirlCollectionActivity.class));
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deletImageFromCache(final MenuItem item) {
+        Observable.create(new Observable.OnSubscribe<Object>() {
+            @Override
+            public void call(Subscriber<? super Object> subscriber) {
+                FileUtil.deleteImage(FileUtil.PRIVATE_IMAGE_STORAGE_DIR, prettyBean.getDescription());
+                subscriber.onCompleted();
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Object>() {
+                    @Override
+                    public void onCompleted() {
+                        Toast.makeText(PrettyGirlDetailActivity.this, "取消收藏成功", Toast.LENGTH_SHORT).show();
+                        item.setIcon(R.drawable.star_empty);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(PrettyGirlDetailActivity.this, "取消收藏失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(Object o) {
+
+                    }
+                });
+    }
+
+    private void saveImageIntoCache(final MenuItem item) {
+        Observable.create(new Observable.OnSubscribe<Bitmap>() {
+            @Override
+            public void call(Subscriber<? super Bitmap> subscriber) {
+                Bitmap bitmap = OKHttpHelper.getBitmapfromUrl(beautyImageUrlStr);
+                FileUtil.saveBitmapIntoFile(bitmap, FileUtil.PRIVATE_IMAGE_STORAGE_DIR, prettyBean.getDescription());
+                subscriber.onCompleted();
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Bitmap>() {
+                    @Override
+                    public void onCompleted() {
+                        Toast.makeText(PrettyGirlDetailActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
+                        item.setIcon(R.drawable.star_full);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(PrettyGirlDetailActivity.this, "收藏失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(Bitmap bitmap) {
+
+                    }
+                });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.getMenuInflater().inflate(R.menu.menu_pretty, menu);
-        return true;
+        if (fromCollection) {
+            return super.onCreateOptionsMenu(menu);
+        } else {
+            this.getMenuInflater().inflate(R.menu.menu_pretty, menu);
+            final MenuItem item = menu.findItem(R.id.action_star);
+
+            Observable.create(new Observable.OnSubscribe<Boolean>() {
+                @Override
+                public void call(Subscriber<? super Boolean> subscriber) {
+                    boolean isImageFileExist = FileUtil.isImageFileExist(FileUtil.PRIVATE_IMAGE_STORAGE_DIR, prettyBean.getDescription());
+                    Log.d(TAG, "isImageFileExist: " + isImageFileExist);
+                    isImageStared = isImageFileExist;
+                    subscriber.onNext(isImageFileExist);
+                    subscriber.onCompleted();
+                }
+            })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<Boolean>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(Boolean isImageFileExist) {
+                            if (isImageFileExist) {
+                                item.setIcon(R.drawable.star_full);
+                                File file = FileUtil.getImageFile(FileUtil.PRIVATE_IMAGE_STORAGE_DIR, prettyBean.getDescription());
+                                Glide.with(PrettyGirlDetailActivity.this).load(file).into(beautyImage);
+                            } else {
+                                item.setIcon(R.drawable.star_empty);
+                                Glide.with(PrettyGirlDetailActivity.this).load(beautyImageUrlStr).into(beautyImage);
+                            }
+                        }
+                    });
+
+            return true;
+        }
     }
 }
 

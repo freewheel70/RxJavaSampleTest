@@ -3,6 +3,7 @@ package com.hong.app.rxjavatest;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -33,6 +34,7 @@ import com.hong.app.rxjavatest.Blogs.BlogFragments.ResourceBlogFragment;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.VideoBlogFragment;
 import com.hong.app.rxjavatest.CustomViews.CustomPagerSlidingTabStrip;
 import com.hong.app.rxjavatest.Events.ServerSyncBlogEvent;
+import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlCollectionActivity;
 import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlFragment;
 import com.hong.app.rxjavatest.database.User;
 import com.hong.app.rxjavatest.profile.LoginActivity;
@@ -48,6 +50,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         com.blunderer.materialdesignlibrary.interfaces.ViewPager {
@@ -69,6 +72,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Bind(R.id.drawer_layout)
     DrawerLayout drawer;
+
+    @Bind(R.id.fab)
+    FloatingActionButton floatingActionButton;
 
     private ImageView avatar;
     private TextView userName;
@@ -130,6 +136,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    public static class FragmentItem {
+        public BasePageFragment fragment;
+        public String name;
+
+        public FragmentItem(BasePageFragment fragment, String name) {
+            this.fragment = fragment;
+            this.name = name;
+        }
+    }
+
+    List<FragmentItem> fragmentItemList = new ArrayList<>();
+
     private void initPageItems() {
 
         AndroidBlogFragment androidBlogFragment = new AndroidBlogFragment();
@@ -142,16 +160,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         CoolBlogFragment coolBlogFragment = new CoolBlogFragment();
         FavouriteBlogFragment favouriteBlogFragment = new FavouriteBlogFragment();
 
-        ViewPagerHandler viewPagerHandler = new ViewPagerHandler(this)
-                .addPage("收藏", favouriteBlogFragment)
-                .addPage("Android", androidBlogFragment)
-                .addPage("福利", prettyGirlFragment)
-                .addPage("IOS", iosBlogFragment)
-                .addPage("前端", frontBlogFragment)
-                .addPage("拓展资源", resourceBlogFragment)
-                .addPage("App", appBlogFragment)
-                .addPage("视频", videoBlogFragment)
-                .addPage("瞎推荐", coolBlogFragment);
+        fragmentItemList.add(new FragmentItem(favouriteBlogFragment, "收藏"));
+        fragmentItemList.add(new FragmentItem(androidBlogFragment, "Android"));
+        fragmentItemList.add(new FragmentItem(prettyGirlFragment, "福利"));
+        fragmentItemList.add(new FragmentItem(iosBlogFragment, "IOS"));
+        fragmentItemList.add(new FragmentItem(frontBlogFragment, "前端"));
+        fragmentItemList.add(new FragmentItem(resourceBlogFragment, "拓展资源"));
+        fragmentItemList.add(new FragmentItem(appBlogFragment, "App"));
+        fragmentItemList.add(new FragmentItem(videoBlogFragment, "视频"));
+        fragmentItemList.add(new FragmentItem(coolBlogFragment, "瞎推荐"));
+
+        ViewPagerHandler viewPagerHandler = new ViewPagerHandler(this);
+        for (int i = 0; i < fragmentItemList.size(); i++) {
+            FragmentItem fragmentItem = fragmentItemList.get(i);
+            viewPagerHandler.addPage(fragmentItem.name, fragmentItem.fragment);
+        }
 
         pagerItems = viewPagerHandler.getViewPagerItems();
 
@@ -237,34 +260,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    @OnClick(R.id.fab)
+    public void clickFab(View view) {
+        int currentItem = viewPager.getCurrentItem();
+        FragmentItem fragmentItem = fragmentItemList.get(currentItem);
+        fragmentItem.fragment.sendRequest();
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        if (id == R.id.nav_pic_collection) {
+            startActivity(new Intent(MainActivity.this, PrettyGirlCollectionActivity.class));
+        }
 
         drawer.closeDrawer(GravityCompat.START);
-        return true;
+        return false;
+    }
+
+    private void sendSyncRequest() {
+        startService(new Intent(MainActivity.this, NetworkSyncService.class));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        this.getMenuInflater().inflate(R.menu.menu_main, menu);
+//        this.getMenuInflater().inflate(R.menu.menu_main, menu);
+//
+//        return true;
 
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
 
         int itemId = item.getItemId();
-        if (itemId == R.id.action_sync) {
-            startService(new Intent(MainActivity.this, NetworkSyncService.class));
+        if (itemId == R.id.nav_pic_collection) {
+
         }
 
-        return true;
+        return false;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -289,7 +327,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d(TAG, "onActivityResult() called with: " + "requestCode = [" + requestCode + "], resultCode = [" + resultCode + "]");
         if (requestCode == LOGIN_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                startService(new Intent(MainActivity.this, NetworkSyncService.class));
+                sendSyncRequest();
             }
         }
     }

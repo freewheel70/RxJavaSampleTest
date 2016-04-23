@@ -31,6 +31,7 @@ public class BeanDeserializer {
             bean.setUrl(object.optString("url"));
             bean.setDescription(object.optString("desc"));
             bean.setWho(object.optString("who"));
+            bean.setType(object.optString("type"));
 
             String dateStr = object.optString("publishedAt");
             Date date = dateFormat.parse(dateStr);

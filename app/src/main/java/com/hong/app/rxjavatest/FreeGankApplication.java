@@ -14,12 +14,19 @@ public class FreeGankApplication extends Application {
 
     private static final String TAG = "FreeGankApplication";
 
+    private static FreeGankApplication application;
+
+    public static FreeGankApplication getInstance() {
+        return application;
+    }
+
     int activityNum = 0;
 
     @Override
     public void onCreate() {
         super.onCreate();
         FlowManager.init(this);
+        application = this;
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
@@ -49,7 +56,7 @@ public class FreeGankApplication extends Application {
             public void onActivityStopped(Activity activity) {
                 activityNum--;
 
-                if (activityNum==0){
+                if (activityNum == 0) {
                     Log.d(TAG, "enter background");
                 }
                 Log.d(TAG, "onActivityStopped: activityNum " + activityNum);

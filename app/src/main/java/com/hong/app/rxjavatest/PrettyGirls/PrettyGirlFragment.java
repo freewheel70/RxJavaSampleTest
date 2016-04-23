@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.hong.app.rxjavatest.BasePageFragment;
+import com.hong.app.rxjavatest.Blogs.BlogBean;
 import com.hong.app.rxjavatest.R;
 import com.hong.app.rxjavatest.network.GankNetworkManager;
 
@@ -30,7 +31,7 @@ public class PrettyGirlFragment extends BasePageFragment {
 
     private static final String TAG = "PrettyGirlFragment";
 
-    List<String> imageUrlStrList = new ArrayList<>();
+    List<BlogBean> prettyList = new ArrayList<>();
 
     @Override
     protected int getContainerViewId() {
@@ -58,18 +59,17 @@ public class PrettyGirlFragment extends BasePageFragment {
     @Override
     protected void sendRequest() {
         Observable
-                .create(new Observable.OnSubscribe<List<String>>() {
-
+                .create(new Observable.OnSubscribe<List<BlogBean>>() {
                     @Override
-                    public void call(Subscriber<? super List<String>> subscriber) {
-                        List<String> beautyList = GankNetworkManager.getBeautyList(SIZE_OF_IMAGES_PER_REQUEST, currentPage);
-                        subscriber.onNext(beautyList);
+                    public void call(Subscriber<? super List<BlogBean>> subscriber) {
+                        List<BlogBean> girlList = GankNetworkManager.getBlogList("福利", SIZE_OF_IMAGES_PER_REQUEST, currentPage);
+                        subscriber.onNext(girlList);
                         subscriber.onCompleted();
                     }
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<String>>() {
+                .subscribe(new Subscriber<List<BlogBean>>() {
                     @Override
                     public void onCompleted() {
 
@@ -81,18 +81,19 @@ public class PrettyGirlFragment extends BasePageFragment {
                     }
 
                     @Override
-                    public void onNext(List<String> strings) {
-                        imageUrlStrList.addAll(strings);
+                    public void onNext(List<BlogBean> blogBeen) {
+                        prettyList.addAll(blogBeen);
                         refreshRecyclerView();
-
                     }
+
+
                 });
     }
 
 
     @Override
     protected int getDataListSize() {
-        return imageUrlStrList.size();
+        return prettyList.size();
     }
 
 
@@ -108,7 +109,8 @@ public class PrettyGirlFragment extends BasePageFragment {
         @Override
         public void onBindViewHolder(BeautyViewholder holder, int position) {
 
-            final String imageStr = imageUrlStrList.get(position);
+            final BlogBean blogBean = prettyList.get(position);
+            final String imageStr = blogBean.getUrl();
 
             Glide.with(PrettyGirlFragment.this)
                     .load(imageStr)
@@ -118,7 +120,7 @@ public class PrettyGirlFragment extends BasePageFragment {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), PrettyGirlDetailActivity.class);
-                    intent.putExtra(PrettyGirlDetailActivity.EXTRA_BEAUTY_IMG, imageStr);
+                    intent.putExtra(PrettyGirlDetailActivity.EXTRA_PRETTY, blogBean);
                     startActivity(intent);
                 }
             });
@@ -126,7 +128,7 @@ public class PrettyGirlFragment extends BasePageFragment {
 
         @Override
         public int getItemCount() {
-            return imageUrlStrList.size();
+            return prettyList.size();
         }
     }
 

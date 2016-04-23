@@ -2,10 +2,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.hong.app.rxjavatest.MainActivity">
+
+    <item
+        android:id="@+id/action_star"
+        android:orderInCategory="100"
+        android:title="@string/action_star"
+        android:icon="@drawable/star_empty"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/action_save"
         android:orderInCategory="100"
         android:title="@string/action_save"
         android:icon="@drawable/download"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_see_all"
+        android:orderInCategory="100"
+        android:title="@string/action_my_pics"
+        android:icon="@drawable/star_full"
+        app:showAsAction="never" />
+
 </menu>
