@@ -40,14 +40,19 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".profile.ProfilePageActivity"
+            android:name=".PrettyGirls.PrettyGirlCollectionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".PrettyGirls.PrettyGirlCollectionActivity"
+            android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
+        <activity android:name=".profile.AvatarResultActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
 
         <service
             android:name=".services.NetworkSyncService"

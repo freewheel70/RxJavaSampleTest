@@ -5,7 +5,10 @@ import android.app.Application;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.hong.app.rxjavatest.Utils.Constants;
 import com.raizlabs.android.dbflow.config.FlowManager;
+
+import java.io.File;
 
 /**
  * Created by Administrator on 2016/4/18.
@@ -72,5 +75,13 @@ public class FreeGankApplication extends Application {
 
             }
         });
+        createDirIfNeed();
+    }
+
+    private void createDirIfNeed() {
+        File dir = new File(Constants.FREEGANK_DIR);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
     }
 }

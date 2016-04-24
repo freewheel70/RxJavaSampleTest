@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#90CAF9"
     android:fitsSystemWindows="true"
     tools:context=".profile.LoginActivity">
 
@@ -23,41 +24,48 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <com.hong.app.rxjavatest.Views.RoundImageView
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/avatar_size"
+        android:layout_height="@dimen/avatar_size"
+        android:layout_gravity="top"
+        android:layout_marginTop="30dp"
+        android:src="@mipmap/ic_launcher"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 
     <LinearLayout
-        android:id="@+id/email_login_form"
+        android:id="@+id/login_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical"
+        android:visibility="visible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="@dimen/avatar_size"
-            android:layout_height="@dimen/avatar_size"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"
-            android:src="@mipmap/ic_launcher" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="#999"
-            >
+            android:background="@drawable/bound_white_bg"
+            android:paddingTop="3dp"
+            android:textColorHint="#999">
 
             <EditText
                 android:id="@+id/user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bound_white_bg"
                 android:hint="@string/prompt_username"
                 android:imeActionId="@+id/login"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPersonName"
                 android:maxLines="1"
+                android:padding="8dp"
                 android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
@@ -65,50 +73,110 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bound_white_bg"
+            android:paddingTop="3dp"
             android:textColorHint="#999">
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bound_white_bg"
                 android:hint="@string/prompt_password"
                 android:imeActionId="@+id/login"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
                 android:maxLines="1"
+                android:padding="8dp"
                 android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:minHeight="0dp"
-            android:background="@drawable/bound_button_bg"
             android:id="@+id/register_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/bound_button_bg"
             android:text="@string/register"
             android:textColor="@color/WHITE"
+            android:textSize="@dimen/button_text_size"
             android:textStyle="bold" />
 
         <Button
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:minHeight="0dp"
-            android:background="@drawable/bound_button_bg"
             android:id="@+id/login_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
+            android:background="@drawable/bound_button_bg"
             android:text="@string/login"
             android:textColor="@color/WHITE"
+            android:textSize="@dimen/button_text_size"
             android:textStyle="bold" />
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/profile_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:visibility="gone">
+
+
+        <RelativeLayout
+            android:id="@+id/username_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bound_white_bg"
+            android:padding="10dp">
+
+
+            <TextView
+                android:id="@+id/username_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/username_title"
+                android:textColor="@color/username_title_color"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/profile_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@+id/username_title"
+                android:hint="@string/prompt_username"
+                android:singleLine="true"
+                android:text="hong1"
+                android:textSize="22sp" />
+
+        </RelativeLayout>
+
+
+        <Button
+            android:id="@+id/logout_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/username_box"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/bound_button_bg"
+            android:text="@string/logout"
+            android:textColor="@color/WHITE"
+            android:textSize="@dimen/button_text_size"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

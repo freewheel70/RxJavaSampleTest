@@ -26,6 +26,8 @@ import android.widget.Toast;
 import com.blunderer.materialdesignlibrary.adapters.ViewPagerAdapter;
 import com.blunderer.materialdesignlibrary.handlers.ViewPagerHandler;
 import com.blunderer.materialdesignlibrary.models.ViewPagerItem;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.AndroidBlogFragment;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.AppBlogFragment;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.CoolBlogFragment;
@@ -38,15 +40,16 @@ import com.hong.app.rxjavatest.CustomViews.CustomPagerSlidingTabStrip;
 import com.hong.app.rxjavatest.Events.ServerSyncBlogEvent;
 import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlCollectionActivity;
 import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlFragment;
+import com.hong.app.rxjavatest.Utils.Constants;
 import com.hong.app.rxjavatest.database.User;
 import com.hong.app.rxjavatest.profile.LoginActivity;
-import com.hong.app.rxjavatest.profile.ProfilePageActivity;
 import com.hong.app.rxjavatest.services.NetworkSyncService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,17 +117,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (User.getUser().isAnonymous()) {
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivityForResult(intent, LOGIN_REQUEST_CODE);
-                } else {
-                    Intent intent = new Intent(MainActivity.this, ProfilePageActivity.class);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivityForResult(intent, LOGIN_REQUEST_CODE);
             }
         });
 
     }
+
+
 
 
     private void initViews() {
@@ -137,6 +137,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
     }
+
+
 
     public static class FragmentItem {
         public BasePageFragment fragment;
@@ -198,6 +200,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
         User user = User.getUser();
         userName.setText(user.username);
+
+        Glide.with(this).load(new File(Constants.AVATAR_PATH))
+                .error(R.mipmap.ic_launcher)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(avatar);
     }
 
     @Override

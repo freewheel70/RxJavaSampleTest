@@ -13,4 +13,5 @@
     <color name="purple">#4527A0</color>
     <color name="dark_green">#00695C</color>
     <color name="dark_red">#D84315</color>
+    <color name="username_title_color">#795548</color>
 </resources>
