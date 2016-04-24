@@ -5,7 +5,7 @@ import android.app.Application;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.hong.app.rxjavatest.Utils.Constants;
+import com.hong.app.rxjavatest.Utils.FileUtil;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
 import java.io.File;
@@ -79,7 +79,7 @@ public class FreeGankApplication extends Application {
     }
 
     private void createDirIfNeed() {
-        File dir = new File(Constants.FREEGANK_DIR);
+        File dir = new File(FileUtil.PRIVATE_IMAGE_STORAGE_DIR);
         if (!dir.exists()) {
             dir.mkdirs();
         }

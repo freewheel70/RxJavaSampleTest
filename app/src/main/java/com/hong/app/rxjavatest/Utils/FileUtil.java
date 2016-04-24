@@ -20,7 +20,7 @@ public class FileUtil {
 
     public static final String PUBLIC_IMAGE_STORAGE_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Pretty";
 
-    public static final String PRIVATE_IMAGE_STORAGE_DIR = FreeGankApplication.getInstance().getFilesDir().getAbsolutePath();
+    public static final String PRIVATE_IMAGE_STORAGE_DIR = FreeGankApplication.getInstance().getFilesDir().getAbsolutePath() + "/Pretty";
 
     public static void saveBitmapIntoFile(Bitmap bitmap, String dirPath, String imageName) {
 

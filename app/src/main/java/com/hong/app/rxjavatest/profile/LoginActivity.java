@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick({R.id.register_button, R.id.login_button, R.id.avatar})
+    @OnClick({R.id.register_button, R.id.login_button, R.id.avatar,R.id.logout_button})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.register_button:
