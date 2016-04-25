@@ -125,8 +125,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
-
     private void initViews() {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -137,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
     }
-
 
 
     public static class FragmentItem {
@@ -297,19 +294,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-//        this.getMenuInflater().inflate(R.menu.menu_main, menu);
-//
-//        return true;
+        this.getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        return super.onCreateOptionsMenu(menu);
+        return true;
+
     }
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
 
         int itemId = item.getItemId();
-        if (itemId == R.id.nav_pic_collection) {
-
+        if (itemId == R.id.action_about) {
+            startActivity(new Intent(MainActivity.this, AboutActivity.class));
         }
 
         return false;

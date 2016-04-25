@@ -28,6 +28,8 @@
     <string name="cancel_save_avatar_warning">丢弃当前图片？</string>
     <string name="cancel">取消</string>
     <string name="save_avatar">保存</string>
+    <string name="github_path">https://github.com/freewheel70/FreeGank</string>
+    <string name="title_about">关于</string>
 
 
 </resources>
