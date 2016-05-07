@@ -14,6 +14,6 @@ public class ResourceBlogFragment extends BaseBlogFragment {
 
     @Override
     protected List<BlogBean> requestBlogList() {
-        return GankNetworkManager.getBlogList("拓展资源", SIZE_OF_IMAGES_PER_REQUEST, currentPage);
+        return GankNetworkManager.getBlogList(GankNetworkManager.TYPE_RESOURCE, SIZE_OF_IMAGES_PER_REQUEST, currentPage);
     }
 }

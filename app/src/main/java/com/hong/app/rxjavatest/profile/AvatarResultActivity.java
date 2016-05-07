@@ -121,12 +121,12 @@ public class AvatarResultActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.change_avatar)
                 .setMessage(R.string.cancel_save_avatar_warning)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.alert_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         cancelButton.performClick();
                     }
-                }).setNegativeButton("取消", null)
+                }).setNegativeButton(R.string.alert_cancel, null)
                 .setCancelable(false)
                 .show();
     }

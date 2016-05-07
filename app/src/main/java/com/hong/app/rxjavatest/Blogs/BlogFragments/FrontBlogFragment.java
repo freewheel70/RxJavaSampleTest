@@ -14,6 +14,6 @@ public class FrontBlogFragment extends BaseBlogFragment {
 
     @Override
     protected List<BlogBean> requestBlogList() {
-        return GankNetworkManager.getBlogList("前端", SIZE_OF_IMAGES_PER_REQUEST, currentPage);
+        return GankNetworkManager.getBlogList(GankNetworkManager.TYPE_FRONT, SIZE_OF_IMAGES_PER_REQUEST, currentPage);
     }
 }

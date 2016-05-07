@@ -150,16 +150,16 @@ public class BaseBlogFragment extends BasePageFragment {
 
         private void initTagLabel(TextView tag, String urlStr) {
             if (urlStr.contains("github")) {
-                tag.setText("Github");
+                tag.setText(R.string.tag_github);
                 tag.setBackgroundResource(R.drawable.bg_github_tag);
             } else if (urlStr.contains("jianshu")) {
-                tag.setText("简书");
+                tag.setText(R.string.tag_jianshu);
                 tag.setBackgroundResource(R.drawable.bg_jianshu_tag);
             } else if (urlStr.contains("weixin")) {
-                tag.setText("微信");
+                tag.setText(R.string.tag_wechat);
                 tag.setBackgroundResource(R.drawable.bg_weixin_tag);
             } else {
-                tag.setText("博客");
+                tag.setText(R.string.tag_blog);
                 tag.setBackgroundResource(R.drawable.bg_blog_tag);
             }
         }

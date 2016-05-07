@@ -26,8 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:textSize="25dp"
-        android:text="GoodDay"
+        android:textSize="25sp"
+        android:text="@string/default_user_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 

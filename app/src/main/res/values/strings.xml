@@ -30,6 +30,34 @@
     <string name="save_avatar">保存</string>
     <string name="github_path">https://github.com/freewheel70/FreeGank</string>
     <string name="title_about">关于</string>
+    <string name="exit_title">退出</string>
+    <string name="exit_warning">确定退出FreeGank吗？</string>
+    <string name="alert_ok">确定</string>
+    <string name="sync_server_success">同步成功</string>
+    <string name="sync_server_fail">同步失败</string>
+    <string name="favourite_blogs_title">收藏</string>
+    <string name="android_blogs_title">Android</string>
+    <string name="pretty_blogs_title">福利</string>
+    <string name="IOS_blogs_title">IOS</string>
+    <string name="front_blogs_title">前端</string>
+    <string name="resource_blogs_title">拓展资源</string>
+    <string name="app_blogs_title">App</string>
+    <string name="video_blogs_title">视频</string>
+    <string name="cool_blogs_title">瞎推荐</string>
+    <string name="default_user_name">哟，你好啊！</string>
+    <string name="tag_github">Github</string>
+    <string name="tag_jianshu">简书</string>
+    <string name="tag_wechat">微信</string>
+    <string name="tag_blog">博客</string>
+    <string name="save_success">保存成功</string>
+    <string name="save_fail">保存失败，请稍后再试</string>
+    <string name="remove_favourite_success">取消收藏成功</string>
+    <string name="remove_favourite_fail">取消收藏失败，请稍后再试</string>
+    <string name="add_favourite_success">收藏成功</string>
+    <string name="add_favourite_fail">收藏失败，请稍后再试</string>
+    <string name="save_image_title">保存图片</string>
+    <string name="save_image_hint">保存此图片到您的手机上？</string>
+    <string name="alert_cancel">取消</string>
 
 
 </resources>

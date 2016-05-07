@@ -1,5 +1,7 @@
 package com.hong.app.rxjavatest.network;
 
+import com.hong.app.rxjavatest.Constant;
+
 import org.json.JSONObject;
 
 /**
@@ -11,8 +13,8 @@ public class AccountNetworkManager {
 
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("username", username);
-            jsonObject.put("password", password);
+            jsonObject.put(Constant.JSON_KEY_USER_NAME, username);
+            jsonObject.put(Constant.JSON_KEY_PASSWORD, password);
 
             String response = OKHttpHelper.postJson(NetworkURLConstant.SIGN_UP_URL_STR, jsonObject.toString());
 
@@ -33,8 +35,8 @@ public class AccountNetworkManager {
 
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("username", username);
-            jsonObject.put("password", password);
+            jsonObject.put(Constant.JSON_KEY_USER_NAME, username);
+            jsonObject.put(Constant.JSON_KEY_PASSWORD, password);
 
             String response = OKHttpHelper.postJson(NetworkURLConstant.LOG_IN_URL_STR, jsonObject.toString());
 

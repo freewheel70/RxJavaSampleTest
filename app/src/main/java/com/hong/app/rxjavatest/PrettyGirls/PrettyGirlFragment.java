@@ -62,7 +62,7 @@ public class PrettyGirlFragment extends BasePageFragment {
                 .create(new Observable.OnSubscribe<List<BlogBean>>() {
                     @Override
                     public void call(Subscriber<? super List<BlogBean>> subscriber) {
-                        List<BlogBean> girlList = GankNetworkManager.getBlogList("福利", SIZE_OF_IMAGES_PER_REQUEST, currentPage);
+                        List<BlogBean> girlList = GankNetworkManager.getBlogList(GankNetworkManager.TYPE_WELFARE, SIZE_OF_IMAGES_PER_REQUEST, currentPage);
                         subscriber.onNext(girlList);
                         subscriber.onCompleted();
                     }

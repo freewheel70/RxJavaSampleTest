@@ -1,5 +1,7 @@
 package com.hong.app.rxjavatest.Blogs;
 
+import com.hong.app.rxjavatest.Constant;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,18 +24,18 @@ public class BeanDeserializer {
 
         List<BlogBean> blogBeanList = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(beanString);
-        JSONArray jsonArray = jsonObject.getJSONArray("results");
+        JSONArray jsonArray = jsonObject.getJSONArray(Constant.JSON_KEY_GANK_BLOG_ARRAY_RESULT);
 
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject object = jsonArray.getJSONObject(i);
             BlogBean bean = new BlogBean();
-            bean.setId(object.optString("_id"));
-            bean.setUrl(object.optString("url"));
-            bean.setDescription(object.optString("desc"));
-            bean.setWho(object.optString("who"));
-            bean.setType(object.optString("type"));
+            bean.setId(object.optString(Constant.JSON_KEY_GANK_BLOG_ID));
+            bean.setUrl(object.optString(Constant.JSON_KEY_GANK_BLOG_URL));
+            bean.setDescription(object.optString(Constant.JSON_KEY_GANK_BLOG_DESC));
+            bean.setWho(object.optString(Constant.JSON_KEY_GANK_BLOG_AUTHOR));
+            bean.setType(object.optString(Constant.JSON_KEY_GANK_BLOG_TYPE));
 
-            String dateStr = object.optString("publishedAt");
+            String dateStr = object.optString(Constant.JSON_KEY_GANK_BLOG_PUBLISH_TIME);
             Date date = dateFormat.parse(dateStr);
             bean.setPublishedAt(date);
 

@@ -14,6 +14,6 @@ public class IOSBlogFragment extends BaseBlogFragment {
 
     @Override
     protected List<BlogBean> requestBlogList() {
-        return GankNetworkManager.getBlogList("iOS", SIZE_OF_IMAGES_PER_REQUEST, currentPage);
+        return GankNetworkManager.getBlogList(GankNetworkManager.TYPE_IOS, SIZE_OF_IMAGES_PER_REQUEST, currentPage);
     }
 }

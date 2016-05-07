@@ -90,9 +90,9 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
 
     private void showSaveDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("保存图片")
-                .setMessage("保存此图片到您的手机上？")
-                .setPositiveButton("好", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.save_image_title)
+                .setMessage(R.string.save_image_hint)
+                .setPositiveButton(R.string.alert_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -109,12 +109,12 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
                                 .subscribe(new Subscriber<Bitmap>() {
                                     @Override
                                     public void onCompleted() {
-                                        Toast.makeText(PrettyGirlDetailActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(PrettyGirlDetailActivity.this, R.string.save_success, Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
                                     public void onError(Throwable e) {
-                                        Toast.makeText(PrettyGirlDetailActivity.this, "保存失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(PrettyGirlDetailActivity.this, R.string.save_fail, Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
@@ -161,13 +161,13 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
                 .subscribe(new Subscriber<Object>() {
                     @Override
                     public void onCompleted() {
-                        Toast.makeText(PrettyGirlDetailActivity.this, "取消收藏成功", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PrettyGirlDetailActivity.this, R.string.remove_favourite_success, Toast.LENGTH_SHORT).show();
                         item.setIcon(R.drawable.star_empty);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(PrettyGirlDetailActivity.this, "取消收藏失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PrettyGirlDetailActivity.this,  R.string.remove_favourite_fail, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -191,13 +191,13 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
                 .subscribe(new Subscriber<Bitmap>() {
                     @Override
                     public void onCompleted() {
-                        Toast.makeText(PrettyGirlDetailActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PrettyGirlDetailActivity.this, R.string.add_favourite_success, Toast.LENGTH_SHORT).show();
                         item.setIcon(R.drawable.star_full);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(PrettyGirlDetailActivity.this, "收藏失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PrettyGirlDetailActivity.this, R.string.add_favourite_fail, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

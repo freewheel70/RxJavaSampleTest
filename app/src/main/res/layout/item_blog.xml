@@ -2,6 +2,7 @@
 
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/FreeGank.Card"
     android:layout_marginTop="10dp"
     android:layout_marginLeft="5dp"
@@ -70,7 +71,7 @@
             android:layout_alignBottom="@id/data_tag_ll"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="222"
+            tools:text="222"
             android:textColor="@color/item_date"
             android:textSize="@dimen/item_date_tv" />
 

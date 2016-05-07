@@ -157,7 +157,7 @@
                 android:layout_toRightOf="@+id/username_title"
                 android:hint="@string/prompt_username"
                 android:singleLine="true"
-                android:text="hong1"
+                tools:text="hong1"
                 android:textSize="22sp" />
 
         </RelativeLayout>

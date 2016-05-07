@@ -161,15 +161,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         CoolBlogFragment coolBlogFragment = new CoolBlogFragment();
         FavouriteBlogFragment favouriteBlogFragment = new FavouriteBlogFragment();
 
-        fragmentItemList.add(new FragmentItem(favouriteBlogFragment, "收藏"));
-        fragmentItemList.add(new FragmentItem(androidBlogFragment, "Android"));
-        fragmentItemList.add(new FragmentItem(prettyGirlFragment, "福利"));
-        fragmentItemList.add(new FragmentItem(iosBlogFragment, "IOS"));
-        fragmentItemList.add(new FragmentItem(frontBlogFragment, "前端"));
-        fragmentItemList.add(new FragmentItem(resourceBlogFragment, "拓展资源"));
-        fragmentItemList.add(new FragmentItem(appBlogFragment, "App"));
-        fragmentItemList.add(new FragmentItem(videoBlogFragment, "视频"));
-        fragmentItemList.add(new FragmentItem(coolBlogFragment, "瞎推荐"));
+        fragmentItemList.add(new FragmentItem(favouriteBlogFragment, getString(R.string.favourite_blogs_title)));
+        fragmentItemList.add(new FragmentItem(androidBlogFragment,  getString(R.string.android_blogs_title)));
+        fragmentItemList.add(new FragmentItem(prettyGirlFragment, getString(R.string.pretty_blogs_title)));
+        fragmentItemList.add(new FragmentItem(iosBlogFragment,  getString(R.string.IOS_blogs_title)));
+        fragmentItemList.add(new FragmentItem(frontBlogFragment,  getString(R.string.front_blogs_title)));
+        fragmentItemList.add(new FragmentItem(resourceBlogFragment,  getString(R.string.resource_blogs_title)));
+        fragmentItemList.add(new FragmentItem(appBlogFragment,  getString(R.string.app_blogs_title)));
+        fragmentItemList.add(new FragmentItem(videoBlogFragment,  getString(R.string.video_blogs_title)));
+        fragmentItemList.add(new FragmentItem(coolBlogFragment, getString(R.string.cool_blogs_title) ));
 
         ViewPagerHandler viewPagerHandler = new ViewPagerHandler(this);
         for (int i = 0; i < fragmentItemList.size(); i++) {
@@ -314,9 +314,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handlerServerSyncResult(ServerSyncBlogEvent event) {
         if (event.success) {
-            Toast.makeText(MainActivity.this, "同步成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getString(R.string.sync_server_success), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(MainActivity.this, "同步失败:" + event.message, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getString(R.string.sync_server_fail) +" : "+ event.message, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -341,9 +341,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
-                .setTitle("退出")
-                .setMessage("确定退出FreeGank吗？")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                .setTitle(getString(R.string.exit_title))
+                .setMessage(R.string.exit_warning)
+                .setPositiveButton(R.string.alert_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
