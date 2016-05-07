@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:elevation="4dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.hong.app.rxjavatest.MainActivity"
     tools:showIn="@layout/activity_main">
@@ -13,7 +14,8 @@
         android:layout_height="match_parent"
         android:background="@color/WHITE">
 
-        <com.hong.app.rxjavatest.CustomViews.CustomPagerSlidingTabStrip xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.hong.app.rxjavatest.CustomViews.CustomPagerSlidingTabStrip
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="@dimen/mdl_viewpager_with_tabs_height"

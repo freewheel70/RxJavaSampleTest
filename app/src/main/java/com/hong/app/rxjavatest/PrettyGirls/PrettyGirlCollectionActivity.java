@@ -1,6 +1,7 @@
 package com.hong.app.rxjavatest.PrettyGirls;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -127,5 +128,10 @@ public class PrettyGirlCollectionActivity extends AppCompatActivity {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 }

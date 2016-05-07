@@ -51,6 +51,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        app:itemIconTint="#F06292"
         app:menu="@menu/activity_main_drawer" />
 
 

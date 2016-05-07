@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tabStrip.setTextColor(getResources().getColor(android.R.color.white));
         tabStrip.setTextSize(getTextSize());
         tabStrip.setDividerColor(getResources().getColor(android.R.color.transparent));
-        tabStrip.setBackgroundColor(getResources().getColor(R.color.tab_bg_color));
+        tabStrip.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         tabStrip.setIndicatorColor(getResources().getColor(R.color.tab_indicator_color));
         tabStrip.setUnderlineColor(getResources().getColor(android.R.color.white));
         tabStrip.setUnderlineHeight(tabStrip.getIndicatorHeight());

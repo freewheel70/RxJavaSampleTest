@@ -41,7 +41,6 @@
 
         <activity
             android:name=".PrettyGirls.PrettyGirlCollectionActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
