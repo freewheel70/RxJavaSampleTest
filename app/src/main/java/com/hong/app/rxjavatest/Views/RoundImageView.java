@@ -1,8 +1,6 @@
 package com.hong.app.rxjavatest.Views;
 
-/**
- * Created by ftuser on 4/6/15.
- */
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -31,7 +29,7 @@ public class RoundImageView extends ImageView {
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
 
     private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
-    private static final int COLORDRAWABLE_DIMENSION = 2;
+    private static final int COLOR_DRAWABLE_DIMENSION = 2;
 
     // 圆形边框的厚度默认值。
     // 如果是0，则没有天蓝色渐变的边框。
@@ -231,8 +229,8 @@ public class RoundImageView extends ImageView {
             Bitmap bitmap;
 
             if (drawable instanceof ColorDrawable) {
-                bitmap = Bitmap.createBitmap(COLORDRAWABLE_DIMENSION,
-                        COLORDRAWABLE_DIMENSION, BITMAP_CONFIG);
+                bitmap = Bitmap.createBitmap(COLOR_DRAWABLE_DIMENSION,
+                        COLOR_DRAWABLE_DIMENSION, BITMAP_CONFIG);
             } else {
                 bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
                         drawable.getIntrinsicHeight(), BITMAP_CONFIG);
