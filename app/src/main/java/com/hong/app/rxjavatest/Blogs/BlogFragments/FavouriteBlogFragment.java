@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 
 import com.hong.app.rxjavatest.Blogs.BlogBean;
 import com.hong.app.rxjavatest.Events.ServerSyncBlogEvent;
+import com.hong.app.rxjavatest.R;
 import com.hong.app.rxjavatest.database.Blog;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
@@ -28,9 +28,14 @@ public class FavouriteBlogFragment extends BaseBlogFragment {
 
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        EventBus.getDefault().register(this);
 
         return view;
+    }
+
+    @Override
+    protected void initViews() {
+        super.initViews();
+        noContentWarning.setText(getString(R.string.no_favourite_content_warning));
     }
 
     @Override
@@ -57,6 +62,5 @@ public class FavouriteBlogFragment extends BaseBlogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        EventBus.getDefault().unregister(this);
     }
 }

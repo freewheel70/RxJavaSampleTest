@@ -58,6 +58,8 @@
     <string name="save_image_title">保存图片</string>
     <string name="save_image_hint">保存此图片到您的手机上？</string>
     <string name="alert_cancel">取消</string>
+    <string name="no_content_in_page">啊，内容不见了，点击右下角刷新一下吧！</string>
+    <string name="no_favourite_content_warning">O.O 你还没收藏任何文章，快快去收藏吧！</string>
 
 
 </resources>

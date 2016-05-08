@@ -14,6 +14,7 @@ import com.hong.app.rxjavatest.Blogs.BlogBean;
 import com.hong.app.rxjavatest.Blogs.BlogBrowserActivity;
 import com.hong.app.rxjavatest.R;
 import com.hong.app.rxjavatest.Utils.DateUtil;
+import com.hong.app.rxjavatest.Views.SimpleRecyclerViewItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,11 @@ public class BaseBlogFragment extends BasePageFragment {
     @Override
     protected int getContainerViewId() {
         return R.layout.fragment_base_list;
+    }
+
+    @Override
+    protected void addItemDecoration() {
+        recyclerView.addItemDecoration(new SimpleRecyclerViewItemDecoration());
     }
 
     @Override
@@ -72,6 +78,10 @@ public class BaseBlogFragment extends BasePageFragment {
     public void onResume() {
         Log.d(TAG, "onResume");
         super.onResume();
+        if (blogBeanList.size() == 0) {
+            noContentWarning.setVisibility(View.VISIBLE);
+            sendRequest();
+        }
     }
 
     @Override
@@ -90,12 +100,17 @@ public class BaseBlogFragment extends BasePageFragment {
                 .subscribe(new Subscriber<List<BlogBean>>() {
                     @Override
                     public void onCompleted() {
-
+                        if (blogBeanList.size() > 0) {
+                            noContentWarning.setVisibility(View.INVISIBLE);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         enableRequest();
+                        if (blogBeanList.size() == 0) {
+                            noContentWarning.setVisibility(View.VISIBLE);
+                        }
                     }
 
                     @Override

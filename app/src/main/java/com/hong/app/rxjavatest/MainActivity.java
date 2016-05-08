@@ -2,10 +2,12 @@ package com.hong.app.rxjavatest;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -23,9 +25,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.blunderer.materialdesignlibrary.adapters.ViewPagerAdapter;
-import com.blunderer.materialdesignlibrary.handlers.ViewPagerHandler;
-import com.blunderer.materialdesignlibrary.models.ViewPagerItem;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.AndroidBlogFragment;
@@ -36,7 +35,6 @@ import com.hong.app.rxjavatest.Blogs.BlogFragments.FrontBlogFragment;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.IOSBlogFragment;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.ResourceBlogFragment;
 import com.hong.app.rxjavatest.Blogs.BlogFragments.VideoBlogFragment;
-import com.hong.app.rxjavatest.CustomViews.CustomPagerSlidingTabStrip;
 import com.hong.app.rxjavatest.Events.ServerSyncBlogEvent;
 import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlCollectionActivity;
 import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlFragment;
@@ -57,8 +55,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        com.blunderer.materialdesignlibrary.interfaces.ViewPager {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
     private static final int LOGIN_REQUEST_CODE = 11;
@@ -67,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
 
     @Bind(R.id.tabs)
-    CustomPagerSlidingTabStrip tabStrip;
+    TabLayout tabLayout;
 
     @Bind(R.id.view_pager)
     ViewPager viewPager;
@@ -84,10 +81,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView avatar;
     private TextView userName;
 
-    private ViewPager.OnPageChangeListener onPageChangeListener;
-    private List<ViewPagerItem> pagerItems = new ArrayList<>();
-    private ViewPagerAdapter pagerAdapter;
     private LayoutInflater inflater;
+
+    private List<String> tabTitles = new ArrayList<>();
+    FreeFragmentPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,10 +97,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         inflater = LayoutInflater.from(this);
 
-        initPageItems();
+        initTabTitles();
         initViewPager();
         initNavHeaderView();
         initViews();
+    }
+
+    private void initTabTitles() {
+
+        tabTitles.add(getString(R.string.favourite_blogs_title));
+        tabTitles.add(getString(R.string.android_blogs_title));
+        tabTitles.add(getString(R.string.pretty_blogs_title));
+        tabTitles.add(getString(R.string.IOS_blogs_title));
+        tabTitles.add(getString(R.string.front_blogs_title));
+        tabTitles.add(getString(R.string.resource_blogs_title));
+        tabTitles.add(getString(R.string.app_blogs_title));
+        tabTitles.add(getString(R.string.video_blogs_title));
+        tabTitles.add(getString(R.string.cool_blogs_title));
     }
 
     private void initNavHeaderView() {
@@ -137,58 +147,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    public static class FragmentItem {
-        public BasePageFragment fragment;
-        public String name;
-
-        public FragmentItem(BasePageFragment fragment, String name) {
-            this.fragment = fragment;
-            this.name = name;
-        }
-    }
-
-    List<FragmentItem> fragmentItemList = new ArrayList<>();
-
-    private void initPageItems() {
-
-        AndroidBlogFragment androidBlogFragment = new AndroidBlogFragment();
-        PrettyGirlFragment prettyGirlFragment = new PrettyGirlFragment();
-        IOSBlogFragment iosBlogFragment = new IOSBlogFragment();
-        FrontBlogFragment frontBlogFragment = new FrontBlogFragment();
-        VideoBlogFragment videoBlogFragment = new VideoBlogFragment();
-        ResourceBlogFragment resourceBlogFragment = new ResourceBlogFragment();
-        AppBlogFragment appBlogFragment = new AppBlogFragment();
-        CoolBlogFragment coolBlogFragment = new CoolBlogFragment();
-        FavouriteBlogFragment favouriteBlogFragment = new FavouriteBlogFragment();
-
-        fragmentItemList.add(new FragmentItem(favouriteBlogFragment, getString(R.string.favourite_blogs_title)));
-        fragmentItemList.add(new FragmentItem(androidBlogFragment,  getString(R.string.android_blogs_title)));
-        fragmentItemList.add(new FragmentItem(prettyGirlFragment, getString(R.string.pretty_blogs_title)));
-        fragmentItemList.add(new FragmentItem(iosBlogFragment,  getString(R.string.IOS_blogs_title)));
-        fragmentItemList.add(new FragmentItem(frontBlogFragment,  getString(R.string.front_blogs_title)));
-        fragmentItemList.add(new FragmentItem(resourceBlogFragment,  getString(R.string.resource_blogs_title)));
-        fragmentItemList.add(new FragmentItem(appBlogFragment,  getString(R.string.app_blogs_title)));
-        fragmentItemList.add(new FragmentItem(videoBlogFragment,  getString(R.string.video_blogs_title)));
-        fragmentItemList.add(new FragmentItem(coolBlogFragment, getString(R.string.cool_blogs_title) ));
-
-        ViewPagerHandler viewPagerHandler = new ViewPagerHandler(this);
-        for (int i = 0; i < fragmentItemList.size(); i++) {
-            FragmentItem fragmentItem = fragmentItemList.get(i);
-            viewPagerHandler.addPage(fragmentItem.name, fragmentItem.fragment);
-        }
-
-        pagerItems = viewPagerHandler.getViewPagerItems();
-
-    }
-
     private void initViewPager() {
-        pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), pagerItems);
-        viewPager.setAdapter(pagerAdapter);
 
-        int defaultViewPagerPageSelectedPosition = defaultViewPagerPageSelectedPosition();
-        selectPage(defaultViewPagerPageSelectedPosition);
-        showTabs();
+        adapter = new FreeFragmentPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
 
+        tabLayout.setupWithViewPager(viewPager);
+
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
     }
 
 
@@ -203,55 +169,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(avatar);
-    }
-
-    @Override
-    public ViewPagerHandler getViewPagerHandler() {
-        return null;
-    }
-
-    @Override
-    public void selectPage(int position) {
-        viewPager.setCurrentItem(position);
-    }
-
-    @Override
-    public void setOnPageChangeListener(ViewPager.OnPageChangeListener onPageChangeListener) {
-        this.onPageChangeListener = onPageChangeListener;
-    }
-
-    @Override
-    public void updateNavigationDrawerTopHandler(ViewPagerHandler viewPagerHandler, int defaultViewPagerPageSelectedPosition) {
-        if (viewPagerHandler == null) {
-            viewPagerHandler = new ViewPagerHandler(this);
-        }
-        pagerItems.clear();
-        pagerItems.addAll(viewPagerHandler.getViewPagerItems());
-        pagerAdapter.notifyDataSetChanged();
-
-        selectPage(defaultViewPagerPageSelectedPosition);
-        showTabs();
-    }
-
-    @Override
-    public int defaultViewPagerPageSelectedPosition() {
-        return 0;
-    }
-
-    private void showTabs() {
-        tabStrip.setTextColor(getResources().getColor(android.R.color.white));
-        tabStrip.setTextSize(getTextSize());
-        tabStrip.setDividerColor(getResources().getColor(android.R.color.transparent));
-        tabStrip.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        tabStrip.setIndicatorColor(getResources().getColor(R.color.tab_indicator_color));
-        tabStrip.setUnderlineColor(getResources().getColor(android.R.color.white));
-        tabStrip.setUnderlineHeight(tabStrip.getIndicatorHeight());
-        tabStrip.setShouldExpand(true);
-        tabStrip.setOnPageChangeListener(onPageChangeListener);
-        tabStrip.setViewPager(viewPager);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            tabStrip.setTabBackground(android.R.attr.selectableItemBackground);
-        }
     }
 
 
@@ -270,8 +187,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @OnClick(R.id.fab)
     public void clickFab(View view) {
         int currentItem = viewPager.getCurrentItem();
-        FragmentItem fragmentItem = fragmentItemList.get(currentItem);
-        fragmentItem.fragment.sendRequest();
+        EventBus.getDefault().post(new BasePageFragment.RefreshEvent(currentItem));
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -316,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (event.success) {
             Toast.makeText(MainActivity.this, getString(R.string.sync_server_success), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(MainActivity.this, getString(R.string.sync_server_fail) +" : "+ event.message, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getString(R.string.sync_server_fail) + " : " + event.message, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -350,5 +266,65 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 })
                 .show();
+    }
+
+    class FreeFragmentPagerAdapter extends FragmentPagerAdapter {
+
+        public FreeFragmentPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+
+        @Override
+        public BasePageFragment getItem(int position) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("pos", position);
+            BasePageFragment basePageFragment;
+            switch (position) {
+                case 0:
+                    basePageFragment = new FavouriteBlogFragment();
+                    break;
+                case 1:
+                    basePageFragment = new AndroidBlogFragment();
+                    break;
+                case 2:
+                    basePageFragment = new PrettyGirlFragment();
+                    break;
+                case 3:
+                    basePageFragment = new IOSBlogFragment();
+                    break;
+                case 4:
+                    basePageFragment = new FrontBlogFragment();
+                    break;
+                case 5:
+                    basePageFragment = new VideoBlogFragment();
+                    break;
+                case 6:
+                    basePageFragment = new ResourceBlogFragment();
+                    break;
+                case 7:
+                    basePageFragment = new AppBlogFragment();
+                    break;
+                case 8:
+                    basePageFragment = new CoolBlogFragment();
+                    break;
+                default:
+                    basePageFragment = new FavouriteBlogFragment();
+            }
+            basePageFragment.setArguments(bundle);
+
+            return basePageFragment;
+        }
+
+        @Override
+        public int getCount() {
+
+            return tabTitles.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return tabTitles.get(position);
+        }
     }
 }

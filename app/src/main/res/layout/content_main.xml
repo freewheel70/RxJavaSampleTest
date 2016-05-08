@@ -14,18 +14,15 @@
         android:layout_height="match_parent"
         android:background="@color/WHITE">
 
-        <com.hong.app.rxjavatest.CustomViews.CustomPagerSlidingTabStrip
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <android.support.design.widget.TabLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="@dimen/mdl_viewpager_with_tabs_height"
-            android:background="?attr/colorPrimary"
-            app:pstsDividerColor="?attr/colorPrimaryDark"
-            app:pstsIndicatorColor="@android:color/white"
-            app:pstsIndicatorHeight="5dp"
-            app:pstsTextAllCaps="false"
-            app:pstsUnderlineColor="@android:color/transparent"
-            app:pstsUnderlineHeight="0dp" />
+            app:tabBackground="@color/colorPrimary"
+            app:tabIndicatorColor="@color/WHITE"
+            app:tabMode="scrollable"
+            app:tabTextColor="@color/tab_text_color"
+            app:tabSelectedTextColor="@color/WHITE" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"

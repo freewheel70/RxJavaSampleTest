@@ -39,8 +39,22 @@ public class PrettyGirlFragment extends BasePageFragment {
     }
 
     @Override
+    protected void addItemDecoration() {
+        //do nothing temporarily
+    }
+
+    @Override
     protected void initViews() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (prettyList.size() == 0) {
+            noContentWarning.setVisibility(View.VISIBLE);
+            sendRequest();
+        }
     }
 
     @Override
@@ -72,12 +86,17 @@ public class PrettyGirlFragment extends BasePageFragment {
                 .subscribe(new Subscriber<List<BlogBean>>() {
                     @Override
                     public void onCompleted() {
-
+                        if (prettyList.size() > 0) {
+                            noContentWarning.setVisibility(View.INVISIBLE);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         enableRequest();
+                        if (prettyList.size() == 0) {
+                            noContentWarning.setVisibility(View.VISIBLE);
+                        }
                     }
 
                     @Override

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2196F3</color>
-    <color name="colorPrimaryDark">#1E88E5</color>
-    <color name="colorAccent">#AB47BC</color>
+    <color name="colorPrimary">#00BCD4</color>
+    <color name="colorPrimaryDark">#00A0B4</color>
+    <color name="colorAccent">#FF4081</color>
     <color name="WHITE">#fff</color>
     <color name="tab_bg_color">#42A5F5</color>
     <color name="tab_indicator_color">#B2FF59</color>
@@ -14,4 +14,5 @@
     <color name="dark_green">#00695C</color>
     <color name="dark_red">#D84315</color>
     <color name="username_title_color">#795548</color>
+    <color name="tab_text_color">#B2EBF2</color>
 </resources>

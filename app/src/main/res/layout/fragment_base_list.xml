@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -19,11 +20,28 @@
         android:visibility="invisible" />
 
     <ProgressBar
-        android:visibility="invisible"
         android:id="@+id/center_progress_bar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_above="@+id/no_content_warning"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="20dp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/no_content_warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:paddingBottom="50dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:text="@string/no_content_in_page"
+        android:textColor="@color/common_item_via"
+        android:textSize="@dimen/no_content_warning_text_size"
+        android:visibility="invisible"
+        tools:visibility="visible" />
 
 </RelativeLayout>

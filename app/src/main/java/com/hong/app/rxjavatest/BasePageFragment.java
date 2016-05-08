@@ -11,6 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,6 +35,10 @@ public abstract class BasePageFragment extends Fragment {
     @Bind(R.id.center_progress_bar)
     protected ProgressBar centerProgressBar;
 
+    @Bind(R.id.no_content_warning)
+    protected TextView noContentWarning;
+
+
     protected RecyclerView.Adapter adapter;
     protected LayoutInflater inflater;
 
@@ -43,6 +51,7 @@ public abstract class BasePageFragment extends Fragment {
     protected boolean hasInitFirstPage = false;
     protected boolean isRequesting = false;
 
+    protected int position = 0;
 
     @Nullable
     @Override
@@ -51,6 +60,11 @@ public abstract class BasePageFragment extends Fragment {
         View view = inflater.inflate(getContainerViewId(), container, false);
         ButterKnife.bind(this, view);
         this.inflater = inflater;
+        EventBus.getDefault().register(this);
+
+        Bundle bundle = getArguments();
+        position = bundle.getInt("pos", 0);
+
         initRecyclerView();
         initViews();
 
@@ -74,6 +88,9 @@ public abstract class BasePageFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
+        addItemDecoration();
 
         initAdapter();
 
@@ -101,6 +118,8 @@ public abstract class BasePageFragment extends Fragment {
         });
     }
 
+    protected abstract void addItemDecoration();
+
     protected abstract int getDataListSize();
 
     protected abstract void initAdapter();
@@ -127,6 +146,31 @@ public abstract class BasePageFragment extends Fragment {
 
     protected abstract void sendRequest();
 
+    @Subscribe
+    public void refreshIfNeed(RefreshEvent refreshEvent) {
+        Log.d(TAG, "refreshIfNeed() called with: " + "refreshEvent = [" + refreshEvent + "]");
+        int diff = refreshEvent.position - this.position;
+        if (diff > -2 && diff < 2) {
+            sendRequest();
+        }
+    }
+
+
+    public static class RefreshEvent {
+        public int position;
+
+        public RefreshEvent(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public String toString() {
+            return "RefreshEvent{" +
+                    "position=" + position +
+                    '}';
+        }
+    }
+
     protected void refreshRecyclerView() {
         adapter.notifyDataSetChanged();
         currentPage++;
@@ -143,6 +187,7 @@ public abstract class BasePageFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         Log.d(TAG, "onDestroyView");
+        EventBus.getDefault().unregister(this);
 //        ButterKnife.unbind(this);
     }
 }
