@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#90CAF9"
     android:fitsSystemWindows="true"
+    android:background="@color/tab_text_color"
     tools:context=".profile.LoginActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -133,6 +133,7 @@
 
 
         <RelativeLayout
+
             android:id="@+id/username_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

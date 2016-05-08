@@ -116,6 +116,7 @@ public abstract class BasePageFragment extends Fragment {
 
             }
         });
+
     }
 
     protected abstract void addItemDecoration();

@@ -297,13 +297,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     basePageFragment = new FrontBlogFragment();
                     break;
                 case 5:
-                    basePageFragment = new VideoBlogFragment();
+                    basePageFragment = new ResourceBlogFragment();
+
                     break;
                 case 6:
-                    basePageFragment = new ResourceBlogFragment();
+                    basePageFragment = new AppBlogFragment();
                     break;
                 case 7:
-                    basePageFragment = new AppBlogFragment();
+                    basePageFragment = new VideoBlogFragment();
                     break;
                 case 8:
                     basePageFragment = new CoolBlogFragment();
