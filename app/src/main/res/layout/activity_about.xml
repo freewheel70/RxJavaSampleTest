@@ -29,12 +29,13 @@
         android:layout_marginTop="30dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.hong.app.rxjavatest.Views.RoundImageView
+        <com.hong.app.rxjavatest.Views.CustomImageView
             android:id="@+id/app_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_launcher"
+            app:type="circle"/>
 
         <TextView
             android:id="@+id/app_name"

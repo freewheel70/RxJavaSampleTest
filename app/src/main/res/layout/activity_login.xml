@@ -24,13 +24,14 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.hong.app.rxjavatest.Views.RoundImageView
+    <com.hong.app.rxjavatest.Views.CustomImageView
         android:id="@+id/avatar"
         android:layout_width="@dimen/avatar_size"
         android:layout_height="@dimen/avatar_size"
         android:layout_gravity="top"
         android:layout_marginTop="30dp"
         android:src="@mipmap/ic_launcher"
+        app:type="circle"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 

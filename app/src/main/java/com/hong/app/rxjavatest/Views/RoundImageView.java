@@ -24,6 +24,7 @@ import android.widget.ImageView;
  * RoundImageView
  *
  */
+@Deprecated
 public class RoundImageView extends ImageView {
 
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
