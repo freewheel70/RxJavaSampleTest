@@ -1,5 +1,6 @@
 package com.hong.app.rxjavatest.network;
 
+import com.hong.app.rxjavatest.Constant;
 import com.hong.app.rxjavatest.database.Blog;
 import com.hong.app.rxjavatest.database.User;
 
@@ -23,8 +24,8 @@ public class BlogNetworkManager {
 
             JSONObject jsonObject = new JSONObject();
             User user = User.getUser();
-            jsonObject.put("username", user.username);
-            jsonObject.put("password", user.password);
+            jsonObject.put(Constant.JSON_KEY_USER_NAME, user.username);
+            jsonObject.put(Constant.JSON_KEY_PASSWORD, user.password);
 
             JSONArray jsonArray = new JSONArray();
 
@@ -60,8 +61,8 @@ public class BlogNetworkManager {
         try {
             JSONObject jsonObject = new JSONObject();
             User user = User.getUser();
-            jsonObject.put("username", user.username);
-            jsonObject.put("password", user.password);
+            jsonObject.put(Constant.JSON_KEY_USER_NAME, user.username);
+            jsonObject.put(Constant.JSON_KEY_PASSWORD, user.password);
 
             String response = OKHttpHelper.postJson(NetworkURLConstant.GET_MY_BLOGS_URL, jsonObject.toString());
 

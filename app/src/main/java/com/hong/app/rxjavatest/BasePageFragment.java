@@ -3,6 +3,7 @@ package com.hong.app.rxjavatest;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -176,6 +177,13 @@ public abstract class BasePageFragment extends Fragment {
         adapter.notifyDataSetChanged();
         currentPage++;
         enableRequest();
+    }
+
+    protected void showErrorMsg(String message) {
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.network_reuqest_title)
+                .setMessage(getString(R.string.network_reuqest_error_warning) + message)
+                .show();
     }
 
     protected void enableRequest() {

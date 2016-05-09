@@ -10,7 +10,6 @@ import org.json.JSONException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,21 +31,17 @@ public class GankNetworkManager {
     public @interface GankType {
     }
 
-    public static List<BlogBean> getBlogList(@GankType String type, int size, int page) {
+    public static List<BlogBean> getBlogList(@GankType String type, int size, int page) throws JSONException, ParseException {
 
-        String urlStr = "https://gank.io/api/data/" + type + "/" + size + "/" + page;
+        String urlStr = generateUrlString(type, size, page);
         String response = OKHttpHelper.sendGetRequest(urlStr);
 
-        try {
-            return BeanDeserializer.deserialize(response);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        return BeanDeserializer.deserialize(response);
 
-        return new ArrayList<>();
+    }
 
+    private static String generateUrlString(@GankType String type, int size, int page) {
+        return "https://gank.io/api/data/" + type + "/" + size + "/" + page;
     }
 
 

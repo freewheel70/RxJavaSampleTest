@@ -60,6 +60,8 @@
     <string name="alert_cancel">取消</string>
     <string name="no_content_in_page">啊，内容不见了，点击右下角刷新一下吧！</string>
     <string name="no_favourite_content_warning">O.O 你还没收藏任何文章，快快去收藏吧！</string>
+    <string name="network_reuqest_title">数据请求错误</string>
+    <string name="network_reuqest_error_warning">啊！出错了！请把后面的内容告诉程序猿——</string>
 
 
 </resources>

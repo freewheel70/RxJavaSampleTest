@@ -1,14 +1,9 @@
 package com.hong.app.rxjavatest.PrettyGirls;
 
-import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.hong.app.rxjavatest.BasePageFragment;
 import com.hong.app.rxjavatest.Blogs.BlogBean;
 import com.hong.app.rxjavatest.R;
@@ -17,8 +12,6 @@ import com.hong.app.rxjavatest.network.GankNetworkManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -66,7 +59,7 @@ public class PrettyGirlFragment extends BasePageFragment {
 
     @Override
     protected void initAdapter() {
-        adapter = new BeautyAdapter();
+        adapter = new PrettyAdapter(getActivity(),inflater,prettyList);
         recyclerView.setAdapter(adapter);
     }
 
@@ -76,9 +69,16 @@ public class PrettyGirlFragment extends BasePageFragment {
                 .create(new Observable.OnSubscribe<List<BlogBean>>() {
                     @Override
                     public void call(Subscriber<? super List<BlogBean>> subscriber) {
-                        List<BlogBean> girlList = GankNetworkManager.getBlogList(GankNetworkManager.TYPE_WELFARE, SIZE_OF_IMAGES_PER_REQUEST, currentPage);
-                        subscriber.onNext(girlList);
-                        subscriber.onCompleted();
+                        List<BlogBean> girlList = null;
+                        try {
+                            girlList = GankNetworkManager.getBlogList(GankNetworkManager.TYPE_WELFARE, SIZE_OF_IMAGES_PER_REQUEST, currentPage);
+                            subscriber.onNext(girlList);
+                            subscriber.onCompleted();
+                        }  catch (Exception e) {
+                            e.printStackTrace();
+                            subscriber.onError(e);
+                        }
+
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -93,6 +93,7 @@ public class PrettyGirlFragment extends BasePageFragment {
 
                     @Override
                     public void onError(Throwable e) {
+                        showErrorMsg(e.getMessage());
                         enableRequest();
                         if (prettyList.size() == 0) {
                             noContentWarning.setVisibility(View.VISIBLE);
@@ -110,55 +111,12 @@ public class PrettyGirlFragment extends BasePageFragment {
     }
 
 
+
+
     @Override
     protected int getDataListSize() {
         return prettyList.size();
     }
 
 
-    public class BeautyAdapter extends RecyclerView.Adapter<BeautyViewholder> {
-
-        @Override
-        public BeautyViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = inflater.inflate(R.layout.item_beauty, parent, false);
-            BeautyViewholder viewholder = new BeautyViewholder(view);
-            return viewholder;
-        }
-
-        @Override
-        public void onBindViewHolder(BeautyViewholder holder, int position) {
-
-            final BlogBean blogBean = prettyList.get(position);
-            final String imageStr = blogBean.getUrl();
-
-            Glide.with(PrettyGirlFragment.this)
-                    .load(imageStr)
-                    .into(holder.image);
-
-            holder.image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), PrettyGirlDetailActivity.class);
-                    intent.putExtra(PrettyGirlDetailActivity.EXTRA_PRETTY, blogBean);
-                    startActivity(intent);
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return prettyList.size();
-        }
-    }
-
-    public class BeautyViewholder extends RecyclerView.ViewHolder {
-
-        @Bind(R.id.image)
-        ImageView image;
-
-        public BeautyViewholder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
 }
