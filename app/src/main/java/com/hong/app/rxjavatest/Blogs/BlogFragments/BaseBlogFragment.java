@@ -80,7 +80,11 @@ public abstract class BaseBlogFragment extends BasePageFragment {
     }
 
     @Override
-    protected void sendRequest() {
+    protected boolean sendRequest() {
+
+        if (!super.sendRequest()){
+            return false;
+        }
 
         Observable.create(new rx.Observable.OnSubscribe<List<BlogBean>>() {
             @Override
@@ -122,6 +126,8 @@ public abstract class BaseBlogFragment extends BasePageFragment {
                         refreshRecyclerView();
                     }
                 });
+
+        return true;
     }
 
     protected void refreshDataList(List<BlogBean> beanList) {

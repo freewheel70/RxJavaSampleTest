@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import com.hong.app.rxjavatest.Views.RoundImageView;
+import com.hong.app.rxjavatest.Views.CustomImageView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,7 +21,7 @@ public class AboutActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     @Bind(R.id.app_icon)
-    RoundImageView appIcon;
+    CustomImageView appIcon;
 
     @Bind(R.id.app_name)
     TextView appName;

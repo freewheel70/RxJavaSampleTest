@@ -140,13 +140,19 @@ public abstract class BasePageFragment extends Fragment {
     }
 
     protected void requestOneMorePage() {
-
-        isRequesting = true;
-
         sendRequest();
     }
 
-    protected abstract void sendRequest();
+    protected boolean sendRequest() {
+        if (isRequesting) {
+            Log.d(TAG, "sendRequest: isRequesting true, ignore current request");
+            return false;
+        }
+
+        isRequesting = true;
+
+        return true;
+    }
 
     @Subscribe
     public void refreshIfNeed(RefreshEvent refreshEvent) {

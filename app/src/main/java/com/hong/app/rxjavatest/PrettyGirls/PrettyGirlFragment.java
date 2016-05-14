@@ -64,7 +64,12 @@ public class PrettyGirlFragment extends BasePageFragment {
     }
 
     @Override
-    protected void sendRequest() {
+    protected boolean sendRequest() {
+
+        if(!super.sendRequest()){
+            return false;
+        }
+
         Observable
                 .create(new Observable.OnSubscribe<List<BlogBean>>() {
                     @Override
@@ -108,6 +113,8 @@ public class PrettyGirlFragment extends BasePageFragment {
 
 
                 });
+
+        return true;
     }
 
 
