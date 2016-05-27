@@ -57,6 +57,17 @@ public class Blog extends BaseModel {
         super();
     }
 
+    public Blog(String author, String blogID, String description, boolean isRemoved, boolean isSynced, Date publishedAt, String type, String url) {
+        this.author = author;
+        this.blogID = blogID;
+        this.description = description;
+        this.isRemoved = isRemoved;
+        this.isSynced = isSynced;
+        this.publishedAt = publishedAt;
+        this.type = type;
+        this.url = url;
+    }
+
     public Blog(BlogBean blogBean) {
         blogID = blogBean.getId();
         description = blogBean.getDescription();
@@ -109,15 +120,13 @@ public class Blog extends BaseModel {
         String blogID = jsonObject.getString("blogID");
         Blog blog = getBlogById(blogID);
         if (blog == null) {
-            blog = new Blog();
-            blog.blogID = blogID;
-            blog.author = jsonObject.getString("author");
-            blog.url = jsonObject.getString("url");
-            blog.type = jsonObject.optString("type");
-            blog.description = jsonObject.getString("description");
-            blog.publishedAt = new Date(jsonObject.getLong("publishedAt"));
-            blog.isRemoved = jsonObject.getBoolean("isRemoved");
-            blog.isSynced = true;
+            String author = jsonObject.getString("author");
+            String url = jsonObject.getString("url");
+            String type = jsonObject.optString("type");
+            String description = jsonObject.getString("description");
+            Date publishedAt = new Date(jsonObject.getLong("publishedAt"));
+            boolean isRemoved = jsonObject.getBoolean("isRemoved");
+            blog = new Blog(author, blogID, description, isRemoved, true, publishedAt, type, url);
         } else {
             blog.isRemoved = jsonObject.getBoolean("isRemoved");
         }

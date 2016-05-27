@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private LayoutInflater inflater;
 
     private List<String> tabTitles = new ArrayList<>();
-    FreeFragmentPagerAdapter adapter;
+    private FreeFragmentPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

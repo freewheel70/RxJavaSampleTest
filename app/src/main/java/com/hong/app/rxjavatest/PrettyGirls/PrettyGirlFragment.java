@@ -24,7 +24,12 @@ public class PrettyGirlFragment extends BasePageFragment {
 
     private static final String TAG = "PrettyGirlFragment";
 
-    List<BlogBean> prettyList = new ArrayList<>();
+    List<BlogBean> prettyList;
+
+    public PrettyGirlFragment() {
+        super();
+        prettyList = new ArrayList<>();
+    }
 
     @Override
     protected int getContainerViewId() {

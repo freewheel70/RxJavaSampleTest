@@ -51,8 +51,8 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    BlogBean prettyBean;
-    String beautyImageUrlStr;
+    private BlogBean prettyBean;
+    private String beautyImageUrlStr;
     private boolean isImageStared = false;
     private boolean fromCollection = false;
 

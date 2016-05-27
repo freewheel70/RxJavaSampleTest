@@ -23,7 +23,7 @@ public class FreeGankApplication extends Application {
         return application;
     }
 
-    int activityNum = 0;
+    private int activityNum = 0;
 
     @Override
     public void onCreate() {

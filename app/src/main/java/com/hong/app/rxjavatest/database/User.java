@@ -25,6 +25,10 @@ public class User extends BaseModel {
     @Column
     public String password;
 
+    public User() {
+        super();
+    }
+
     public static User getUser() {
         User user = SQLite.select()
                 .from(User.class)

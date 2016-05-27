@@ -28,16 +28,17 @@ public class BeanDeserializer {
 
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject object = jsonArray.getJSONObject(i);
-            BlogBean bean = new BlogBean();
-            bean.setId(object.optString(Constant.JSON_KEY_GANK_BLOG_ID));
-            bean.setUrl(object.optString(Constant.JSON_KEY_GANK_BLOG_URL));
-            bean.setDescription(object.optString(Constant.JSON_KEY_GANK_BLOG_DESC));
-            bean.setWho(object.optString(Constant.JSON_KEY_GANK_BLOG_AUTHOR));
-            bean.setType(object.optString(Constant.JSON_KEY_GANK_BLOG_TYPE));
+
+            String blogId = object.optString(Constant.JSON_KEY_GANK_BLOG_ID);
+            String blogUrl = object.optString(Constant.JSON_KEY_GANK_BLOG_URL);
+            String description = object.optString(Constant.JSON_KEY_GANK_BLOG_DESC);
+            String author = object.optString(Constant.JSON_KEY_GANK_BLOG_AUTHOR);
+            String type = object.optString(Constant.JSON_KEY_GANK_BLOG_TYPE);
 
             String dateStr = object.optString(Constant.JSON_KEY_GANK_BLOG_PUBLISH_TIME);
             Date date = dateFormat.parse(dateStr);
-            bean.setPublishedAt(date);
+
+            BlogBean bean = new BlogBean(dateStr,description,blogId,date,type,blogUrl,author);
 
             blogBeanList.add(bean);
         }

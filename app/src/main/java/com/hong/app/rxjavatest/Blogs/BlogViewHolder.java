@@ -16,21 +16,21 @@ import butterknife.ButterKnife;
 public class BlogViewHolder extends RecyclerView.ViewHolder {
 
     @Bind(R.id.description)
-    public TextView description;
+    TextView description;
 
     @Bind(R.id.data_via_tv)
-    public TextView author;
+    TextView author;
 
     @Bind(R.id.data_tag_tv)
-    public TextView tag;
+    TextView tag;
 
     @Bind(R.id.data_tag_ll)
-    public LinearLayout dataTagLl;
+    LinearLayout dataTagLl;
 
     @Bind(R.id.data_date_tv)
-    public TextView publishDate;
+    TextView publishDate;
 
-    public View itemView;
+    View itemView;
 
     public BlogViewHolder(View itemView) {
         super(itemView);

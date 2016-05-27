@@ -39,9 +39,9 @@ public class PrettyGirlCollectionActivity extends AppCompatActivity {
 
     List<File> beautyFileList = new ArrayList<>();
 
-    LayoutInflater inflater;
+    private LayoutInflater inflater;
 
-    BeautyAdapter adapter;
+    private BeautyAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
