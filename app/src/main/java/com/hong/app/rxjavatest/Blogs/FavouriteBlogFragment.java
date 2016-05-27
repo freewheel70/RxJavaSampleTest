@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.Blogs.BlogFragments;
+package com.hong.app.rxjavatest.Blogs;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hong.app.rxjavatest.Blogs.BlogBean;
 import com.hong.app.rxjavatest.Events.ServerSyncBlogEvent;
 import com.hong.app.rxjavatest.R;
 import com.hong.app.rxjavatest.database.Blog;

@@ -40,7 +40,7 @@ public class BlogNetworkManager {
 
             NetworkResponseResult responseResult = OKHttpHelper.deserializeResponse(response);
 
-            if (responseResult.success) {
+            if (responseResult.isSuccess()) {
                 for (int i = 0; i < blogList.size(); i++) {
                     Blog blog = blogList.get(i);
                     blog.isSynced = true;

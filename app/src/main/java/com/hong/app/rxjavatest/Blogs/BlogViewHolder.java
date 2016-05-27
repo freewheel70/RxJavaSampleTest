@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2016/5/9.
  */
-public class BlogViewHolder extends RecyclerView.ViewHolder {
+class BlogViewHolder extends RecyclerView.ViewHolder {
 
     @Bind(R.id.description)
     TextView description;

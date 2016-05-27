@@ -1,6 +1,5 @@
-package com.hong.app.rxjavatest.Blogs.BlogFragments;
+package com.hong.app.rxjavatest.Blogs;
 
-import com.hong.app.rxjavatest.Blogs.BlogBean;
 import com.hong.app.rxjavatest.network.GankNetworkManager;
 
 import org.json.JSONException;

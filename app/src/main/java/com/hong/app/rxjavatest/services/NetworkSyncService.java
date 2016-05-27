@@ -48,10 +48,10 @@ public class NetworkSyncService extends IntentService {
                     subscriber.onError(new Throwable("登录账号以同步云服务"));
                 } else {
                     NetworkResponseResult responseResult = BlogNetworkManager.getMyBlogs();
-                    if (responseResult.success) {
+                    if (responseResult.isSuccess()) {
                         subscriber.onCompleted();
                     } else {
-                        subscriber.onError(new Throwable(responseResult.message));
+                        subscriber.onError(new Throwable(responseResult.getMessage()));
                     }
 
                 }
@@ -86,10 +86,10 @@ public class NetworkSyncService extends IntentService {
                     subscriber.onError(new Throwable("登录账号以同步云服务"));
                 } else {
                     NetworkResponseResult responseResult = BlogNetworkManager.uploadNonSyncedBlogs();
-                    if (responseResult.success) {
+                    if (responseResult.isSuccess()) {
                         subscriber.onCompleted();
                     } else {
-                        subscriber.onError(new Throwable(responseResult.message));
+                        subscriber.onError(new Throwable(responseResult.getMessage()));
                     }
                 }
             }

@@ -167,10 +167,10 @@ public class LoginActivity extends AppCompatActivity {
             public void call(Subscriber<? super String> subscriber) {
                 NetworkResponseResult responseResult = AccountNetworkManager.signup(username, pass);
 
-                if (responseResult.success) {
+                if (responseResult.isSuccess()) {
                     subscriber.onCompleted();
                 } else {
-                    subscriber.onError(new Throwable(responseResult.message));
+                    subscriber.onError(new Throwable(responseResult.getMessage()));
                 }
             }
         })
@@ -211,10 +211,10 @@ public class LoginActivity extends AppCompatActivity {
             public void call(Subscriber<? super Object> subscriber) {
                 NetworkResponseResult responseResult = AccountNetworkManager.login(username, pass);
 
-                if (responseResult.success) {
+                if (responseResult.isSuccess()) {
                     subscriber.onCompleted();
                 } else {
-                    subscriber.onError(new Throwable(responseResult.message));
+                    subscriber.onError(new Throwable(responseResult.getMessage()));
                 }
             }
         })
@@ -355,7 +355,7 @@ public class LoginActivity extends AppCompatActivity {
     public void handlerServerSyncResult(ServerSyncBlogEvent event) {
 
         dismissProgressDialog();
-        if (event.success) {
+        if (event.isSuccess()) {
             deleteAllDataAndLogout();
         } else {
             showDeleteDataAlert();

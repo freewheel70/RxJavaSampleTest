@@ -31,9 +31,9 @@ public class OKHttpHelper {
         Request request = new Request.Builder()
                 .url(urlStr)
                 .build();
-        Response response = null;
+
         try {
-            response = client.newCall(request).execute();
+            Response response = client.newCall(request).execute();
             return response.body().string();
         } catch (IOException e) {
             e.printStackTrace();

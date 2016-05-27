@@ -16,8 +16,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/5/9.
  */
-public class BlogAdapter extends RecyclerView.Adapter<BlogViewHolder> {
-
+class BlogAdapter extends RecyclerView.Adapter<BlogViewHolder> {
 
     private LayoutInflater inflater;
     private List<BlogBean> blogBeanList;

@@ -27,14 +27,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.hong.app.rxjavatest.Blogs.BlogFragments.AndroidBlogFragment;
-import com.hong.app.rxjavatest.Blogs.BlogFragments.AppBlogFragment;
-import com.hong.app.rxjavatest.Blogs.BlogFragments.CoolBlogFragment;
-import com.hong.app.rxjavatest.Blogs.BlogFragments.FavouriteBlogFragment;
-import com.hong.app.rxjavatest.Blogs.BlogFragments.FrontBlogFragment;
-import com.hong.app.rxjavatest.Blogs.BlogFragments.IOSBlogFragment;
-import com.hong.app.rxjavatest.Blogs.BlogFragments.ResourceBlogFragment;
-import com.hong.app.rxjavatest.Blogs.BlogFragments.VideoBlogFragment;
+import com.hong.app.rxjavatest.Blogs.AndroidBlogFragment;
+import com.hong.app.rxjavatest.Blogs.AppBlogFragment;
+import com.hong.app.rxjavatest.Blogs.CoolBlogFragment;
+import com.hong.app.rxjavatest.Blogs.FavouriteBlogFragment;
+import com.hong.app.rxjavatest.Blogs.FrontBlogFragment;
+import com.hong.app.rxjavatest.Blogs.IOSBlogFragment;
+import com.hong.app.rxjavatest.Blogs.ResourceBlogFragment;
+import com.hong.app.rxjavatest.Blogs.VideoBlogFragment;
 import com.hong.app.rxjavatest.Events.ServerSyncBlogEvent;
 import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlCollectionActivity;
 import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlFragment;
@@ -229,10 +229,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handlerServerSyncResult(ServerSyncBlogEvent event) {
-        if (event.success) {
+        if (event.isSuccess()) {
             Toast.makeText(MainActivity.this, getString(R.string.sync_server_success), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(MainActivity.this, getString(R.string.sync_server_fail) + " : " + event.message, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getString(R.string.sync_server_fail) + " : " + event.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
     }

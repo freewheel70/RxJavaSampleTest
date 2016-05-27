@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.Blogs.BlogFragments;
+package com.hong.app.rxjavatest.Blogs;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;

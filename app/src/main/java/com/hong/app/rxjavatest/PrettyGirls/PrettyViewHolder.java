@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2016/5/9.
  */
-public class PrettyViewHolder extends RecyclerView.ViewHolder {
+class PrettyViewHolder extends RecyclerView.ViewHolder {
 
     @Bind(R.id.image)
     ImageView image;

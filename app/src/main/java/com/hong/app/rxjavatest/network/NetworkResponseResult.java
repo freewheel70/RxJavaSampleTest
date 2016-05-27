@@ -5,9 +5,17 @@ package com.hong.app.rxjavatest.network;
  */
 public class NetworkResponseResult {
 
-    public boolean success;
+    private boolean success;
 
-    public String message;
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
 
     public NetworkResponseResult(String message, boolean success) {
         this.message = message;
