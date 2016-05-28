@@ -12,11 +12,5 @@
         <attr name="borderRadius" />
         <attr name="type" />
     </declare-styleable>
-
-    <declare-styleable name="RefreshView">
-        <attr name="refreshType" format="enum">
-            <enum name="soup" value="0"/>
-        </attr>
-    </declare-styleable>
-
+    
 </resources>
