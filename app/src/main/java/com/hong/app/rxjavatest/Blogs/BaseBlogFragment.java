@@ -5,8 +5,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.hong.app.rxjavatest.BasePageFragment;
-import com.hong.app.rxjavatest.Blogs.BlogAdapter;
-import com.hong.app.rxjavatest.Blogs.BlogBean;
 import com.hong.app.rxjavatest.R;
 import com.hong.app.rxjavatest.Views.SimpleRecyclerViewItemDecoration;
 
@@ -109,6 +107,8 @@ public abstract class BaseBlogFragment extends BasePageFragment {
                         if (blogBeanList.size() > 0) {
                             noContentWarning.setVisibility(View.INVISIBLE);
                         }
+
+                        onItemsLoadComplete();
                     }
 
                     @Override
@@ -118,6 +118,7 @@ public abstract class BaseBlogFragment extends BasePageFragment {
                         if (blogBeanList.size() == 0) {
                             noContentWarning.setVisibility(View.VISIBLE);
                         }
+                        onItemsLoadComplete();
                     }
 
                     @Override

@@ -99,6 +99,7 @@ public class PrettyGirlFragment extends BasePageFragment {
                         if (prettyList.size() > 0) {
                             noContentWarning.setVisibility(View.INVISIBLE);
                         }
+                        onItemsLoadComplete();
                     }
 
                     @Override
@@ -108,6 +109,7 @@ public class PrettyGirlFragment extends BasePageFragment {
                         if (prettyList.size() == 0) {
                             noContentWarning.setVisibility(View.VISIBLE);
                         }
+                        onItemsLoadComplete();
                     }
 
                     @Override

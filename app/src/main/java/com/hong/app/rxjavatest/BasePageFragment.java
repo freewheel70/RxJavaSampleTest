@@ -3,6 +3,7 @@ package com.hong.app.rxjavatest;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,6 +40,9 @@ public abstract class BasePageFragment extends Fragment {
     @Bind(R.id.no_content_warning)
     protected TextView noContentWarning;
 
+    @Bind(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+
 
     protected RecyclerView.Adapter adapter;
     protected LayoutInflater inflater;
@@ -67,6 +71,7 @@ public abstract class BasePageFragment extends Fragment {
         position = bundle.getInt("pos", 0);
 
         initRecyclerView();
+        initSwipeRefreshLayout();
         initViews();
 
         if (!hasInitFirstPage) {
@@ -80,7 +85,6 @@ public abstract class BasePageFragment extends Fragment {
     }
 
     protected abstract int getContainerViewId();
-
 
     private void initRecyclerView() {
 
@@ -118,6 +122,35 @@ public abstract class BasePageFragment extends Fragment {
             }
         });
 
+    }
+
+
+    private void initSwipeRefreshLayout() {
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                refreshItems();
+            }
+        });
+
+    }
+    void refreshItems() {
+        // Load items
+        // ...
+
+        // Load complete
+
+        sendRequest();
+    }
+
+    protected void onItemsLoadComplete() {
+        // Update the adapter and notify data set changed
+        // ...
+
+        // Stop refresh animation
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     protected abstract void addItemDecoration();
