@@ -3,6 +3,7 @@ package com.hong.app.rxjavatest.database;
 import android.support.annotation.Nullable;
 
 import com.hong.app.rxjavatest.Blogs.BlogBean;
+import com.hong.app.rxjavatest.Utils.DateUtil;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ConflictAction;
 import com.raizlabs.android.dbflow.annotation.ModelContainer;
@@ -15,6 +16,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -115,7 +117,7 @@ public class Blog extends BaseModel {
     }
 
 
-    public static void createBlogFromJsonObject(JSONObject jsonObject) throws JSONException {
+    public static void createBlogFromJsonObject(JSONObject jsonObject) throws JSONException, ParseException {
 
         String blogID = jsonObject.getString("blogID");
         Blog blog = getBlogById(blogID);
@@ -124,11 +126,11 @@ public class Blog extends BaseModel {
             String url = jsonObject.getString("url");
             String type = jsonObject.optString("type");
             String description = jsonObject.getString("description");
-            Date publishedAt = new Date(jsonObject.getLong("publishedAt"));
-            boolean isRemoved = jsonObject.getBoolean("isRemoved");
+            Date publishedAt = DateUtil.toServerDate(jsonObject.getString("publishedAt"));
+            boolean isRemoved = jsonObject.getInt("isRemoved") == 1;
             blog = new Blog(author, blogID, description, isRemoved, true, publishedAt, type, url);
         } else {
-            blog.isRemoved = jsonObject.getBoolean("isRemoved");
+            blog.isRemoved = jsonObject.getInt("isRemoved") == 1;
         }
 
         blog.save();
@@ -140,7 +142,7 @@ public class Blog extends BaseModel {
         jsonObject.put("url", url);
         jsonObject.put("blogID", blogID);
         jsonObject.put("description", description);
-        jsonObject.put("publishedAt", publishedAt.getTime());
+        jsonObject.put("publishedAt", DateUtil.toServerAcceptableDateString(publishedAt));
         jsonObject.put("type", type);
         jsonObject.put("author", author);
         jsonObject.put("isRemoved", isRemoved);
@@ -162,5 +164,16 @@ public class Blog extends BaseModel {
 
     public static void deleteAll() {
         SQLite.delete().from(Blog.class).execute();
+    }
+
+    public static void resetBlogSyncStatus() {
+        List<Blog> allBlogs = SQLite.select()
+                .from(Blog.class)
+                .queryList();
+        for (int i = 0; i < allBlogs.size(); i++) {
+            Blog blog = allBlogs.get(i);
+            blog.isSynced = false;
+            blog.save();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.hong.app.rxjavatest.PrettyGirls;
 
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -34,6 +35,14 @@ public class PrettyGirlFragment extends BasePageFragment {
     @Override
     protected int getContainerViewId() {
         return R.layout.fragment_base_list;
+    }
+
+    @Override
+    protected void onRecyclerViewItemClick(int pos) {
+        BlogBean blogBean = prettyList.get(pos);
+        Intent intent = new Intent(getActivity(), PrettyGirlDetailActivity.class);
+        intent.putExtra(PrettyGirlDetailActivity.EXTRA_PRETTY, blogBean);
+        startActivity(intent);
     }
 
     @Override

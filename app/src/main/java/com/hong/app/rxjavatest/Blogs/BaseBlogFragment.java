@@ -1,5 +1,6 @@
 package com.hong.app.rxjavatest.Blogs;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
@@ -80,7 +81,7 @@ public abstract class BaseBlogFragment extends BasePageFragment {
     @Override
     protected boolean sendRequest() {
 
-        if (!super.sendRequest()){
+        if (!super.sendRequest()) {
             return false;
         }
 
@@ -138,4 +139,11 @@ public abstract class BaseBlogFragment extends BasePageFragment {
     protected abstract List<BlogBean> requestBlogList() throws JSONException, ParseException;
 
 
+    @Override
+    protected void onRecyclerViewItemClick(int pos) {
+        BlogBean blogBean = blogBeanList.get(pos);
+        Intent intent = new Intent(getActivity(), BlogBrowserActivity.class);
+        intent.putExtra(BlogBrowserActivity.EXTRA_BLOG, blogBean);
+        startActivity(intent);
+    }
 }

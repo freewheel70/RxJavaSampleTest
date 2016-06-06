@@ -15,7 +15,6 @@ import java.util.List;
 public class BlogNetworkManager {
 
 
-
     public static NetworkResponseResult uploadNonSyncedBlogs() {
 
         List<Blog> blogList = Blog.getAllNonSyncedFavouriteBlogs();
@@ -34,7 +33,7 @@ public class BlogNetworkManager {
                 jsonArray.put(object);
             }
 
-            jsonObject.put("marks", jsonArray);
+            jsonObject.put("blogs", jsonArray);
 
             String response = OKHttpHelper.postJson(NetworkURLConstant.UPLOAD_BLOGS_URL, jsonObject.toString());
 
@@ -72,7 +71,7 @@ public class BlogNetworkManager {
             if (responseObject.getInt("status") != 200) {
                 throw new Exception(responseObject.getString("message"));
             } else {
-                JSONArray jsonArray = responseObject.getJSONArray("marks");
+                JSONArray jsonArray = responseObject.getJSONArray("blogs");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.getJSONObject(i);
                     Blog.createBlogFromJsonObject(object);

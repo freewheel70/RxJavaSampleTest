@@ -39,6 +39,7 @@ import com.hong.app.rxjavatest.Events.ServerSyncBlogEvent;
 import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlCollectionActivity;
 import com.hong.app.rxjavatest.PrettyGirls.PrettyGirlFragment;
 import com.hong.app.rxjavatest.Utils.Constants;
+import com.hong.app.rxjavatest.database.Blog;
 import com.hong.app.rxjavatest.database.User;
 import com.hong.app.rxjavatest.profile.LoginActivity;
 import com.hong.app.rxjavatest.services.NetworkSyncService;
@@ -54,6 +55,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.Subscriber;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -222,9 +226,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int itemId = item.getItemId();
         if (itemId == R.id.action_about) {
             startActivity(new Intent(MainActivity.this, AboutActivity.class));
+        } else if (itemId == R.id.action_sync_all) {
+            syncAllBlogs();
         }
 
         return false;
+    }
+
+    private void syncAllBlogs() {
+        Observable.create(new Observable.OnSubscribe<Object>() {
+            @Override
+            public void call(Subscriber<? super Object> subscriber) {
+                Log.d(TAG, "call: sync_all");
+                Blog.resetBlogSyncStatus();
+                subscriber.onCompleted();
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(new Subscriber<Object>() {
+                    @Override
+                    public void onCompleted() {
+                        sendSyncRequest();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Object o) {
+
+                    }
+                });
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

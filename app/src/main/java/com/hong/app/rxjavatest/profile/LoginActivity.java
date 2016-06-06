@@ -94,7 +94,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private Uri tempUri;
 
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
+    private boolean isLoggingOut = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,9 +112,11 @@ public class LoginActivity extends AppCompatActivity {
 
         User user = User.getUser();
         if (user.isAnonymous()) {
+            Log.d(TAG, "onCreate: isAnonymous");
             profileBox.setVisibility(View.GONE);
             loginBox.setVisibility(View.VISIBLE);
         } else {
+            Log.d(TAG, "onCreate: is NOT Anonymous");
             profileBox.setVisibility(View.VISIBLE);
             loginBox.setVisibility(View.GONE);
 
@@ -136,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick({R.id.register_button, R.id.login_button, R.id.avatar,R.id.logout_button})
+    @OnClick({R.id.register_button, R.id.login_button, R.id.avatar, R.id.logout_button})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.register_button:
@@ -149,6 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                 showChangeAvatarDialog();
                 break;
             case R.id.logout_button:
+                isLoggingOut = true;
                 showProgressDialog();
                 startService(new Intent(LoginActivity.this, NetworkSyncService.class));
                 break;
@@ -265,8 +269,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
-
     private void showProgressDialog() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(this);
@@ -354,16 +356,19 @@ public class LoginActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handlerServerSyncResult(ServerSyncBlogEvent event) {
 
-        dismissProgressDialog();
-        if (event.isSuccess()) {
-            deleteAllDataAndLogout();
-        } else {
-            showDeleteDataAlert();
+        if (isLoggingOut) {
+            dismissProgressDialog();
+            if (event.isSuccess()) {
+                deleteAllDataAndLogout();
+            } else {
+                showDeleteDataAlert();
+            }
         }
     }
 
     private void deleteAllDataAndLogout() {
-        User.getUser().delete();
+        Log.d(TAG, "deleteAllDataAndLogout() called with: " + "");
+        User.deleteUser();
         Blog.deleteAll();
         finish();
     }
@@ -380,11 +385,12 @@ public class LoginActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("取消", null)
                 .show();
+        isLoggingOut = false;
     }
 
     @Override
     protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

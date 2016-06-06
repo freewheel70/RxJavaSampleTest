@@ -1,7 +1,6 @@
 package com.hong.app.rxjavatest.Blogs;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,14 +48,14 @@ class BlogAdapter extends RecyclerView.Adapter<BlogViewHolder> {
         holder.publishDate.setText(DateUtil.getDisplayDateString(blogBean.getPublishedAt()));
         initTagLabel(holder.tag, blogBean.getUrl());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, BlogBrowserActivity.class);
-                intent.putExtra(BlogBrowserActivity.EXTRA_BLOG, blogBean);
-                context.startActivity(intent);
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, BlogBrowserActivity.class);
+//                intent.putExtra(BlogBrowserActivity.EXTRA_BLOG, blogBean);
+//                context.startActivity(intent);
+//            }
+//        });
     }
 
     private void initTagLabel(TextView tag, String urlStr) {

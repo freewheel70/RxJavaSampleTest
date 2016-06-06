@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.hong.app.rxjavatest.CustomViews.OnRecyclerViewItemClickListener;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -122,7 +124,25 @@ public abstract class BasePageFragment extends Fragment {
             }
         });
 
+        recyclerView.addOnItemTouchListener(
+                new OnRecyclerViewItemClickListener(recyclerView) {
+                    @Override
+                    public void onItemClick(RecyclerView.ViewHolder vh) {
+                        Log.d(TAG, "recyclerView onItemClick() called with: " + "vh = [" + vh + "]");
+                        onRecyclerViewItemClick(vh.getLayoutPosition());
+                    }
+
+                    @Override
+                    public void onItemLongClick(RecyclerView.ViewHolder vh) {
+                        Log.d(TAG, "recyclerView onItemLongClick() called with: " + "vh = [" + vh + "]");
+                    }
+                }
+        );
+
+
     }
+
+    protected abstract void onRecyclerViewItemClick(int pos);
 
 
     private void initSwipeRefreshLayout() {
@@ -136,20 +156,14 @@ public abstract class BasePageFragment extends Fragment {
         });
 
     }
-    void refreshItems() {
-        // Load items
-        // ...
 
-        // Load complete
+    void refreshItems() {
 
         sendRequest();
     }
 
     protected void onItemsLoadComplete() {
-        // Update the adapter and notify data set changed
-        // ...
 
-        // Stop refresh animation
         swipeRefreshLayout.setRefreshing(false);
     }
 

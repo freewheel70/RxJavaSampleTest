@@ -1,5 +1,6 @@
 package com.hong.app.rxjavatest.Utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -14,6 +15,8 @@ public class DateUtil {
     public static final long ONE_MINUTE = ONE_SECOND * 60;
     public static final long ONE_HOUR = ONE_MINUTE * 60;
     public static final long ONE_DAY = ONE_HOUR * 24;
+
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
 
     public static String getDisplayDateString(Date date) {
@@ -37,4 +40,13 @@ public class DateUtil {
         result = "M月d日 HH:mm";
         return (new SimpleDateFormat(result, Locale.CHINA)).format(date);
     }
+
+    public static String toServerAcceptableDateString(Date date) {
+        return dateFormat.format(date);
+    }
+
+    public static Date toServerDate(String dateStr) throws ParseException {
+        return dateFormat.parse(dateStr);
+    }
+
 }

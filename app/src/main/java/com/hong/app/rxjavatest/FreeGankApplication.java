@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.hong.app.rxjavatest.Utils.FileUtil;
+import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
 import java.io.File;
@@ -28,7 +29,7 @@ public class FreeGankApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        FlowManager.init(this);
+        FlowManager.init(new FlowConfig.Builder(this).build());
         application = this;
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override

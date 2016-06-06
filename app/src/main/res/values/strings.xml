@@ -62,6 +62,7 @@
     <string name="no_favourite_content_warning">O.O 你还没收藏任何文章，快快去收藏吧！</string>
     <string name="network_reuqest_title">数据请求错误</string>
     <string name="network_reuqest_error_warning">啊！出错了！请把后面的内容告诉程序猿——</string>
+    <string name="title_sync_all">同步所有</string>
 
 
 </resources>

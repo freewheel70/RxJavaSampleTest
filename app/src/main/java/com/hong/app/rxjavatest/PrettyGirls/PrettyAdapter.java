@@ -1,7 +1,6 @@
 package com.hong.app.rxjavatest.PrettyGirls;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,14 +44,14 @@ class PrettyAdapter extends RecyclerView.Adapter<PrettyViewHolder> {
                 .load(imageStr)
                 .into(holder.image);
 
-        holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, PrettyGirlDetailActivity.class);
-                intent.putExtra(PrettyGirlDetailActivity.EXTRA_PRETTY, blogBean);
-                context.startActivity(intent);
-            }
-        });
+//        holder.image.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, PrettyGirlDetailActivity.class);
+//                intent.putExtra(PrettyGirlDetailActivity.EXTRA_PRETTY, blogBean);
+//                context.startActivity(intent);
+//            }
+//        });
     }
 
     @Override
