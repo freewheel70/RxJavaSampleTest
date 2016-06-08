@@ -74,16 +74,18 @@ public abstract class BaseBlogFragment extends BasePageFragment {
         super.onResume();
         if (blogBeanList.size() == 0) {
             noContentWarning.setVisibility(View.VISIBLE);
-            sendRequest();
+            sendRequest(true);
         }
     }
 
     @Override
-    protected boolean sendRequest() {
+    protected boolean sendRequest(final boolean isRefreshing) {
 
-        if (!super.sendRequest()) {
+        if (!super.sendRequest(isRefreshing)) {
             return false;
         }
+
+
 
         Observable.create(new rx.Observable.OnSubscribe<List<BlogBean>>() {
             @Override
@@ -124,15 +126,21 @@ public abstract class BaseBlogFragment extends BasePageFragment {
 
                     @Override
                     public void onNext(List<BlogBean> beanList) {
-                        refreshDataList(beanList);
+                        refreshDataList(beanList, isRefreshing);
                         refreshRecyclerView();
+                        increasePageNum();
+                        enableRequest();
                     }
                 });
 
         return true;
     }
 
-    protected void refreshDataList(List<BlogBean> beanList) {
+    protected void refreshDataList(List<BlogBean> beanList, boolean isRefreshing) {
+        if (isRefreshing) {
+            blogBeanList.clear();
+        }
+
         blogBeanList.addAll(beanList);
     }
 

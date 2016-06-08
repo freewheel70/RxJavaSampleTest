@@ -60,7 +60,7 @@ public class PrettyGirlFragment extends BasePageFragment {
         super.onResume();
         if (prettyList.size() == 0) {
             noContentWarning.setVisibility(View.VISIBLE);
-            sendRequest();
+            sendRequest(true);
         }
     }
 
@@ -78,9 +78,9 @@ public class PrettyGirlFragment extends BasePageFragment {
     }
 
     @Override
-    protected boolean sendRequest() {
+    protected boolean sendRequest(final boolean isRefreshing) {
 
-        if(!super.sendRequest()){
+        if(!super.sendRequest(isRefreshing)){
             return false;
         }
 
@@ -123,8 +123,10 @@ public class PrettyGirlFragment extends BasePageFragment {
 
                     @Override
                     public void onNext(List<BlogBean> blogBeen) {
-                        prettyList.addAll(blogBeen);
+                        refreshDataList(blogBeen,isRefreshing);
                         refreshRecyclerView();
+                        increasePageNum();
+                        enableRequest();
                     }
 
 
@@ -133,6 +135,13 @@ public class PrettyGirlFragment extends BasePageFragment {
         return true;
     }
 
+    protected void refreshDataList(List<BlogBean> beanList, boolean isRefreshing) {
+        if (isRefreshing) {
+            prettyList.clear();
+        }
+
+        prettyList.addAll(beanList);
+    }
 
 
 

@@ -50,12 +50,12 @@ public class FavouriteBlogFragment extends BaseBlogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        sendRequest();
+//        sendRequest();
     }
 
     @Subscribe
-    public void refreshListDueToNetworkSync(ServerSyncBlogEvent event){
-        sendRequest();
+    public void refreshListDueToNetworkSync(ServerSyncBlogEvent event) {
+        sendRequest(true);
     }
 
     @Override

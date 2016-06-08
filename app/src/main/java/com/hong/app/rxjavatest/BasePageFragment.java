@@ -159,7 +159,7 @@ public abstract class BasePageFragment extends Fragment {
 
     void refreshItems() {
 
-        sendRequest();
+        sendRequest(true);
     }
 
     protected void onItemsLoadComplete() {
@@ -187,16 +187,20 @@ public abstract class BasePageFragment extends Fragment {
     }
 
     protected void requestOneMorePage() {
-        sendRequest();
+        sendRequest(false);
     }
 
-    protected boolean sendRequest() {
+    protected boolean sendRequest(boolean isRefreshing) {
         if (isRequesting) {
             Log.d(TAG, "sendRequest: isRequesting true, ignore current request");
             return false;
         }
 
         isRequesting = true;
+
+        if (isRefreshing) {
+            resetPageNum();
+        }
 
         return true;
     }
@@ -206,7 +210,7 @@ public abstract class BasePageFragment extends Fragment {
         Log.d(TAG, "refreshIfNeed() called with: " + "refreshEvent = [" + refreshEvent + "]");
         int diff = refreshEvent.position - this.position;
         if (diff > -2 && diff < 2) {
-            sendRequest();
+            sendRequest(false);
         }
     }
 
@@ -228,8 +232,14 @@ public abstract class BasePageFragment extends Fragment {
 
     protected void refreshRecyclerView() {
         adapter.notifyDataSetChanged();
+    }
+
+    protected void increasePageNum() {
         currentPage++;
-        enableRequest();
+    }
+
+    protected void resetPageNum() {
+        currentPage = 1;
     }
 
     protected void showErrorMsg(String message) {
