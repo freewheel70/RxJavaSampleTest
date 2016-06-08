@@ -10,7 +10,6 @@ import com.hong.app.rxjavatest.Blogs.BlogBean;
 import com.hong.app.rxjavatest.R;
 import com.hong.app.rxjavatest.network.GankNetworkManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
@@ -25,11 +24,8 @@ public class PrettyGirlFragment extends BasePageFragment {
 
     private static final String TAG = "PrettyGirlFragment";
 
-    List<BlogBean> prettyList;
-
     public PrettyGirlFragment() {
         super();
-        prettyList = new ArrayList<>();
     }
 
     @Override
@@ -39,7 +35,7 @@ public class PrettyGirlFragment extends BasePageFragment {
 
     @Override
     protected void onRecyclerViewItemClick(int pos) {
-        BlogBean blogBean = prettyList.get(pos);
+        BlogBean blogBean = blogBeanList.get(pos);
         Intent intent = new Intent(getActivity(), PrettyGirlDetailActivity.class);
         intent.putExtra(PrettyGirlDetailActivity.EXTRA_PRETTY, blogBean);
         startActivity(intent);
@@ -58,7 +54,7 @@ public class PrettyGirlFragment extends BasePageFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (prettyList.size() == 0) {
+        if (blogBeanList.size() == 0) {
             noContentWarning.setVisibility(View.VISIBLE);
             sendRequest(true);
         }
@@ -73,7 +69,7 @@ public class PrettyGirlFragment extends BasePageFragment {
 
     @Override
     protected void initAdapter() {
-        adapter = new PrettyAdapter(getActivity(),inflater,prettyList);
+        adapter = new PrettyAdapter(getActivity(),inflater, blogBeanList);
         recyclerView.setAdapter(adapter);
     }
 
@@ -105,7 +101,7 @@ public class PrettyGirlFragment extends BasePageFragment {
                 .subscribe(new Subscriber<List<BlogBean>>() {
                     @Override
                     public void onCompleted() {
-                        if (prettyList.size() > 0) {
+                        if (blogBeanList.size() > 0) {
                             noContentWarning.setVisibility(View.INVISIBLE);
                         }
                         onItemsLoadComplete();
@@ -115,7 +111,7 @@ public class PrettyGirlFragment extends BasePageFragment {
                     public void onError(Throwable e) {
                         showErrorMsg(e.getMessage());
                         enableRequest();
-                        if (prettyList.size() == 0) {
+                        if (blogBeanList.size() == 0) {
                             noContentWarning.setVisibility(View.VISIBLE);
                         }
                         onItemsLoadComplete();
@@ -135,19 +131,12 @@ public class PrettyGirlFragment extends BasePageFragment {
         return true;
     }
 
-    protected void refreshDataList(List<BlogBean> beanList, boolean isRefreshing) {
-        if (isRefreshing) {
-            prettyList.clear();
-        }
-
-        prettyList.addAll(beanList);
-    }
 
 
 
     @Override
     protected int getDataListSize() {
-        return prettyList.size();
+        return blogBeanList.size();
     }
 
 

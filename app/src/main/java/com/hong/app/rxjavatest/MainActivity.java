@@ -54,7 +54,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
@@ -188,11 +187,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    @OnClick(R.id.fab)
-    public void clickFab(View view) {
-        int currentItem = viewPager.getCurrentItem();
-        EventBus.getDefault().post(new BasePageFragment.RefreshEvent(currentItem));
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

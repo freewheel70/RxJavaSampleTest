@@ -12,7 +12,6 @@ import com.hong.app.rxjavatest.Views.SimpleRecyclerViewItemDecoration;
 import org.json.JSONException;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
@@ -27,7 +26,7 @@ public abstract class BaseBlogFragment extends BasePageFragment {
 
     private static final String TAG = "BaseBlogFragment";
 
-    protected List<BlogBean> blogBeanList = new ArrayList<>();
+
 
     @Override
     protected int getContainerViewId() {
@@ -134,14 +133,6 @@ public abstract class BaseBlogFragment extends BasePageFragment {
                 });
 
         return true;
-    }
-
-    protected void refreshDataList(List<BlogBean> beanList, boolean isRefreshing) {
-        if (isRefreshing) {
-            blogBeanList.clear();
-        }
-
-        blogBeanList.addAll(beanList);
     }
 
     protected abstract List<BlogBean> requestBlogList() throws JSONException, ParseException;

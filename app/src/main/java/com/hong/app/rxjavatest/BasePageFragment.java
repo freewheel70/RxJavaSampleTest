@@ -15,10 +15,11 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.hong.app.rxjavatest.Blogs.BlogBean;
 import com.hong.app.rxjavatest.CustomViews.OnRecyclerViewItemClickListener;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -60,6 +61,8 @@ public abstract class BasePageFragment extends Fragment {
 
     protected int position = 0;
 
+    protected List<BlogBean> blogBeanList = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,7 +70,6 @@ public abstract class BasePageFragment extends Fragment {
         View view = inflater.inflate(getContainerViewId(), container, false);
         ButterKnife.bind(this, view);
         this.inflater = inflater;
-        EventBus.getDefault().register(this);
 
         Bundle bundle = getArguments();
         position = bundle.getInt("pos", 0);
@@ -205,30 +207,15 @@ public abstract class BasePageFragment extends Fragment {
         return true;
     }
 
-    @Subscribe
-    public void refreshIfNeed(RefreshEvent refreshEvent) {
-        Log.d(TAG, "refreshIfNeed() called with: " + "refreshEvent = [" + refreshEvent + "]");
-        int diff = refreshEvent.position - this.position;
-        if (diff > -2 && diff < 2) {
-            sendRequest(false);
+
+    protected void refreshDataList(List<BlogBean> beanList, boolean isRefreshing) {
+        if (isRefreshing) {
+            blogBeanList.clear();
         }
+
+        blogBeanList.addAll(beanList);
     }
 
-
-    public static class RefreshEvent {
-        public int position;
-
-        public RefreshEvent(int position) {
-            this.position = position;
-        }
-
-        @Override
-        public String toString() {
-            return "RefreshEvent{" +
-                    "position=" + position +
-                    '}';
-        }
-    }
 
     protected void refreshRecyclerView() {
         adapter.notifyDataSetChanged();
@@ -259,7 +246,6 @@ public abstract class BasePageFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         Log.d(TAG, "onDestroyView");
-        EventBus.getDefault().unregister(this);
 //        ButterKnife.unbind(this);
     }
 }
