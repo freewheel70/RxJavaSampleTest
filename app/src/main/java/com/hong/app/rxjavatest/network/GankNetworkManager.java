@@ -1,6 +1,7 @@
 package com.hong.app.rxjavatest.network;
 
 import android.support.annotation.StringDef;
+import android.util.Log;
 
 import com.hong.app.rxjavatest.Blogs.BeanDeserializer;
 import com.hong.app.rxjavatest.Blogs.BlogBean;
@@ -16,6 +17,8 @@ import java.util.List;
  * Created by Administrator on 2016/4/20.
  */
 public class GankNetworkManager {
+
+    private static final String TAG = "GankNetworkManager";
 
     public static final String TYPE_ANDROID = "Android";
     public static final String TYPE_IOS = "iOS";
@@ -36,12 +39,13 @@ public class GankNetworkManager {
         String urlStr = generateUrlString(type, size, page);
         String response = OKHttpHelper.sendGetRequest(urlStr);
 
-        return BeanDeserializer.deserialize(response);
+        Log.d(TAG, "getBlogList: response "+response);
 
+        return BeanDeserializer.deserialize(response);
     }
 
     private static String generateUrlString(@GankType String type, int size, int page) {
-        return "https://gank.io/api/data/" + type + "/" + size + "/" + page;
+        return "http://gank.io/api/data/" + type + "/" + size + "/" + page;
     }
 
 

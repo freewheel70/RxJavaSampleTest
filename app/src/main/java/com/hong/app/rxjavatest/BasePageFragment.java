@@ -47,21 +47,21 @@ public abstract class BasePageFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
 
 
-    protected RecyclerView.Adapter adapter;
-    protected LayoutInflater inflater;
+    private RecyclerView.Adapter adapter;
+    private LayoutInflater inflater;
 
-    protected LinearLayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
 
-    protected int SIZE_OF_IMAGES_PER_REQUEST = 10;
-    protected int currentPage = 1;
+    private int SIZE_OF_IMAGES_PER_REQUEST = 10;
+    private int currentPage = 1;
 
 
-    protected boolean hasInitFirstPage = false;
-    protected boolean isRequesting = false;
+    private boolean hasInitFirstPage = false;
+    private boolean isRequesting = false;
 
-    protected int position = 0;
+    private int position = 0;
 
-    protected List<BlogBean> blogBeanList = new ArrayList<>();
+    private List<BlogBean> blogBeanList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -247,6 +247,50 @@ public abstract class BasePageFragment extends Fragment {
         super.onDestroyView();
         Log.d(TAG, "onDestroyView");
 //        ButterKnife.unbind(this);
+    }
+
+    public RecyclerView.Adapter getAdapter() {
+        return adapter;
+    }
+
+    public List<BlogBean> getBlogBeanList() {
+        return blogBeanList;
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public boolean isHasInitFirstPage() {
+        return hasInitFirstPage;
+    }
+
+    public LayoutInflater getInflater() {
+        return inflater;
+    }
+
+    public boolean isRequesting() {
+        return isRequesting;
+    }
+
+    public LinearLayoutManager getLayoutManager() {
+        return layoutManager;
+    }
+
+    public int getSIZE_OF_IMAGES_PER_REQUEST() {
+        return SIZE_OF_IMAGES_PER_REQUEST;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    protected void setAdapter(RecyclerView.Adapter adapter) {
+        this.adapter = adapter;
+    }
+
+    protected void setLayoutManager(LinearLayoutManager layoutManager) {
+        this.layoutManager = layoutManager;
     }
 }
 

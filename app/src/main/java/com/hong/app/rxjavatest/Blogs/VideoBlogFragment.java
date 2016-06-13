@@ -16,6 +16,6 @@ public class VideoBlogFragment extends BaseBlogFragment {
 
     @Override
     protected List<BlogBean> requestBlogList() throws JSONException, ParseException {
-        return GankNetworkManager.getBlogList(GankNetworkManager.TYPE_VIDEO, SIZE_OF_IMAGES_PER_REQUEST, currentPage);
+        return GankNetworkManager.getBlogList(GankNetworkManager.TYPE_VIDEO, getSIZE_OF_IMAGES_PER_REQUEST(), getCurrentPage());
     }
 }

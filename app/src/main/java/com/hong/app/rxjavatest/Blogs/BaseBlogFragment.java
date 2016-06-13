@@ -27,7 +27,6 @@ public abstract class BaseBlogFragment extends BasePageFragment {
     private static final String TAG = "BaseBlogFragment";
 
 
-
     @Override
     protected int getContainerViewId() {
         return R.layout.fragment_base_list;
@@ -40,21 +39,21 @@ public abstract class BaseBlogFragment extends BasePageFragment {
 
     @Override
     protected int getDataListSize() {
-        return blogBeanList.size();
+        return getBlogBeanList().size();
     }
 
     @Override
     protected void initLayoutManager() {
-        layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
+        setLayoutManager(new LinearLayoutManager(getActivity()));
+        getLayoutManager().setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(getLayoutManager());
     }
 
     @Override
     protected void initAdapter() {
 
-        adapter = new BlogAdapter(getActivity(), inflater, blogBeanList);
-        recyclerView.setAdapter(adapter);
+        setAdapter(new BlogAdapter(getActivity(), getInflater(), getBlogBeanList()));
+        recyclerView.setAdapter(getAdapter());
     }
 
     @Override
@@ -71,7 +70,7 @@ public abstract class BaseBlogFragment extends BasePageFragment {
     public void onResume() {
         Log.d(TAG, "onResume");
         super.onResume();
-        if (blogBeanList.size() == 0) {
+        if (getBlogBeanList().size() == 0) {
             noContentWarning.setVisibility(View.VISIBLE);
             sendRequest(true);
         }
@@ -83,7 +82,6 @@ public abstract class BaseBlogFragment extends BasePageFragment {
         if (!super.sendRequest(isRefreshing)) {
             return false;
         }
-
 
 
         Observable.create(new rx.Observable.OnSubscribe<List<BlogBean>>() {
@@ -106,7 +104,7 @@ public abstract class BaseBlogFragment extends BasePageFragment {
                 .subscribe(new Subscriber<List<BlogBean>>() {
                     @Override
                     public void onCompleted() {
-                        if (blogBeanList.size() > 0) {
+                        if (getBlogBeanList().size() > 0) {
                             noContentWarning.setVisibility(View.INVISIBLE);
                         }
 
@@ -117,7 +115,7 @@ public abstract class BaseBlogFragment extends BasePageFragment {
                     public void onError(Throwable e) {
                         showErrorMsg(e.getMessage());
                         enableRequest();
-                        if (blogBeanList.size() == 0) {
+                        if (getBlogBeanList().size() == 0) {
                             noContentWarning.setVisibility(View.VISIBLE);
                         }
                         onItemsLoadComplete();
@@ -140,7 +138,7 @@ public abstract class BaseBlogFragment extends BasePageFragment {
 
     @Override
     protected void onRecyclerViewItemClick(int pos) {
-        BlogBean blogBean = blogBeanList.get(pos);
+        BlogBean blogBean = getBlogBeanList().get(pos);
         Intent intent = new Intent(getActivity(), BlogBrowserActivity.class);
         intent.putExtra(BlogBrowserActivity.EXTRA_BLOG, blogBean);
         startActivity(intent);

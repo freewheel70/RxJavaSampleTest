@@ -16,6 +16,6 @@ public class CoolBlogFragment extends BaseBlogFragment {
 
     @Override
     protected List<BlogBean> requestBlogList() throws JSONException, ParseException {
-        return GankNetworkManager.getBlogList(GankNetworkManager.TYPE_COOL, SIZE_OF_IMAGES_PER_REQUEST, currentPage);
+        return GankNetworkManager.getBlogList(GankNetworkManager.TYPE_COOL, getSIZE_OF_IMAGES_PER_REQUEST(), getCurrentPage());
     }
 }

@@ -1,5 +1,7 @@
 package com.hong.app.rxjavatest.Blogs;
 
+import android.util.Log;
+
 import com.hong.app.rxjavatest.Constant;
 
 import org.json.JSONArray;
@@ -17,6 +19,7 @@ import java.util.Locale;
  * Created by Administrator on 2016/4/17.
  */
 public class BeanDeserializer {
+    private static final String TAG = "BeanDeserializer";
 
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss'Z'", Locale.ENGLISH);
 
@@ -38,11 +41,12 @@ public class BeanDeserializer {
             String dateStr = object.optString(Constant.JSON_KEY_GANK_BLOG_PUBLISH_TIME);
             Date date = dateFormat.parse(dateStr);
 
-            BlogBean bean = new BlogBean(dateStr,description,blogId,date,type,blogUrl,author);
+            BlogBean bean = new BlogBean(dateStr, description, blogId, date, type, blogUrl, author);
 
             blogBeanList.add(bean);
         }
 
+        Log.d(TAG, "deserialize: blogBeanList size " + blogBeanList.size());
         return blogBeanList;
     }
 

@@ -35,7 +35,7 @@ public class PrettyGirlFragment extends BasePageFragment {
 
     @Override
     protected void onRecyclerViewItemClick(int pos) {
-        BlogBean blogBean = blogBeanList.get(pos);
+        BlogBean blogBean = getBlogBeanList().get(pos);
         Intent intent = new Intent(getActivity(), PrettyGirlDetailActivity.class);
         intent.putExtra(PrettyGirlDetailActivity.EXTRA_PRETTY, blogBean);
         startActivity(intent);
@@ -54,7 +54,7 @@ public class PrettyGirlFragment extends BasePageFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (blogBeanList.size() == 0) {
+        if (getBlogBeanList().size() == 0) {
             noContentWarning.setVisibility(View.VISIBLE);
             sendRequest(true);
         }
@@ -62,21 +62,21 @@ public class PrettyGirlFragment extends BasePageFragment {
 
     @Override
     protected void initLayoutManager() {
-        layoutManager = new GridLayoutManager(getActivity(), 2);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
+        setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        getLayoutManager().setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(getLayoutManager());
     }
 
     @Override
     protected void initAdapter() {
-        adapter = new PrettyAdapter(getActivity(),inflater, blogBeanList);
-        recyclerView.setAdapter(adapter);
+       setAdapter( new PrettyAdapter(getActivity(), getInflater(), getBlogBeanList()));
+        recyclerView.setAdapter(getAdapter());
     }
 
     @Override
     protected boolean sendRequest(final boolean isRefreshing) {
 
-        if(!super.sendRequest(isRefreshing)){
+        if (!super.sendRequest(isRefreshing)) {
             return false;
         }
 
@@ -86,10 +86,10 @@ public class PrettyGirlFragment extends BasePageFragment {
                     public void call(Subscriber<? super List<BlogBean>> subscriber) {
                         List<BlogBean> girlList = null;
                         try {
-                            girlList = GankNetworkManager.getBlogList(GankNetworkManager.TYPE_WELFARE, SIZE_OF_IMAGES_PER_REQUEST, currentPage);
+                            girlList = GankNetworkManager.getBlogList(GankNetworkManager.TYPE_WELFARE, getSIZE_OF_IMAGES_PER_REQUEST(), getCurrentPage());
                             subscriber.onNext(girlList);
                             subscriber.onCompleted();
-                        }  catch (Exception e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                             subscriber.onError(e);
                         }
@@ -101,7 +101,7 @@ public class PrettyGirlFragment extends BasePageFragment {
                 .subscribe(new Subscriber<List<BlogBean>>() {
                     @Override
                     public void onCompleted() {
-                        if (blogBeanList.size() > 0) {
+                        if (getBlogBeanList().size() > 0) {
                             noContentWarning.setVisibility(View.INVISIBLE);
                         }
                         onItemsLoadComplete();
@@ -111,7 +111,7 @@ public class PrettyGirlFragment extends BasePageFragment {
                     public void onError(Throwable e) {
                         showErrorMsg(e.getMessage());
                         enableRequest();
-                        if (blogBeanList.size() == 0) {
+                        if (getBlogBeanList().size() == 0) {
                             noContentWarning.setVisibility(View.VISIBLE);
                         }
                         onItemsLoadComplete();
@@ -119,7 +119,7 @@ public class PrettyGirlFragment extends BasePageFragment {
 
                     @Override
                     public void onNext(List<BlogBean> blogBeen) {
-                        refreshDataList(blogBeen,isRefreshing);
+                        refreshDataList(blogBeen, isRefreshing);
                         refreshRecyclerView();
                         increasePageNum();
                         enableRequest();
@@ -132,11 +132,9 @@ public class PrettyGirlFragment extends BasePageFragment {
     }
 
 
-
-
     @Override
     protected int getDataListSize() {
-        return blogBeanList.size();
+        return getBlogBeanList().size();
     }
 
 

@@ -43,8 +43,8 @@ public class FavouriteBlogFragment extends BaseBlogFragment {
     }
 
     protected void refreshDataList(List<BlogBean> beanList) {
-        blogBeanList.clear();
-        blogBeanList.addAll(beanList);
+        getBlogBeanList().clear();
+        getBlogBeanList().addAll(beanList);
     }
 
     @Override
