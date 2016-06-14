@@ -13,11 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hong.app.rxjavatest.CustomViews.gesture_imageview;
+package com.hong.app.rxjavatest.custom_views.gesture_imageview;
 
-import java.io.InputStream;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -36,6 +33,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
+
+import java.io.InputStream;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 public class GestureImageView extends ImageView  {
 
@@ -332,7 +333,7 @@ public class GestureImageView extends ImageView  {
 
 	/**
 	 * Waits for a draw
-	 * @param max time to wait for draw (ms)
+	 * @param timeout time to wait for draw (ms)
 	 * @throws InterruptedException
 	 */
 	public boolean waitForDraw(long timeout) throws InterruptedException {

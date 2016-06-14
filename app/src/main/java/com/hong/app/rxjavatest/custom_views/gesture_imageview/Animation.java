@@ -13,15 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hong.app.rxjavatest.CustomViews.gesture_imageview;
-
+package com.hong.app.rxjavatest.custom_views.gesture_imageview;
 
 /**
  * @author Jason Polites
- *
  */
-public interface MoveAnimationListener {
+public interface Animation {
 
-	public void onMove(float x, float y);
-	
+    /**
+     * Transforms the view.
+     *
+     * @param view
+     * @return true if this animation should remain active.  False otherwise.
+     */
+    public boolean update(GestureImageView view, long time);
+
 }

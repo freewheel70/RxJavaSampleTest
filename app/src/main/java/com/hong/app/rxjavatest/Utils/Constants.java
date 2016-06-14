@@ -1,11 +1,11 @@
-package com.hong.app.rxjavatest.Utils;
+package com.hong.app.rxjavatest.utils;
 
 import android.os.Environment;
 
 import com.hong.app.rxjavatest.FreeGankApplication;
 
 /**
- * Created by Administrator on 2016/4/24.
+ * Created by Freewheel on 2016/4/24.
  */
 public class Constants {
 

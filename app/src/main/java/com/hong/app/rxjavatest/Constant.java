@@ -1,7 +1,7 @@
 package com.hong.app.rxjavatest;
 
 /**
- * Created by Administrator on 2016/5/7.
+ * Created by Freewheel on 2016/5/7.
  */
 public class Constant {
 

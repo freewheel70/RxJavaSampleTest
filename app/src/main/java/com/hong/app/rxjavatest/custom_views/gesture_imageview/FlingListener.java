@@ -13,19 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hong.app.rxjavatest.CustomViews.gesture_imageview;
+package com.hong.app.rxjavatest.custom_views.gesture_imageview;
+
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MotionEvent;
+
 
 /**
  * @author Jason Polites
+ *
  */
-public interface Animation {
+public class FlingListener extends SimpleOnGestureListener {
+	
+	private float velocityX;
+	private float velocityY;
+	
+	@Override
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+		this.velocityX = velocityX;
+		this.velocityY = velocityY;
+		return true;
+	}
 
-    /**
-     * Transforms the view.
-     *
-     * @param view
-     * @return true if this animation should remain active.  False otherwise.
-     */
-    public boolean update(GestureImageView view, long time);
-
+	public float getVelocityX() {
+		return velocityX;
+	}
+	
+	public float getVelocityY() {
+		return velocityY;
+	}
 }

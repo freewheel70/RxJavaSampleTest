@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.Blogs;
+package com.hong.app.rxjavatest.blogs;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -32,7 +32,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Administrator on 2016/4/17.
+ * Created by Freewheel on 2016/4/17.
  */
 public class BlogBrowserActivity extends AppCompatActivity {
 

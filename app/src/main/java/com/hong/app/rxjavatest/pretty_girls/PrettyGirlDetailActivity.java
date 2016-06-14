@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.PrettyGirls;
+package com.hong.app.rxjavatest.pretty_girls;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -16,10 +16,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.hong.app.rxjavatest.Blogs.BlogBean;
-import com.hong.app.rxjavatest.CustomViews.gesture_imageview.GestureImageView;
+import com.hong.app.rxjavatest.blogs.BlogBean;
+import com.hong.app.rxjavatest.custom_views.gesture_imageview.GestureImageView;
 import com.hong.app.rxjavatest.R;
-import com.hong.app.rxjavatest.Utils.FileUtil;
+import com.hong.app.rxjavatest.utils.FileUtil;
 import com.hong.app.rxjavatest.network.OKHttpHelper;
 
 import java.io.File;
@@ -32,7 +32,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Administrator on 2016/4/16.
+ * Created by Freewheel on 2016/4/16.
  */
 @SuppressLint("LongLogTag")
 public class PrettyGirlDetailActivity extends AppCompatActivity {

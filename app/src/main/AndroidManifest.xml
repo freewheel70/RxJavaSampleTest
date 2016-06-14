@@ -26,11 +26,11 @@
 
 
         <activity
-            android:name=".PrettyGirls.PrettyGirlDetailActivity"
+            android:name=".pretty_girls.PrettyGirlDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".Blogs.BlogBrowserActivity"
+            android:name=".blogs.BlogBrowserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -40,7 +40,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".PrettyGirls.PrettyGirlCollectionActivity"
+            android:name=".pretty_girls.PrettyGirlCollectionActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity

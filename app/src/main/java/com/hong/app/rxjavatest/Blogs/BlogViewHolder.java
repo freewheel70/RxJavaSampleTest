@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.Blogs;
+package com.hong.app.rxjavatest.blogs;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,7 +11,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2016/5/9.
+ * Created by Freewheel on 2016/5/9.
  */
 class BlogViewHolder extends RecyclerView.ViewHolder {
 

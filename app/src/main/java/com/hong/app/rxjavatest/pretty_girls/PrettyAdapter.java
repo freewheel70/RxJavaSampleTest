@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.PrettyGirls;
+package com.hong.app.rxjavatest.pretty_girls;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.hong.app.rxjavatest.Blogs.BlogBean;
+import com.hong.app.rxjavatest.blogs.BlogBean;
 import com.hong.app.rxjavatest.R;
 
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/5/9.
+ * Created by Freewheel on 2016/5/9.
  */
 class PrettyAdapter extends RecyclerView.Adapter<PrettyViewHolder> {
 

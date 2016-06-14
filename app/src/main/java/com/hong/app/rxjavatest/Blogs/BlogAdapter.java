@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.Blogs;
+package com.hong.app.rxjavatest.blogs;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,12 +8,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hong.app.rxjavatest.R;
-import com.hong.app.rxjavatest.Utils.DateUtil;
+import com.hong.app.rxjavatest.utils.DateUtil;
 
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/5/9.
+ * Created by Freewheel on 2016/5/9.
  */
 class BlogAdapter extends RecyclerView.Adapter<BlogViewHolder> {
 

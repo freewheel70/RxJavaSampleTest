@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hong.app.rxjavatest.CustomViews.gesture_imageview;
+package com.hong.app.rxjavatest.custom_views.gesture_imageview;
 
 
 /**
  * @author Jason Polites
  *
  */
-public interface ZoomAnimationListener {
-	public void onZoom(float scale, float x, float y);
-	public void onComplete();
+public interface MoveAnimationListener {
+
+	public void onMove(float x, float y);
+	
 }

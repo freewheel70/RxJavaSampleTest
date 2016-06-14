@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.Utils;
+package com.hong.app.rxjavatest.utils;
 
 import android.graphics.Bitmap;
 import android.os.Environment;
@@ -12,7 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * Created by Administrator on 2016/4/23.
+ * Created by Freewheel on 2016/4/23.
  */
 public class FileUtil {
 

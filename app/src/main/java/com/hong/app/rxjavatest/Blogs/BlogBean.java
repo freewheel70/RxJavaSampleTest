@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.Blogs;
+package com.hong.app.rxjavatest.blogs;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/4/17.
+ * Created by Freewheel on 2016/4/17.
  */
 public class BlogBean implements Parcelable {
 

@@ -1,7 +1,7 @@
 package com.hong.app.rxjavatest.network;
 
 /**
- * Created by Administrator on 2016/4/20.
+ * Created by Freewheel on 2016/4/20.
  */
 public class NetworkResponseResult {
 

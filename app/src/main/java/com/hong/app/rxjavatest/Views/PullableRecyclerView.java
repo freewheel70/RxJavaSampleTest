@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.Views;
+package com.hong.app.rxjavatest.views;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
 /**
- * Created by Administrator on 2016/5/8.
+ * Created by Freewheel on 2016/5/8.
  */
 public class PullableRecyclerView  extends RecyclerView{
 

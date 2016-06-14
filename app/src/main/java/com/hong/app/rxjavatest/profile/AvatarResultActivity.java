@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.hong.app.rxjavatest.R;
-import com.hong.app.rxjavatest.Utils.Constants;
+import com.hong.app.rxjavatest.utils.Constants;
 
 import java.io.File;
 import java.io.FileInputStream;

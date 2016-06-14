@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.Views;
+package com.hong.app.rxjavatest.views;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -6,10 +6,10 @@ import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.hong.app.rxjavatest.Utils.UnitUtil;
+import com.hong.app.rxjavatest.utils.UnitUtil;
 
 /**
- * Created by Administrator on 2016/5/8.
+ * Created by Freewheel on 2016/5/8.
  */
 public class SimpleRecyclerViewItemDecoration extends RecyclerView.ItemDecoration {
 

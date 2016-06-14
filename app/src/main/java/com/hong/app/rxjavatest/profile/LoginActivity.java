@@ -22,9 +22,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.hong.app.rxjavatest.Events.ServerSyncBlogEvent;
+import com.hong.app.rxjavatest.events.ServerSyncBlogEvent;
 import com.hong.app.rxjavatest.R;
-import com.hong.app.rxjavatest.Utils.Constants;
+import com.hong.app.rxjavatest.utils.Constants;
 import com.hong.app.rxjavatest.database.Blog;
 import com.hong.app.rxjavatest.database.User;
 import com.hong.app.rxjavatest.network.AccountNetworkManager;
@@ -48,7 +48,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Administrator on 2016/4/19.
+ * Created by Freewheel on 2016/4/19.
  */
 public class LoginActivity extends AppCompatActivity {
 

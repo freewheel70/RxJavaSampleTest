@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.Blogs;
+package com.hong.app.rxjavatest.blogs;
 
 import android.util.Log;
 
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by Administrator on 2016/4/17.
+ * Created by Freewheel on 2016/4/17.
  */
 public class BeanDeserializer {
     private static final String TAG = "BeanDeserializer";

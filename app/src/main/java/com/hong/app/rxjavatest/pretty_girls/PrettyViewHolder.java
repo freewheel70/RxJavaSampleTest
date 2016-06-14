@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.PrettyGirls;
+package com.hong.app.rxjavatest.pretty_girls;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,7 +10,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2016/5/9.
+ * Created by Freewheel on 2016/5/9.
  */
 class PrettyViewHolder extends RecyclerView.ViewHolder {
 

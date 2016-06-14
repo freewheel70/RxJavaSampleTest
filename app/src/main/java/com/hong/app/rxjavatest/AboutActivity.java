@@ -7,13 +7,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import com.hong.app.rxjavatest.Views.CustomImageView;
+import com.hong.app.rxjavatest.views.CustomImageView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2016/4/25.
+ * Created by Freewheel on 2016/4/25.
  */
 public class AboutActivity extends AppCompatActivity {
 

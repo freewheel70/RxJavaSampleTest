@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.Blogs;
+package com.hong.app.rxjavatest.blogs;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hong.app.rxjavatest.Events.ServerSyncBlogEvent;
+import com.hong.app.rxjavatest.events.ServerSyncBlogEvent;
 import com.hong.app.rxjavatest.R;
 import com.hong.app.rxjavatest.database.Blog;
 
@@ -15,7 +15,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/4/18.
+ * Created by Freewheel on 2016/4/18.
  */
 public class FavouriteBlogFragment extends BaseBlogFragment {
 

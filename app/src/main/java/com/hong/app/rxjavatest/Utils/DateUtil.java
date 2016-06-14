@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.Utils;
+package com.hong.app.rxjavatest.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Created by Administrator on 2016/4/17.
+ * Created by Freewheel on 2016/4/17.
  */
 public class DateUtil {
 

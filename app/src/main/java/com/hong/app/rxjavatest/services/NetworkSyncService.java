@@ -3,7 +3,7 @@ package com.hong.app.rxjavatest.services;
 import android.app.IntentService;
 import android.content.Intent;
 
-import com.hong.app.rxjavatest.Events.ServerSyncBlogEvent;
+import com.hong.app.rxjavatest.events.ServerSyncBlogEvent;
 import com.hong.app.rxjavatest.database.User;
 import com.hong.app.rxjavatest.network.BlogNetworkManager;
 import com.hong.app.rxjavatest.network.NetworkResponseResult;
@@ -15,7 +15,7 @@ import rx.Subscriber;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Administrator on 2016/4/22.
+ * Created by Freewheel on 2016/4/22.
  */
 public class NetworkSyncService extends IntentService {
 

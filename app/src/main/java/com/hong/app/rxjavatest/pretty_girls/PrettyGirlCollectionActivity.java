@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.PrettyGirls;
+package com.hong.app.rxjavatest.pretty_girls;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -16,7 +16,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.hong.app.rxjavatest.R;
-import com.hong.app.rxjavatest.Utils.FileUtil;
+import com.hong.app.rxjavatest.utils.FileUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2016/4/23.
+ * Created by Freewheel on 2016/4/23.
  */
 public class PrettyGirlCollectionActivity extends AppCompatActivity {
 

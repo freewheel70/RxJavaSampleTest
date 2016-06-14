@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.hong.app.rxjavatest.Blogs.BlogBean;
-import com.hong.app.rxjavatest.CustomViews.OnRecyclerViewItemClickListener;
+import com.hong.app.rxjavatest.blogs.BlogBean;
+import com.hong.app.rxjavatest.custom_views.OnRecyclerViewItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2016/4/17.
+ * Created by Freewheel on 2016/4/17.
  */
 public abstract class BasePageFragment extends Fragment {
 

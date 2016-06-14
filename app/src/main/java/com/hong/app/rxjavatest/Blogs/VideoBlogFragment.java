@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.Blogs;
+package com.hong.app.rxjavatest.blogs;
 
 import com.hong.app.rxjavatest.network.GankNetworkManager;
 
@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/4/17.
+ * Created by Freewheel on 2016/4/17.
  */
 public class VideoBlogFragment extends BaseBlogFragment {
 

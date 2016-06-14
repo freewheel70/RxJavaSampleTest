@@ -1,11 +1,11 @@
-package com.hong.app.rxjavatest.Utils;
+package com.hong.app.rxjavatest.utils;
 
 import android.util.TypedValue;
 
 import com.hong.app.rxjavatest.FreeGankApplication;
 
 /**
- * Created by Administrator on 2016/5/8.
+ * Created by Freewheel on 2016/5/8.
  */
 public class UnitUtil {
     public static int dp2px(int dpVal) {

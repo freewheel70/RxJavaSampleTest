@@ -3,8 +3,8 @@ package com.hong.app.rxjavatest.network;
 import android.support.annotation.StringDef;
 import android.util.Log;
 
-import com.hong.app.rxjavatest.Blogs.BeanDeserializer;
-import com.hong.app.rxjavatest.Blogs.BlogBean;
+import com.hong.app.rxjavatest.blogs.BeanDeserializer;
+import com.hong.app.rxjavatest.blogs.BlogBean;
 
 import org.json.JSONException;
 
@@ -14,7 +14,7 @@ import java.text.ParseException;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/4/20.
+ * Created by Freewheel on 2016/4/20.
  */
 public class GankNetworkManager {
 

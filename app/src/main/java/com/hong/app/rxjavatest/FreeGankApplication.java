@@ -5,14 +5,14 @@ import android.app.Application;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.hong.app.rxjavatest.Utils.FileUtil;
+import com.hong.app.rxjavatest.utils.FileUtil;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
 import java.io.File;
 
 /**
- * Created by Administrator on 2016/4/18.
+ * Created by Freewheel on 2016/4/18.
  */
 public class FreeGankApplication extends Application {
 

@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.CustomViews;
+package com.hong.app.rxjavatest.custom_views;
 
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * Created by Administrator on 2016/5/30.
+ * Created by Freewheel on 2016/5/30.
  */
 public abstract class OnRecyclerViewItemClickListener implements RecyclerView.OnItemTouchListener {
     private GestureDetectorCompat mGestureDetector;

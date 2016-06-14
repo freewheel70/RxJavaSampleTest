@@ -13,33 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hong.app.rxjavatest.CustomViews.gesture_imageview;
-
-import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.MotionEvent;
+package com.hong.app.rxjavatest.custom_views.gesture_imageview;
 
 
 /**
  * @author Jason Polites
  *
  */
-public class FlingListener extends SimpleOnGestureListener {
-	
-	private float velocityX;
-	private float velocityY;
-	
-	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-		this.velocityX = velocityX;
-		this.velocityY = velocityY;
-		return true;
-	}
-
-	public float getVelocityX() {
-		return velocityX;
-	}
-	
-	public float getVelocityY() {
-		return velocityY;
-	}
+public interface ZoomAnimationListener {
+	public void onZoom(float scale, float x, float y);
+	public void onComplete();
 }

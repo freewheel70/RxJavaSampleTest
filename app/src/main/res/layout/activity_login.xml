@@ -7,24 +7,12 @@
     android:background="@color/tab_text_color"
     tools:context=".profile.LoginActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <include
+        layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="wrap_content" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:title="@string/app_name"
-            app:layout_collapseMode="parallax"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <com.hong.app.rxjavatest.Views.CustomImageView
+    <com.hong.app.rxjavatest.views.CustomImageView
         android:id="@+id/avatar"
         android:layout_width="@dimen/avatar_size"
         android:layout_height="@dimen/avatar_size"

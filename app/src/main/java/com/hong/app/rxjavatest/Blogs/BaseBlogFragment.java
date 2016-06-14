@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.Blogs;
+package com.hong.app.rxjavatest.blogs;
 
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.hong.app.rxjavatest.BasePageFragment;
 import com.hong.app.rxjavatest.R;
-import com.hong.app.rxjavatest.Views.SimpleRecyclerViewItemDecoration;
+import com.hong.app.rxjavatest.views.SimpleRecyclerViewItemDecoration;
 
 import org.json.JSONException;
 
@@ -20,7 +20,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Administrator on 2016/4/17.
+ * Created by Freewheel on 2016/4/17.
  */
 public abstract class BaseBlogFragment extends BasePageFragment {
 

@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/4/20.
+ * Created by Freewheel on 2016/4/20.
  */
 public class BlogNetworkManager {
 

@@ -5,7 +5,7 @@ import com.hong.app.rxjavatest.Constant;
 import org.json.JSONObject;
 
 /**
- * Created by Administrator on 2016/4/19.
+ * Created by Freewheel on 2016/4/19.
  */
 public class AccountNetworkManager {
 

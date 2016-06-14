@@ -10,7 +10,7 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 /**
- * Created by Administrator on 2016/4/20.
+ * Created by Freewheel on 2016/4/20.
  */
 @ModelContainer
 @Table(database = FreeGankDatabase.class)

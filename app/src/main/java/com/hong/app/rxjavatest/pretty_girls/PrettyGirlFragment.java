@@ -1,4 +1,4 @@
-package com.hong.app.rxjavatest.PrettyGirls;
+package com.hong.app.rxjavatest.pretty_girls;
 
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.hong.app.rxjavatest.BasePageFragment;
-import com.hong.app.rxjavatest.Blogs.BlogBean;
+import com.hong.app.rxjavatest.blogs.BlogBean;
 import com.hong.app.rxjavatest.R;
 import com.hong.app.rxjavatest.network.GankNetworkManager;
 
@@ -18,7 +18,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Administrator on 2016/4/16.
+ * Created by Freewheel on 2016/4/16.
  */
 public class PrettyGirlFragment extends BasePageFragment {
 

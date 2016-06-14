@@ -2,8 +2,8 @@ package com.hong.app.rxjavatest.database;
 
 import android.support.annotation.Nullable;
 
-import com.hong.app.rxjavatest.Blogs.BlogBean;
-import com.hong.app.rxjavatest.Utils.DateUtil;
+import com.hong.app.rxjavatest.blogs.BlogBean;
+import com.hong.app.rxjavatest.utils.DateUtil;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ConflictAction;
 import com.raizlabs.android.dbflow.annotation.ModelContainer;
@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/4/18.
+ * Created by Freewheel on 2016/4/18.
  */
 @ModelContainer
 @Table(database = FreeGankDatabase.class)

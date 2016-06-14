@@ -1,7 +1,7 @@
-package com.hong.app.rxjavatest.Events;
+package com.hong.app.rxjavatest.events;
 
 /**
- * Created by Administrator on 2016/4/22.
+ * Created by Freewheel on 2016/4/22.
  */
 public class ServerSyncBlogEvent {
 
