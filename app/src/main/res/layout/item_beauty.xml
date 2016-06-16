@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:padding="2dp">
 
-    <com.hong.app.rxjavatest.views.CustomImageView
+    <com.hong.app.freegank.views.CustomImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="300dp"

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hong.app.rxjavatest">
+    package="com.hong.app.freegank">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.hong.app.rxjavatest.FreeGankApplication"
+        android:name="com.hong.app.freegank.FreeGankApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.hong.app.freegank.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -26,21 +26,21 @@
 
 
         <activity
-            android:name=".pretty_girls.PrettyGirlDetailActivity"
+            android:name="com.hong.app.freegank.pretty_girls.PrettyGirlDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".blogs.BlogBrowserActivity"
+            android:name="com.hong.app.freegank.blogs.BlogBrowserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".profile.LoginActivity"
+            android:name="com.hong.app.freegank.profile.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".pretty_girls.PrettyGirlCollectionActivity"
+            android:name="com.hong.app.freegank.pretty_girls.PrettyGirlCollectionActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
@@ -48,16 +48,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
-        <activity android:name=".profile.AvatarResultActivity"
+        <activity android:name="com.hong.app.freegank.profile.AvatarResultActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
-        <activity android:name=".AboutActivity"
+        <activity android:name="com.hong.app.freegank.AboutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <service
-            android:name=".services.NetworkSyncService"
+            android:name="com.hong.app.freegank.services.NetworkSyncService"
             android:exported="false" />
 
     </application>

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content" />
 
 
-    <com.hong.app.rxjavatest.custom_views.gesture_imageview.GestureImageView
+    <com.hong.app.freegank.custom_views.gesture_imageview.GestureImageView
         android:id="@+id/beauty_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

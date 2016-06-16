@@ -20,7 +20,7 @@
         android:fitsSystemWindows="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.hong.app.rxjavatest.views.CustomImageView
+        <com.hong.app.freegank.views.CustomImageView
             android:id="@+id/app_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
