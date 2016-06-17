@@ -19,9 +19,6 @@ import com.hong.app.freegank.R;
 import com.hong.app.freegank.utils.FileUtil;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,13 +28,16 @@ import butterknife.ButterKnife;
  */
 public class PrettyGirlCollectionActivity extends AppCompatActivity {
 
+    private static final String TAG = "PrettyGirlCollectionActivity";
+
+    private static final int REQUEST_CODE = 2;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    List<File> beautyFileList = new ArrayList<>();
+    File[] beautyFileList;
 
     private LayoutInflater inflater;
 
@@ -55,7 +55,6 @@ public class PrettyGirlCollectionActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.my_image_collection);
 
-//        toolbar.setTitle(R.string.my_image_collection);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,18 +62,23 @@ public class PrettyGirlCollectionActivity extends AppCompatActivity {
             }
         });
 
-        initFiledata();
         initRecyclerView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initFiledata();
+        adapter.notifyDataSetChanged();
     }
 
     private void initFiledata() {
         File dir = new File(FileUtil.PRIVATE_IMAGE_STORAGE_DIR);
-        File[] files = dir.listFiles();
-        beautyFileList = Arrays.asList(files);
+        beautyFileList = dir.listFiles();
     }
 
     private void initRecyclerView() {
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -96,7 +100,7 @@ public class PrettyGirlCollectionActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(BeautyViewholder holder, int position) {
 
-            final File file = beautyFileList.get(position);
+            final File file = beautyFileList[position];
 
             Glide.with(PrettyGirlCollectionActivity.this)
                     .load(file)
@@ -108,14 +112,14 @@ public class PrettyGirlCollectionActivity extends AppCompatActivity {
                     Intent intent = new Intent(PrettyGirlCollectionActivity.this, PrettyGirlDetailActivity.class);
                     intent.putExtra(PrettyGirlDetailActivity.EXTRA_SOURCE, PrettyGirlDetailActivity.EXTRA_SOURCE_COLLECTION);
                     intent.putExtra(PrettyGirlDetailActivity.EXTRA_PRETTY, file.getAbsolutePath());
-                    startActivity(intent);
+                    startActivityForResult(intent, REQUEST_CODE);
                 }
             });
         }
 
         @Override
         public int getItemCount() {
-            return beautyFileList.size();
+            return beautyFileList.length;
         }
     }
 
@@ -133,5 +137,13 @@ public class PrettyGirlCollectionActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            String filePath = data.getStringExtra(PrettyGirlDetailActivity.EXTRA_PRETTY);
+            FileUtil.deleteImage(filePath);
+        }
     }
 }

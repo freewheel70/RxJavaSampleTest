@@ -77,6 +77,15 @@ public class FileUtil {
 
     }
 
+    public static void deleteImage(String filePath) {
+
+        File file = new File(filePath);
+        if (file.exists()) {
+            file.delete();
+        }
+
+    }
+
     public static File getImageFile(String dirPath, String imageName) {
         Log.d(TAG, "deleteImage() called with: " + "dirPath = [" + dirPath + "], imageName = [" + imageName + "]");
 

@@ -38,6 +38,10 @@ public class BlogBean implements Parcelable {
         return description;
     }
 
+    public String getImageName() {
+        return description + id;
+    }
+
     public Date getPublishedAt() {
         return publishedAt;
     }
