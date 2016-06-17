@@ -24,7 +24,6 @@ import com.hong.app.freegank.network.OKHttpHelper;
 import com.hong.app.freegank.utils.FileUtil;
 
 import java.io.File;
-import java.util.UUID;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -140,7 +139,8 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888;
                 Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
-                FileUtil.saveBitmapIntoFile(bitmap, FileUtil.PUBLIC_IMAGE_STORAGE_DIR, UUID.randomUUID().toString());
+                File file = new File(filePath);
+                FileUtil.saveBitmapIntoFile(bitmap, FileUtil.PUBLIC_IMAGE_STORAGE_DIR, file.getName());
             }
         });
     }
