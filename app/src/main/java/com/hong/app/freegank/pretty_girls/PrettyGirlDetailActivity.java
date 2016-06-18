@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -135,12 +134,16 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
     private void savePictureFromCache() {
         savePicture(new PictureSaveAction() {
             @Override
-            public void save() {
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
+            public boolean save() {
+//                BitmapFactory.Options options = new BitmapFactory.Options();
+//                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+//                Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
+//                File file = new File(filePath);
+//                FileUtil.saveBitmapIntoFile(bitmap, FileUtil.PUBLIC_IMAGE_STORAGE_DIR, file.getName());
+
                 File file = new File(filePath);
-                FileUtil.saveBitmapIntoFile(bitmap, FileUtil.PUBLIC_IMAGE_STORAGE_DIR, file.getName());
+                return FileUtil.copyFile(file, new File(FileUtil.PUBLIC_IMAGE_STORAGE_DIR, file.getName()));
+
             }
         });
     }
@@ -149,9 +152,9 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
 
         savePicture(new PictureSaveAction() {
             @Override
-            public void save() {
+            public boolean save() {
                 Bitmap bitmap = OKHttpHelper.getBitmapfromUrl(beautyImageUrlStr);
-                FileUtil.saveBitmapIntoFile(bitmap, FileUtil.PUBLIC_IMAGE_STORAGE_DIR, prettyBean.getImageName());
+                return FileUtil.saveBitmapIntoFile(bitmap, FileUtil.PUBLIC_IMAGE_STORAGE_DIR, prettyBean.getImageName());
             }
         });
     }
@@ -160,8 +163,11 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
         Observable.create(new Observable.OnSubscribe<Bitmap>() {
             @Override
             public void call(Subscriber<? super Bitmap> subscriber) {
-                saveAction.save();
-                subscriber.onCompleted();
+                if (saveAction.save()) {
+                    subscriber.onCompleted();
+                } else {
+                    subscriber.onError(new Throwable("save error"));
+                }
             }
         })
                 .subscribeOn(Schedulers.io())
@@ -185,7 +191,7 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
     }
 
     private interface PictureSaveAction {
-        void save();
+        boolean save();
     }
 
     private void deleteImage(MenuItem item) {
@@ -237,8 +243,11 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
             @Override
             public void call(Subscriber<? super Bitmap> subscriber) {
                 Bitmap bitmap = OKHttpHelper.getBitmapfromUrl(beautyImageUrlStr);
-                FileUtil.saveBitmapIntoFile(bitmap, FileUtil.PRIVATE_IMAGE_STORAGE_DIR, prettyBean.getImageName());
-                subscriber.onCompleted();
+                if (FileUtil.saveBitmapIntoFile(bitmap, FileUtil.PRIVATE_IMAGE_STORAGE_DIR, prettyBean.getImageName())) {
+                    subscriber.onCompleted();
+                } else {
+                    subscriber.onError(new Throwable("save error"));
+                }
             }
         })
                 .subscribeOn(Schedulers.io())

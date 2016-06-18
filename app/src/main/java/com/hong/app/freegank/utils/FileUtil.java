@@ -8,8 +8,11 @@ import com.hong.app.freegank.FreeGankApplication;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Created by Freewheel on 2016/4/23.
@@ -22,9 +25,11 @@ public class FileUtil {
 
     public static final String PRIVATE_IMAGE_STORAGE_DIR = FreeGankApplication.getInstance().getFilesDir().getAbsolutePath() + "/Pretty";
 
-    public static void saveBitmapIntoFile(Bitmap bitmap, String dirPath, String imageName) {
+    public static boolean saveBitmapIntoFile(Bitmap bitmap, String dirPath, String imageName) {
 
         Log.d(TAG, "saveBitmapIntoFile() called with: " + "bitmap = [" + bitmap + "], dirPath = [" + dirPath + "], imageName = [" + imageName + "]");
+
+        boolean saveSuccess = false;
 
         File dir = new File(dirPath);
         if (!dir.exists()) {
@@ -44,8 +49,10 @@ public class FileUtil {
             fos = new FileOutputStream(file);
             fos.write(bitmapdata);
             fos.flush();
+            saveSuccess = true;
         } catch (IOException e) {
             e.printStackTrace();
+            saveSuccess = false;
         } finally {
 
             try {
@@ -55,6 +62,51 @@ public class FileUtil {
             }
 
         }
+
+        return saveSuccess;
+    }
+
+    public static boolean copyFile(String sourcePath, String targetPath) throws IOException {
+        return copyFile(new File(sourcePath), new File(targetPath));
+    }
+
+    public static boolean copyFile(File sourceFile, File targetFile) {
+        boolean saveSuccess = false;
+        InputStream in = null;
+        OutputStream out = null;
+        try {
+            in = new FileInputStream(sourceFile);
+
+            out = new FileOutputStream(targetFile);
+
+            // Copy the bits from instream to outstream
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            saveSuccess = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            saveSuccess = false;
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return saveSuccess;
     }
 
     public static boolean isImageFileExist(String dirPath, String imageName) {
