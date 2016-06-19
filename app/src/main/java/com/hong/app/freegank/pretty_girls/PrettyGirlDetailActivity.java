@@ -135,11 +135,6 @@ public class PrettyGirlDetailActivity extends AppCompatActivity {
         savePicture(new PictureSaveAction() {
             @Override
             public boolean save() {
-//                BitmapFactory.Options options = new BitmapFactory.Options();
-//                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-//                Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
-//                File file = new File(filePath);
-//                FileUtil.saveBitmapIntoFile(bitmap, FileUtil.PUBLIC_IMAGE_STORAGE_DIR, file.getName());
 
                 File file = new File(filePath);
                 return FileUtil.copyFile(file, new File(FileUtil.PUBLIC_IMAGE_STORAGE_DIR, file.getName()));

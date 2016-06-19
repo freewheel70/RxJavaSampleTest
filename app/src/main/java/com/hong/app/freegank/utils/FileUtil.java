@@ -9,6 +9,7 @@ import com.hong.app.freegank.FreeGankApplication;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,32 +36,32 @@ public class FileUtil {
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        //create a file to write bitmap data
-        File file = new File(dir, imageName + ".png");
-        FileOutputStream fos = null;
+
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+        byte[] bitmapData = bos.toByteArray();
+
         try {
-            file.createNewFile();
-
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
-            byte[] bitmapdata = bos.toByteArray();
-
-//write the bytes in file
-            fos = new FileOutputStream(file);
-            fos.write(bitmapdata);
-            fos.flush();
-            saveSuccess = true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            saveSuccess = false;
-        } finally {
+            File file = new File(dir, imageName + ".png");
+            FileOutputStream fos = new FileOutputStream(file);
 
             try {
-                fos.close();
+                fos.write(bitmapData);
+                fos.flush();
+                saveSuccess = true;
             } catch (IOException e) {
                 e.printStackTrace();
+                saveSuccess = false;
+            } finally {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
 
         return saveSuccess;
@@ -71,40 +72,44 @@ public class FileUtil {
     }
 
     public static boolean copyFile(File sourceFile, File targetFile) {
+
         boolean saveSuccess = false;
-        InputStream in = null;
-        OutputStream out = null;
+
         try {
-            in = new FileInputStream(sourceFile);
+            InputStream in = new FileInputStream(sourceFile);
+            OutputStream out = new FileOutputStream(targetFile);
 
-            out = new FileOutputStream(targetFile);
+            try {
 
-            // Copy the bits from instream to outstream
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-            saveSuccess = true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            saveSuccess = false;
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
                 }
-            }
-            if (out != null) {
+
+                saveSuccess = true;
+
+            } catch (IOException e1) {
+                e1.printStackTrace();
+                saveSuccess = false;
+            } finally {
                 try {
                     out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                try {
+                    in.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
                 }
             }
+
+
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
         }
+
 
         return saveSuccess;
     }
